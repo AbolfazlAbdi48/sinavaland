@@ -4,407 +4,417 @@
 
 {% block extra_css %}
 
-/* ===== Page Header ===== */
-.page-header {
-position: relative;
-padding: 80px 0 60px;
-overflow: hidden;
-text-align: center;
-}
+    /* ===== Page Header ===== */
+    .page-header {
+    position: relative;
+    padding: 80px 0 60px;
+    overflow: hidden;
+    text-align: center;
+    }
 
-.page-header-bg {
-position: absolute;
-inset: 0;
-}
+    .page-header-bg {
+    position: absolute;
+    inset: 0;
+    }
 
-.page-header-bg .overlay {
-position: absolute;
-inset: 0;
-opacity: .88;
-}
+    .page-header-bg .overlay {
+    position: absolute;
+    inset: 0;
+    opacity: .88;
+    }
 
-.page-header-content {
-position: relative;
-z-index: 10;
-}
+    .page-header-content {
+    position: relative;
+    z-index: 10;
+    }
 
-.page-header-content h1 {
-font-size: 2.25rem;
-color: var(--primary-fg);
-margin-bottom: 12px;
-}
+    .page-header-content h1 {
+    font-size: 2.25rem;
+    color: var(--primary-fg);
+    margin-bottom: 12px;
+    }
 
-.page-header-content p {
-color: rgba(250, 250, 250, .75);
-font-size: 1rem;
-}
+    .page-header-content p {
+    color: rgba(250, 250, 250, .75);
+    font-size: 1rem;
+    }
 
-@media (min-width: 768px) {
-.page-header-content h1 {
-font-size: 2.75rem;
-}
-}
+    @media (min-width: 768px) {
+    .page-header-content h1 {
+    font-size: 2.75rem;
+    }
+    }
 
-/* ===== Filters ===== */
-.filters-wrap {
-background: var(--card);
-border: 1px solid var(--border);
-border-radius: var(--radius);
-padding: 20px 24px;
-margin: 32px 0;
-display: flex;
-gap: 16px;
-flex-wrap: wrap;
-align-items: flex-end;
-}
+    /* ===== Filters ===== */
+    .filters-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 32px 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    }
 
-.filter-group {
-flex: 1;
-min-width: 180px;
-display: flex;
-flex-direction: column;
-gap: 6px;
-}
+    .filter-group {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    }
 
-.filter-group label {
-font-size: .8rem;
-font-weight: 600;
-color: var(--muted-fg);
-text-transform: uppercase;
-letter-spacing: .03em;
-}
+    .filter-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--muted-fg);
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    }
 
-.filter-group select,
-.filter-group input[type="text"] {
-padding: 10px 14px;
-border: 1px solid var(--input);
-border-radius: var(--radius);
-background: var(--bg);
-color: var(--fg);
-font-size: .9rem;
-width: 100%;
-}
+    .filter-group select,
+    .filter-group input[type="text"] {
+    padding: 10px 14px;
+    border: 1px solid var(--input);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--fg);
+    font-size: .9rem;
+    width: 100%;
+    }
 
-.filter-group select:focus,
-.filter-group input[type="text"]:focus {
-outline: none;
-border-color: var(--amber);
-}
+    .filter-group select:focus,
+    .filter-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--amber);
+    }
 
-.search-group {
-flex: 2;
-min-width: 220px;
-}
+    .search-group {
+    flex: 2;
+    min-width: 220px;
+    }
 
-.search-row {
-display: flex;
-gap: 10px;
-}
+    .search-row {
+    display: flex;
+    gap: 10px;
+    }
 
-.search-row input {
-flex: 1;
-}
+    .search-row input {
+    flex: 1;
+    }
 
-/* ===== Articles Grid ===== */
-.articles-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-gap: 24px;
-margin-bottom: 40px;
-}
+    /* ===== Articles Grid ===== */
+    .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+    }
 
-.article-card {
-background: var(--card);
-border-radius: var(--radius);
-overflow: hidden;
-border: 1px solid var(--border);
-transition: transform .25s, box-shadow .25s;
-display: flex;
-flex-direction: column;
-}
+    .article-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform .25s, box-shadow .25s;
+    display: flex;
+    flex-direction: column;
+    }
 
-.article-card:hover {
-transform: translateY(-4px);
-box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
-}
+    .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
+    }
 
-.article-image-wrap {
-position: relative;
-height: 220px;
-overflow: hidden;
-}
+    .article-image-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    }
 
-.article-image {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: transform .4s;
-}
+    .article-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s;
+    }
 
-.article-card:hover .article-image {
-transform: scale(1.05);
-}
+    .article-card:hover .article-image {
+    transform: scale(1.05);
+    }
 
-.article-image-placeholder {
-width: 100%;
-height: 100%;
-background: var(--muted);
-display: flex;
-align-items: center;
-justify-content: center;
-color: var(--steel);
-}
+    .article-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--steel);
+    }
 
-.article-category {
-position: absolute;
-top: 12px;
-right: 12px;
-background: var(--amber);
-color: var(--charcoal);
-font-size: .75rem;
-font-weight: 700;
-padding: 4px 10px;
-border-radius: 999px;
-}
+    .article-category {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--amber);
+    color: var(--charcoal);
+    font-size: .75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    }
 
-.article-content {
-padding: 20px;
-display: flex;
-flex-direction: column;
-flex: 1;
-}
+    .article-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    }
 
-.article-content h3 {
-font-size: 1.05rem;
-color: var(--fg);
-line-height: 1.6;
-margin-bottom: 12px;
-}
+    .article-content h3 {
+    font-size: 1.05rem;
+    color: var(--fg);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    }
 
-.article-excerpt {
-color: var(--muted-fg);
-line-height: 1.8;
-margin-bottom: 16px;
-}
+    .article-excerpt {
+    color: var(--muted-fg);
+    line-height: 1.8;
+    margin-bottom: 16px;
+    }
 
-.article-meta {
-margin-top: auto;
-border-top: 1px solid var(--border);
-padding-top: 14px;
-display: flex;
-flex-direction: column;
-gap: 8px;
-font-size: .85rem;
-color: var(--muted-fg);
-}
+    .article-meta {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: .85rem;
+    color: var(--muted-fg);
+    }
 
-.article-footer {
-border-top: 1px solid var(--border);
-padding: 14px 20px;
-}
+    .article-footer {
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+    }
 
-/* ===== Empty State ===== */
-.no-results {
-grid-column: 1 / -1;
-text-align: center;
-padding: 60px 20px;
-color: var(--muted-fg);
-}
+    /* ===== Empty State ===== */
+    .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted-fg);
+    }
 
-/* ===== Pagination ===== */
-.pagination {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 6px;
-margin: 40px 0 60px;
-flex-wrap: wrap;
-}
+    /* ===== Pagination ===== */
+    .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 40px 0 60px;
+    flex-wrap: wrap;
+    }
 
-.pagination a,
-.pagination span {
-padding: 8px 16px;
-border-radius: var(--radius);
-font-size: .875rem;
-font-weight: 600;
-text-decoration: none;
-}
+    .pagination a,
+    .pagination span {
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: .875rem;
+    font-weight: 600;
+    text-decoration: none;
+    }
 
-.pagination a {
-background: var(--card);
-border: 1px solid var(--border);
-color: var(--fg);
-}
+    .pagination a {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    }
 
-.pagination a:hover {
-background: var(--muted);
-}
+    .pagination a:hover {
+    background: var(--muted);
+    }
 
-.page-current {
-background: var(--navy);
-color: var(--primary-fg);
-border: 1px solid var(--navy);
-}
+    .page-current {
+    background: var(--navy);
+    color: var(--primary-fg);
+    border: 1px solid var(--navy);
+    }
 
 {% endblock %}
 
 {% block content %}
 
-<div class="page-header" style="margin: 0 -1.5rem;">
-    <div class="page-header-bg">
-        <div class="overlay gradient-industrial"></div>
-    </div>
-
-
-<div class="page-header-content container">
-    <h1>مجله گردشگری</h1>
-    <p>مقالات و راهنماهای سفر</p>
-</div>
-
-
-</div>
-
-<form method="get">
-    <div class="filters-wrap industrial-shadow">
-
-
-    <div class="filter-group">
-        <label for="category">دسته‌بندی</label>
-
-        <select name="category"
-                id="category"
-                onchange="this.form.submit()">
-
-            <option value="">همه</option>
-
-            <option value="travel_guide" {% if request.GET.category == 'travel_guide' %}selected{% endif %}>راهنمای سفر</option>
-            <option value="destination" {% if request.GET.category == 'destination' %}selected{% endif %}>معرفی مقصد</option>
-            <option value="tips" {% if request.GET.category == 'tips' %}selected{% endif %}>نکات سفر</option>
-            <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>فرهنگ و آداب</option>
-            <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی</option>
-            <option value="adventure" {% if request.GET.category == 'adventure' %}selected{% endif %}>ماجراجویی</option>
-
-        </select>
-    </div>
-
-    <div class="filter-group search-group">
-        <label for="search">جستجو</label>
-
-        <div class="search-row">
-            <input type="text"
-                   name="search"
-                   id="search"
-                   placeholder="جستجو در مقالات..."
-                   value="{{ request.GET.search }}">
-
-            <button type="submit"
-                    class="btn-amber gradient-amber"
-                    style="white-space:nowrap;border:none;">
-                جستجو
-            </button>
+    <div class="page-header" style="margin: 0 -1.5rem;">
+        <div class="page-header-bg">
+            <div class="overlay gradient-industrial"></div>
         </div>
+
+
+        <div class="page-header-content container">
+            <h1>مجله گردشگری</h1>
+            <p>مقالات و راهنماهای سفر</p>
+        </div>
+
+
     </div>
 
-</div>
+    <form method="get">
+        <div class="filters-wrap industrial-shadow">
 
 
-</form>
+            <div class="filter-group">
+                <label for="category">دسته‌بندی</label>
 
-<div class="articles-grid">
+                <select name="category"
+                        id="category"
+                        onchange="this.form.submit()">
 
+                    <option value="">همه</option>
 
-{% for article in articles %}
+                    <option value="travel_guide" {% if request.GET.category == 'travel_guide' %}selected{% endif %}>
+                        راهنمای سفر
+                    </option>
+                    <option value="destination" {% if request.GET.category == 'destination' %}selected{% endif %}>معرفی
+                        مقصد
+                    </option>
+                    <option value="tips" {% if request.GET.category == 'tips' %}selected{% endif %}>نکات سفر</option>
+                    <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>فرهنگ و آداب
+                    </option>
+                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی
+                    </option>
+                    <option value="adventure" {% if request.GET.category == 'adventure' %}selected{% endif %}>
+                        ماجراجویی
+                    </option>
 
-<article class="article-card animate-fade-in-up industrial-shadow">
-
-    <div class="article-image-wrap">
-
-        {% if article.image %}
-            <img src="{{ article.image.url }}"
-                 alt="{{ article.title }}"
-                 class="article-image">
-        {% else %}
-            <div class="article-image-placeholder">
-                بدون تصویر
+                </select>
             </div>
-        {% endif %}
 
-        <div class="article-category">
-            {{ article.get_category_display }}
+            <div class="filter-group search-group">
+                <label for="search">جستجو</label>
+
+                <div class="search-row">
+                    <input type="text"
+                           name="search"
+                           id="search"
+                           placeholder="جستجو در مقالات..."
+                           value="{{ request.GET.search }}">
+
+                    <button type="submit"
+                            class="btn-amber gradient-amber"
+                            style="white-space:nowrap;border:none;">
+                        جستجو
+                    </button>
+                </div>
+            </div>
+
         </div>
 
-    </div>
 
-    <div class="article-content">
+    </form>
 
-        <h3>{{ article.title }}</h3>
+    <div class="articles-grid">
 
-        <p class="article-excerpt">
-            {{ article.excerpt|truncatewords:25 }}
-        </p>
 
-        <div class="article-meta">
+        {% for article in articles %}
+
+            <article class="article-card animate-fade-in-up industrial-shadow">
+
+                <div class="article-image-wrap">
+
+                    {% if article.image %}
+                        <img src="{{ article.image.url }}"
+                             alt="{{ article.title }}"
+                             class="article-image">
+                    {% else %}
+                        <div class="article-image-placeholder">
+                            بدون تصویر
+                        </div>
+                    {% endif %}
+
+                    <div class="article-category">
+                        {{ article.get_category_display }}
+                    </div>
+
+                </div>
+
+                <div class="article-content">
+
+                    <h3>{{ article.title }}</h3>
+
+                    <p class="article-excerpt">
+                        {{ article.excerpt|truncatewords:25 }}
+                    </p>
+
+                    <div class="article-meta">
             <span>
                 نویسنده:
                 {{ article.author.get_full_name|default:article.author.username }}
             </span>
 
-            <span>
+                        <span>
                 {{ article.published_at|date:"Y/m/d" }}
             </span>
-        </div>
+                    </div>
+
+                </div>
+
+                <div class="article-footer">
+
+                    <a href="{% url 'magazine:detail' article.slug %}"
+                       class="btn-amber gradient-amber"
+                       style="width:100%;justify-content:center;">
+
+                        ادامه مطلب
+
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="no-results">
+                <p>مقاله‌ای یافت نشد.</p>
+            </div>
+
+        {% endfor %}
+
 
     </div>
 
-    <div class="article-footer">
+    {% if articles.has_other_pages %}
 
-        <a href="{% url 'magazine:detail' article.slug %}"
-           class="btn-amber gradient-amber"
-           style="width:100%;justify-content:center;">
-
-            ادامه مطلب
-
-        </a>
-
-    </div>
-
-</article>
-
-{% empty %}
-
-<div class="no-results">
-    <p>مقاله‌ای یافت نشد.</p>
-</div>
-
-{% endfor %}
+        <div class="pagination">
 
 
-</div>
+            {% if articles.has_previous %}
+                <a href="?page=
+                        {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    قبلی
+                </a>
+            {% endif %}
 
-{% if articles.has_other_pages %}
-
-<div class="pagination">
-
-
-{% if articles.has_previous %}
-    <a href="?page={{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
-        قبلی
-    </a>
-{% endif %}
-
-<span class="page-current">
+            <span class="page-current">
     صفحه {{ articles.number }} از {{ articles.paginator.num_pages }}
 </span>
 
-{% if articles.has_next %}
-    <a href="?page={{ articles.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
-        بعدی
-    </a>
-{% endif %}
+            {% if articles.has_next %}
+                <a href="?page=
+                        {{ articles.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    بعدی
+                </a>
+            {% endif %}
 
 
-</div>
+        </div>
 
-{% endif %}
+    {% endif %}
 
 {% endblock %}

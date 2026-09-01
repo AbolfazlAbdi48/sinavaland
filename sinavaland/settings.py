@@ -16,7 +16,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'accounts',
     'accommodations',
     'tours',
@@ -76,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sinavaland.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
@@ -99,7 +97,6 @@ elif config('DATABASE') == 'MYSQL':
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -118,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -130,12 +126,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 
-#custom user model
+# custom user model
 AUTH_USER_MODEL = 'accounts.User'
 
 # Media files
@@ -146,8 +141,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = config('STATIC_ROOT', default=str(BASE_DIR / 'staticfiles'))
-
-
 
 PWA_APP_NAME = 'Sinavaland'
 PWA_APP_DESCRIPTION = "سوئیس مازندران"
@@ -187,8 +180,8 @@ PWA_APP_SHORTCUTS = [
 ]
 PWA_APP_SCREENSHOTS = [
     {
-      'src': '/static/images/icons/splash-750x1334.png',
-      'sizes': '750x1334',
-      "type": "image/png"
+        'src': '/static/images/icons/splash-750x1334.png',
+        'sizes': '750x1334',
+        "type": "image/png"
     }
 ]
