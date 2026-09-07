@@ -19,9 +19,11 @@ class Accommodation(models.Model):
     price_per_night = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='قیمت هر شب')
     capacity = models.PositiveIntegerField(verbose_name='ظرفیت')
     is_available = models.BooleanField(default=True, verbose_name='موجود')
-    reserved_by = models.ManyToManyField(
+    reserved_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         blank=True,
+        null=True,
         related_name='reserved_accommodations',
         verbose_name='رزرو شده توسط'
     )
