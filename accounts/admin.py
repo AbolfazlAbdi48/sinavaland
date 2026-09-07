@@ -71,3 +71,5 @@ class OTPAdmin(admin.ModelAdmin):
     list_display = ['user', 'code', 'is_used']
     list_filter = ['is_used']
     search_fields = ['user__phone_number']
+
+    ordering = ('-created_at',)
