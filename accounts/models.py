@@ -23,6 +23,7 @@ class OTP(models.Model):
     )
     code = models.CharField(max_length=6)
     is_used = models.BooleanField(default=False)
+    expires_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
     class Meta:

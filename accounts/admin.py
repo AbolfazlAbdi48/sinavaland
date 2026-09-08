@@ -68,7 +68,7 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(OTP)
 class OTPAdmin(admin.ModelAdmin):
-    list_display = ['user', 'code', 'is_used']
+    list_display = ['user', 'code', 'is_used', 'expires_at']
     list_filter = ['is_used']
     search_fields = ['user__phone_number']
 

@@ -3,29 +3,29 @@
 {% block title %}ورود - سینوالند{% endblock %}
 
 {% block extra_css %}
-.auth-container {
+    .auth-container {
     min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-}
+    }
 
-.auth-box {
+    .auth-box {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 40px;
     width: 100%;
     max-width: 450px;
-}
+    }
 
-.auth-logo {
+    .auth-logo {
     text-align: center;
     margin-bottom: 28px;
-}
+    }
 
-.auth-logo-icon {
+    .auth-logo-icon {
     width: 56px;
     height: 56px;
     border-radius: 14px;
@@ -33,40 +33,40 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
-}
+    }
 
-.auth-box h1 {
+    .auth-box h1 {
     text-align: center;
     color: var(--fg);
     margin-bottom: 6px;
     font-size: 1.75rem;
-}
+    }
 
-.auth-subtitle {
+    .auth-subtitle {
     text-align: center;
     color: var(--muted-fg);
     margin-bottom: 28px;
     font-size: .9rem;
-}
+    }
 
-.messages { margin-bottom: 20px; }
+    .messages { margin-bottom: 20px; }
 
-.alert {
+    .alert {
     padding: 10px 14px;
     border-radius: var(--radius);
     font-size: .875rem;
     margin-bottom: 8px;
-}
+    }
 
-.alert-success  { background: #d1fae5; color: #065f46; }
-.alert-error    { background: #fee2e2; color: #991b1b; }
-.alert-warning  { background: #fef3c7; color: #92400e; }
+    .alert-success  { background: #d1fae5; color: #065f46; }
+    .alert-error    { background: #fee2e2; color: #991b1b; }
+    .alert-warning  { background: #fef3c7; color: #92400e; }
 
-.auth-form { margin-bottom: 24px; }
+    .auth-form { margin-bottom: 24px; }
 
-.form-group { margin-bottom: 18px; }
+    .form-group { margin-bottom: 18px; }
 
-.form-group label {
+    .form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
@@ -74,9 +74,9 @@
     color: var(--muted-fg);
     text-transform: uppercase;
     letter-spacing: .03em;
-}
+    }
 
-.form-group input {
+    .form-group input {
     width: 100%;
     padding: 11px 14px;
     border: 1px solid var(--input);
@@ -86,39 +86,39 @@
     font-size: .95rem;
     transition: border-color .2s;
     box-sizing: border-box;
-}
+    }
 
-.form-group input:focus {
+    .form-group input:focus {
     outline: none;
     border-color: var(--amber);
-}
+    }
 
-.form-options {
+    .form-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 22px;
-}
+    }
 
-.checkbox-label {
+    .checkbox-label {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
     color: var(--muted-fg);
     font-size: .875rem;
-}
+    }
 
-.forgot-link {
+    .forgot-link {
     color: var(--amber);
     text-decoration: none;
     font-size: .875rem;
     font-weight: 600;
-}
+    }
 
-.forgot-link:hover { text-decoration: underline; }
+    .forgot-link:hover { text-decoration: underline; }
 
-.btn-submit {
+    .btn-submit {
     width: 100%;
     padding: 13px;
     font-size: 1rem;
@@ -126,76 +126,126 @@
     border: none;
     cursor: pointer;
     justify-content: center;
-}
+    }
 
-.auth-footer {
+    .auth-footer {
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid var(--border);
     color: var(--muted-fg);
     font-size: .875rem;
-}
+    }
 
-.auth-footer a {
+    .auth-footer a {
     color: var(--amber);
     text-decoration: none;
     font-weight: 700;
-}
+    }
 
-.auth-footer a:hover { text-decoration: underline; }
+    .auth-footer a:hover { text-decoration: underline; }
+
+    .send-code {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    transition: transform .2s
+    }
+
+    .alert-message {
+    font-size: 12px;
+    color: red;
+    }
+
+    .code-input {
+    display: flex;
+    gap: 0.2rem;
+    }
 {% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-box industrial-shadow">
+    <div class="auth-container">
+        <div class="auth-box industrial-shadow">
 
-        <div class="auth-logo">
-            <div class="auth-logo-icon gradient-industrial">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                </svg>
-            </div>
-            <h1>ورود به حساب کاربری</h1>
-            <p class="auth-subtitle">به سینوالند خوش آمدید</p>
-        </div>
-
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <form method="post" class="auth-form">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="username">نام کاربری</label>
-                <input type="text" id="username" name="username" required
-                       placeholder="نام کاربری خود را وارد کنید">
+            <div class="auth-logo">
+                <div class="auth-logo-icon gradient-industrial">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <h1>ورود به حساب کاربری</h1>
+                <p class="auth-subtitle">به سینوالند خوش آمدید</p>
             </div>
 
-            <div class="form-group">
-                <label for="password">رمز عبور</label>
-                <input type="password" id="password" name="password" required
-                       placeholder="رمز عبور خود را وارد کنید">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="phone_number">شماره موبایل</label>
+                    <input type="text" id="phone_number" name="phone_number" required
+                           placeholder="شماره موبایل خود را وارد کنید">
+                    <span class="alert-message alert-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="code">کد تایید</label>
+                    <div class="code-input">
+                        <input type="text" id="code" name="code" required
+                               placeholder="کد تایید خود را وارد کنید">
+                        <button type="button" class="send-code gradient-industrial">دریافت کد</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-amber gradient-amber btn-submit">ورود</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>حساب کاربری ندارید؟ <a href="{% url 'accounts:register' %}">ثبت‌نام کنید</a></p>
             </div>
-
-            <div class="form-options">
-                <label class="checkbox-label">
-                    <input type="checkbox" name="remember_me">
-                    <span>مرا به خاطر بسپار</span>
-                </label>
-                <a href="#" class="forgot-link">فراموشی رمز عبور؟</a>
-            </div>
-
-            <button type="submit" class="btn-amber gradient-amber btn-submit">ورود</button>
-        </form>
-
-        <div class="auth-footer">
-            <p>حساب کاربری ندارید؟ <a href="{% url 'accounts:register' %}">ثبت‌نام کنید</a></p>
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const button = document.querySelector('.send-code');
+        const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
+        const alertBox = document.querySelector('.alert-message')
+
+        button.addEventListener("click", async () => {
+            const phoneNumber = document.querySelector('[name="phone_number"]').value;
+
+            const response = await fetch("/accounts/request-otp/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrfToken,
+                },
+                body: new URLSearchParams({
+                    phone_number: phoneNumber,
+                }),
+            });
+
+            const data = await response.json();
+            alertBox.textContent = ''
+
+            if (!response.ok) {
+                alertBox.textContent = data.error;
+            }
+        });
+    </script>
 {% endblock %}
