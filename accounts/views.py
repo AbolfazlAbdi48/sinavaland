@@ -128,9 +128,14 @@ def request_otp(request):
     if last_otp:
         elapsed = timezone.now() - last_otp.created_at
 
-        if elapsed < timedelta(minutes=1):
+        if elapsed < timedelta(minutes=2):
+            remaining = 120 - int(elapsed.total_seconds())
+
             return JsonResponse(
-                {"error": 'لطفاً 60 ثانیه صبر کنید و دوباره تلاش کنید.'},
+                {
+                    "error": 'لطفاً کمی صبر کنید.',
+                    "retry_after": max(remaining, 1),
+                },
                 status=429,
             )
 
@@ -138,4 +143,5 @@ def request_otp(request):
 
     return JsonResponse({
         "message": "کد تایید ارسال شد.",
+        "retry_after": 120,
     })

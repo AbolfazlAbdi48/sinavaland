@@ -210,7 +210,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-amber gradient-amber btn-submit">ورود</button>
+                <button type="submit" id="send-otp-btn" class="btn-amber gradient-amber btn-submit">ورود</button>
             </form>
 
             <div class="auth-footer">
@@ -223,11 +223,19 @@
 {% block extra_js %}
     <script>
         const button = document.querySelector('.send-code');
-        const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
-        const alertBox = document.querySelector('.alert-message')
+        const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+        const alertBox = document.querySelector('.alert-message');
 
         button.addEventListener("click", async () => {
             const phoneNumber = document.querySelector('[name="phone_number"]').value;
+
+            if (!phoneNumber) {
+                alertBox.textContent = 'لطفاً شماره موبایل را وارد کنید.';
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = 'در حال ارسال...';
 
             const response = await fetch("/accounts/request-otp/", {
                 method: "POST",
@@ -241,11 +249,42 @@
             });
 
             const data = await response.json();
-            alertBox.textContent = ''
+
+            alertBox.textContent = '';
 
             if (!response.ok) {
                 alertBox.textContent = data.error;
+
+                button.disabled = false;
+                button.textContent = 'دریافت کد';
+
+                return;
             }
+
+            startTimer(data.retry_after);
         });
+
+
+        function startTimer(seconds) {
+            let remaining = seconds;
+
+            button.disabled = true;
+            button.textContent = `ارسال مجدد (${remaining})`;
+
+            const timer = setInterval(() => {
+                remaining--;
+
+                if (remaining <= 0) {
+                    clearInterval(timer);
+
+                    button.disabled = false;
+                    button.textContent = 'دریافت کد';
+
+                    return;
+                }
+
+                button.textContent = `ارسال مجدد (${remaining})`;
+            }, 1000);
+        }
     </script>
 {% endblock %}
