@@ -166,6 +166,12 @@
     display: flex;
     gap: 0.2rem;
     }
+
+    .btn-disabled {
+    background: var(--muted);
+    color: var(--steel);
+    cursor: not-allowed;
+    }
 {% endblock %}
 
 {% block content %}
@@ -270,6 +276,7 @@
 
             button.disabled = true;
             button.textContent = `ارسال مجدد (${remaining})`;
+            button.classList.add('btn-disabled')
 
             const timer = setInterval(() => {
                 remaining--;
