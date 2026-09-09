@@ -108,124 +108,199 @@
 
     <!-- PAGE: Landing -->
     <div id="page-landing" class="page-wrapper">
-    <main style="padding-top:64px">
+        <main style="padding-top:64px">
 
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-bg">
-                <img src="{% static 'sinavaland.jpg' %}" alt="صنعت ماشین‌آلات"/>
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-bg">
+                    <img src="{% static 'sinavaland.jpg' %}" alt="صنعت ماشین‌آلات"/>
+                    <div class="overlay gradient-industrial"></div>
+                </div>
+                <div class="container hero-content animate-fade-in-up">
+                    <h1>سینوا، <span class="text-gradient-amber">سوئیس مازندران</span></h1>
+                    <p>یادتونه آخرین باری که زیر سایه درختای جنگل، بوی خاک خیس و دریا رو حس کردید؟ سینوالند طعم و بوی
+                        اصیل مازندران رو مستقیم
+                        از دست هنرمندان محلی به خونه شما میاره. حصیرهای دست‌باف، ترشی‌های سنتی، برنج معطر و کلوچه‌هایی
+                        که مثل دست مادربزرگ‌هامون
+                        طعم خاطره دارن.</p>
+                    <div class="hero-btns">
+                        <a href="#about" class="btn-amber gradient-amber">درباره سینوالند
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video -->
+            <section class="video-section" id="about">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>درباره سینوالند</h2>
+                        <p>با سینوالند دیگه نیازی نیست برای تجربه اصالت شمال، ساعت‌ها راه برید.</p>
+                    </div>
+                    <div class="video-container industrial-shadow">
+                        <img src="{% static 'sinavaland.jpg' %}" alt="معرفی پلتفرم ماشین‌یار"/>
+                        <div class="video-overlay"></div>
+                        <div class="play-btn gradient-amber">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="#2d3548" stroke="none">
+                                <polygon points="10,8 16,12 10,16"/>
+                            </svg>
+                        </div>
+                        <div class="video-bottom">
+                            <p>معرفی سینوا</p>
+                            <p>مدت زمان: ۳ دقیقه</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="stats">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item animate-count-up">
+                            <div class="stat-number">۲,۵۰۰+</div>
+                            <div class="stat-label">تولیدکننده صنایع دستی</div>
+                        </div>
+                        <div class="stat-item animate-count-up">
+                            <div class="stat-number">۱,۰۰۰+</div>
+                            <div class="stat-label">محصول ارگانیک و طبیعی</div>
+                        </div>
+                        <div class="stat-item animate-count-up">
+                            <div class="stat-number">۸۵+</div>
+                            <div class="stat-label">اقامتگاه</div>
+                        </div>
+                        <div class="stat-item animate-count-up">
+                            <div class="stat-number">۹+</div>
+                            <div class="stat-label">تور سینوالند</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CNC Image+Text -->
+            <section class="img-text-section" style="background:var(--bg)" id="home">
+                <div class="container">
+                    <div class="img-text-grid">
+                        <div class="img-block industrial-shadow"><img src="{% static 'homemain.jpg' %}"
+                                                                      alt="ماشین‌کاری CNC"/>
+                        </div>
+                        <div class="text-block">
+                            <div class="icon-box gradient-amber">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
+                                     stroke-width="2">
+                                    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+                                </svg>
+                            </div>
+                            <h2>رزرو اقامتگاه</h2>
+                            <p>تجربه اصیل اقامت در مازندران با سینوالند</p>
+                            <ul class="check-list">
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    اقامت در منطقه ای اصیل و پر از آرامش
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    دسترسی راحت از طریق اتوبان تهران شمال
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    فول پکیج امکانات رفاهی
+                                </li>
+                            </ul>
+                            <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
+                               style="margin-top: 30px;">رزرو
+                                اقامتگاه
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Team Image+Text (reversed) -->
+            <section class="img-text-section" style="background:var(--muted)" id="tour">
+                <div class="container">
+                    <div class="img-text-grid">
+                        <div class="img-block industrial-shadow" style="order:1"><img src="{% static 'tour.png' %}"
+                                                                                      alt="تیم مهندسین"/></div>
+                        <div class="text-block" style="order:2">
+                            <div class="icon-box gradient-industrial">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                                </svg>
+                            </div>
+                            <h2>تور آرامش سینوا</h2>
+                            <p>تور های مازندران سینوالند، خاص، متفاوت و پر از آرامش...</p>
+                            <ul class="check-list">
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    تور آرامش سینوالند
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    خاص و متفاوت
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    رویایی و خاطره ساز
+                                </li>
+                            </ul>
+                            <a href="{% url 'tours:list' %}" class="btn-amber gradient-amber" style="margin-top: 30px;">رزرو
+                                تور آرامش
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Full-width Banner -->
+            <section class="full-banner">
+                <img src="{% static 'umag-savadkuh-attractions.webp' %}" alt="انبار ماشین‌آلات"/>
                 <div class="overlay gradient-industrial"></div>
-            </div>
-            <div class="container hero-content animate-fade-in-up">
-                <h1>سینوا، <span class="text-gradient-amber">سوئیس مازندران</span></h1>
-                <p>یادتونه آخرین باری که زیر سایه درختای جنگل، بوی خاک خیس و دریا رو حس کردید؟ سینوالند طعم و بوی
-                    اصیل مازندران رو مستقیم
-                    از دست هنرمندان محلی به خونه شما میاره. حصیرهای دست‌باف، ترشی‌های سنتی، برنج معطر و کلوچه‌هایی
-                    که مثل دست مادربزرگ‌هامون
-                    طعم خاطره دارن.</p>
-                <div class="hero-btns">
-                    <a href="#about" class="btn-amber gradient-amber">درباره سینوالند
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Video -->
-        <section class="video-section" id="about">
-            <div class="container">
-                <div class="section-header">
-                    <h2>درباره سینوالند</h2>
-                    <p>با سینوالند دیگه نیازی نیست برای تجربه اصالت شمال، ساعت‌ها راه برید.</p>
-                </div>
-                <div class="video-container industrial-shadow">
-                    <img src="{% static 'sinavaland.jpg' %}" alt="معرفی پلتفرم ماشین‌یار"/>
-                    <div class="video-overlay"></div>
-                    <div class="play-btn gradient-amber">
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="#2d3548" stroke="none">
-                            <polygon points="10,8 16,12 10,16"/>
-                        </svg>
-                    </div>
-                    <div class="video-bottom">
-                        <p>معرفی سینوا</p>
-                        <p>مدت زمان: ۳ دقیقه</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <section class="stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item animate-count-up">
-                        <div class="stat-number">۲,۵۰۰+</div>
-                        <div class="stat-label">تولیدکننده صنایع دستی</div>
-                    </div>
-                    <div class="stat-item animate-count-up">
-                        <div class="stat-number">۱,۰۰۰+</div>
-                        <div class="stat-label">محصول ارگانیک و طبیعی</div>
-                    </div>
-                    <div class="stat-item animate-count-up">
-                        <div class="stat-number">۸۵+</div>
-                        <div class="stat-label">اقامتگاه</div>
-                    </div>
-                    <div class="stat-item animate-count-up">
-                        <div class="stat-number">۹+</div>
-                        <div class="stat-label">تور سینوالند</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CNC Image+Text -->
-        <section class="img-text-section" style="background:var(--bg)" id="home">
-            <div class="container">
-                <div class="img-text-grid">
-                    <div class="img-block industrial-shadow"><img src="{% static 'homemain.jpg' %}"
-                                                                  alt="ماشین‌کاری CNC"/>
-                    </div>
-                    <div class="text-block">
-                        <div class="icon-box gradient-amber">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
-                                 stroke-width="2">
-                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
-                            </svg>
-                        </div>
-                        <h2>رزرو اقامتگاه</h2>
-                        <p>تجربه اصیل اقامت در مازندران با سینوالند</p>
-                        <ul class="check-list">
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                اقامت در منطقه ای اصیل و پر از آرامش
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                دسترسی راحت از طریق اتوبان تهران شمال
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                فول پکیج امکانات رفاهی
-                            </li>
-                        </ul>
-                        <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
-                           style="margin-top: 30px;">رزرو
-                            اقامتگاه
+                <div class="banner-content">
+                    <div class="inner">
+                        <h3>عضویت در باشگاه طلایی</h3>
+                        <a href="tel:09125866638" class="btn-amber gradient-amber" style="margin-top: 30px;">عضویت در
+                            باشگاه(به زودی)
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
                                 <path d="M15 18l-6-6 6-6"/>
@@ -233,186 +308,112 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-
-        <!-- Team Image+Text (reversed) -->
-        <section class="img-text-section" style="background:var(--muted)" id="tour">
-            <div class="container">
-                <div class="img-text-grid">
-                    <div class="img-block industrial-shadow" style="order:1"><img src="{% static 'tour.png' %}"
-                                                                                  alt="تیم مهندسین"/></div>
-                    <div class="text-block" style="order:2">
-                        <div class="icon-box gradient-industrial">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                            </svg>
+            <!-- Services -->
+            <section class="services-section" id="market">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>بازارچه سینوالند</h2>
+                        <p>اصالت مازندران، در هر سفارشی که می‌دهید
+                        </p>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-card industrial-shadow">
+                            <div class="s-icon gradient-industrial">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2">
+                                    <path
+                                            d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+                                </svg>
+                            </div>
+                            <h3>محصولات ارگانیک و طبیعی</h3>
+                            <p>مجموعه ای از خوراکی های محلی که با عشق درست شده اند</p>
                         </div>
-                        <h2>تور آرامش سینوا</h2>
-                        <p>تور های مازندران سینوالند، خاص، متفاوت و پر از آرامش...</p>
-                        <ul class="check-list">
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
+                        <div class="service-card industrial-shadow">
+                            <div class="s-icon gradient-industrial">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2">
+                                    <path
+                                            d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
                                 </svg>
-                                تور آرامش سینوالند
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                خاص و متفاوت
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                رویایی و خاطره ساز
-                            </li>
-                        </ul>
-                        <a href="{% url 'tours:list' %}" class="btn-amber gradient-amber" style="margin-top: 30px;">رزرو
-                            تور آرامش
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Full-width Banner -->
-        <section class="full-banner">
-            <img src="{% static 'umag-savadkuh-attractions.webp' %}" alt="انبار ماشین‌آلات"/>
-            <div class="overlay gradient-industrial"></div>
-            <div class="banner-content">
-                <div class="inner">
-                    <h3>عضویت در باشگاه طلایی</h3>
-                    <a href="tel:09125866638" class="btn-amber gradient-amber" style="margin-top: 30px;">عضویت در
-                        باشگاه(به زودی)
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services -->
-        <section class="services-section" id="market">
-            <div class="container">
-                <div class="section-header">
-                    <h2>بازارچه سینوالند</h2>
-                    <p>اصالت مازندران، در هر سفارشی که می‌دهید
-                    </p>
-                </div>
-                <div class="services-grid">
-                    <div class="service-card industrial-shadow">
-                        <div class="s-icon gradient-industrial">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2">
-                                <path
-                                        d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                                <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
-                            </svg>
+                            </div>
+                            <h3>صنایع دستی</h3>
+                            <p>صنایع دستی مازندران برای خانه‌هایی که به اصالت اهمیت می‌دهند</p>
                         </div>
-                        <h3>محصولات ارگانیک و طبیعی</h3>
-                        <p>مجموعه ای از خوراکی های محلی که با عشق درست شده اند</p>
-                    </div>
-                    <div class="service-card industrial-shadow">
-                        <div class="s-icon gradient-industrial">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2">
-                                <path
-                                        d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                                <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
-                            </svg>
-                        </div>
-                        <h3>صنایع دستی</h3>
-                        <p>صنایع دستی مازندران برای خانه‌هایی که به اصالت اهمیت می‌دهند</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Automation Image+Text -->
-        <section class="img-text-section" style="background:var(--bg)">
-            <div class="container">
-                <div class="img-text-grid">
-                    <div class="img-block industrial-shadow"><img src="{% static 'prmain.jpg' %}"
-                                                                  alt="خط تولید اتوماتیک"/>
-                    </div>
-                    <div class="text-block">
-                        <div class="icon-box gradient-amber">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
-                                 stroke-width="2">
-                                <path d="M12 20V10M18 20V4M6 20v-4"/>
-                            </svg>
+            <!-- Automation Image+Text -->
+            <section class="img-text-section" style="background:var(--bg)">
+                <div class="container">
+                    <div class="img-text-grid">
+                        <div class="img-block industrial-shadow"><img src="{% static 'prmain.jpg' %}"
+                                                                      alt="خط تولید اتوماتیک"/>
                         </div>
-                        <h2>محصولات ارگانیک و خاص سینوا</h2>
-                        <p>محصولاتی که برای سلامت شما فرآوری شده اند</p>
-                        <ul class="check-list">
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
+                        <div class="text-block">
+                            <div class="icon-box gradient-amber">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
+                                     stroke-width="2">
+                                    <path d="M12 20V10M18 20V4M6 20v-4"/>
                                 </svg>
-                                انواع مربا و خوراکی های میوه ای.
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
+                            </div>
+                            <h2>محصولات ارگانیک و خاص سینوا</h2>
+                            <p>محصولاتی که برای سلامت شما فرآوری شده اند</p>
+                            <ul class="check-list">
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    انواع مربا و خوراکی های میوه ای.
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    میوه های خاص و ارگانیک مازندران.
+                                </li>
+                                <li>
+                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="#f59e0b" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                        <path d="M22 4L12 14.01l-3-3"/>
+                                    </svg>
+                                    زیتون، روغن زیتون، صابون زیتون و ... ارگانیک و بدون مواد شیمیایی.
+                                </li>
+                            </ul>
+                            <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
+                               style="margin-top: 30px;">ارتباط
+                                با واحد بازارچه
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
                                 </svg>
-                                میوه های خاص و ارگانیک مازندران.
-                            </li>
-                            <li>
-                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                     stroke="#f59e0b" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                    <path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                زیتون، روغن زیتون، صابون زیتون و ... ارگانیک و بدون مواد شیمیایی.
-                            </li>
-                        </ul>
-                        <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
-                           style="margin-top: 30px;">ارتباط
-                            با واحد بازارچه
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- How it works -->
-        <section class="steps-section">
-            <div class="steps-bg">
-                <img src="{% static 'gears-detail.jpg' %}" alt="چرخ‌دنده"/>
-                <div class="overlay"></div>
-            </div>
-            <div class="container" style="position:relative;z-index:10">
-                <div class="section-header">
-                    <h2>وبلاگ</h2>
+            <!-- How it works -->
+            <section class="steps-section">
+                <div class="steps-bg">
+                    <img src="{% static 'gears-detail.jpg' %}" alt="چرخ‌دنده"/>
+                    <div class="overlay"></div>
                 </div>
                 {% if articles %}
+                    <div class="container" style="position:relative;z-index:10">
+                    <div class="section-header">
+                        <h2>وبلاگ</h2>
+                    </div>
+
                     <div class="articles-grid">
                         {% for article in articles %}
                             {% if article.is_published %}
@@ -473,80 +474,26 @@
                     </div>
                 {% endif %}
 
-            </div>
-        </section>
-
-        <!-- Benefits -->
-        <!-- <section class="benefits-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>مزایای کلیدی</h2>
                 </div>
-                <div class="benefits-grid">
-                    <div class="benefit-card industrial-shadow">
-                        <div class="b-icon">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f59e0b"
-                                stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-                            </svg>
-                        </div>
-                        <h3>شبکه گسترده</h3>
-                        <p>دسترسی به هزاران فعال صنعتی</p>
-                    </div>
-                    <div class="benefit-card industrial-shadow">
-                        <div class="b-icon">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f59e0b"
-                                stroke-width="2">
-                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                                <polyline points="17 6 23 6 23 12" />
-                            </svg>
-                        </div>
-                        <h3>رشد کسب‌وکار</h3>
-                        <p>افزایش فروش و بازار هدف</p>
-                    </div>
-                    <div class="benefit-card industrial-shadow">
-                        <div class="b-icon">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f59e0b"
-                                stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
-                        </div>
-                        <h3>امنیت و اعتماد</h3>
-                        <p>تراکنش‌های امن و تأیید شده</p>
-                    </div>
-                    <div class="benefit-card industrial-shadow">
-                        <div class="b-icon">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f59e0b"
-                                stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                                <path d="M22 4L12 14.01l-3-3" />
-                            </svg>
-                        </div>
-                        <h3>کیفیت تضمینی</h3>
-                        <p>بررسی و تأیید اعتبار اعضا</p>
-                    </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta-section" id="call">
+                <div class="cta-bg">
+                    <img src="{% static 'warehouse-machinery.jpg' %}" alt="محیط صنعتی"/>
+                    <div class="overlay gradient-industrial"></div>
                 </div>
-            </div>
-        </section> -->
+                <div class="container cta-content">
+                    <h2>همین حالا با سینوالند ارتباط بگیرید</h2>
+                    <a href="tel:09125866638" class="btn-amber gradient-amber">تماس با ما
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
 
-        <!-- CTA -->
-        <section class="cta-section" id="call">
-            <div class="cta-bg">
-                <img src="{% static 'warehouse-machinery.jpg' %}" alt="محیط صنعتی"/>
-                <div class="overlay gradient-industrial"></div>
-            </div>
-            <div class="container cta-content">
-                <h2>همین حالا با سینوالند ارتباط بگیرید</h2>
-                <a href="tel:09125866638" class="btn-amber gradient-amber">تماس با ما
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </a>
-            </div>
-        </section>
-
-    </main>
+        </main>
+    </div>
 {% endblock %}
