@@ -4,10 +4,10 @@ from .models import Accommodation, AccommodationImage
 
 @admin.register(Accommodation)
 class AccommodationAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'location', 'price_per_night', 'capacity', 'is_available',
+    list_display = ['code', 'title', 'category', 'location', 'price_per_night', 'capacity', 'is_available',
                     'reserved_by']
     list_filter = ['category', 'is_available', 'created_at']
-    search_fields = ['title', 'location', 'description']
+    search_fields = ['code', 'title', 'location', 'description']
     prepopulated_fields = {'slug': ('title',)}
 
 

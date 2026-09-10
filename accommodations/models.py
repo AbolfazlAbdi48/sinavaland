@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
+from .utils import generate_accommodation_code
 
 
 class Accommodation(models.Model):
@@ -11,6 +12,13 @@ class Accommodation(models.Model):
         ('ecolodge', 'بومگردی'),
     ]
 
+    code = models.CharField(
+        max_length=16,
+        unique=True,
+        blank=True,
+        editable=False,
+        verbose_name='کد اقامتگاه'
+    )
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(unique=True, allow_unicode=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name='دسته‌بندی')
@@ -36,12 +44,17 @@ class Accommodation(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.title
+        return self.code
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
+
         super().save(*args, **kwargs)
+
+        if not self.code:
+            self.code = generate_accommodation_code(self.pk)
+            super().save(update_fields=['code'])
 
     # ── aliases so templates can use .name and .available ──
     @property
