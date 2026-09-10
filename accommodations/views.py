@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Accommodation
+from accounts.sms_service import send_order_sms
+from decouple import config
 
 
 def accommodation_list(request):
@@ -56,6 +58,12 @@ def reserve_accommodation(request, slug):
         accommodation.save()
 
         messages.success(request, f'اقامتگاه "{accommodation.title}" رزرو شد.')
+        send_order_sms(
+            phone_number=config('MANAGER_PHONE_NUMBER'),
+            order_number=accommodation.code,
+            full_name=f"{request.user.first_name} {request.user.last_name}",
+            phone=request.user.phone_number
+        )
 
     return redirect('accommodations:detail', slug=slug)
 
