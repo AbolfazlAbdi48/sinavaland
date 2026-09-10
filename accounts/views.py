@@ -15,6 +15,8 @@ from .otp_service import send_otp
 def register(request):
     """ثبت‌نام"""
     if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
@@ -24,6 +26,8 @@ def register(request):
             return redirect('accounts:register')
 
         user = User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
             username=username,
             password=password
         )
