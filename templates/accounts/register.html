@@ -3,29 +3,29 @@
 {% block title %}ثبت‌نام - سیناوالند{% endblock %}
 
 {% block extra_css %}
-.auth-container {
+    .auth-container {
     min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-}
+    }
 
-.auth-box {
+    .auth-box {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 40px;
     width: 100%;
     max-width: 550px;
-}
+    }
 
-.auth-logo {
+    .auth-logo {
     text-align: center;
     margin-bottom: 28px;
-}
+    }
 
-.auth-logo-icon {
+    .auth-logo-icon {
     width: 56px;
     height: 56px;
     border-radius: 14px;
@@ -33,46 +33,46 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
-}
+    }
 
-.auth-box h1 {
+    .auth-box h1 {
     text-align: center;
     color: var(--fg);
     margin-bottom: 6px;
     font-size: 1.75rem;
-}
+    }
 
-.auth-subtitle {
+    .auth-subtitle {
     text-align: center;
     color: var(--muted-fg);
     margin-bottom: 28px;
     font-size: .9rem;
-}
+    }
 
-.messages { margin-bottom: 20px; }
+    .messages { margin-bottom: 20px; }
 
-.alert {
+    .alert {
     padding: 10px 14px;
     border-radius: var(--radius);
     font-size: .875rem;
     margin-bottom: 8px;
-}
+    }
 
-.alert-success  { background: #d1fae5; color: #065f46; }
-.alert-error    { background: #fee2e2; color: #991b1b; }
-.alert-warning  { background: #fef3c7; color: #92400e; }
+    .alert-success  { background: #d1fae5; color: #065f46; }
+    .alert-error    { background: #fee2e2; color: #991b1b; }
+    .alert-warning  { background: #fef3c7; color: #92400e; }
 
-.auth-form { margin-bottom: 24px; }
+    .auth-form { margin-bottom: 24px; }
 
-.form-row {
+    .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-}
+    }
 
-.form-group { margin-bottom: 18px; }
+    .form-group { margin-bottom: 18px; }
 
-.form-group label {
+    .form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
@@ -80,9 +80,9 @@
     color: var(--muted-fg);
     text-transform: uppercase;
     letter-spacing: .03em;
-}
+    }
 
-.form-group input {
+    .form-group input {
     width: 100%;
     padding: 11px 14px;
     border: 1px solid var(--input);
@@ -92,25 +92,25 @@
     font-size: .95rem;
     transition: border-color .2s;
     box-sizing: border-box;
-}
+    }
 
-.form-group input:focus {
+    .form-group input:focus {
     outline: none;
     border-color: var(--amber);
-}
+    }
 
-.checkbox-label {
+    .checkbox-label {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
     color: var(--muted-fg);
     font-size: .875rem;
-}
+    }
 
-.checkbox-label input { cursor: pointer; width: auto; }
+    .checkbox-label input { cursor: pointer; width: auto; }
 
-.btn-submit {
+    .btn-submit {
     width: 100%;
     padding: 13px;
     font-size: 1rem;
@@ -118,82 +118,94 @@
     border: none;
     cursor: pointer;
     justify-content: center;
-}
+    }
 
-.auth-footer {
+    .auth-footer {
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid var(--border);
     color: var(--muted-fg);
     font-size: .875rem;
-}
+    }
 
-.auth-footer a {
+    .auth-footer a {
     color: var(--amber);
     text-decoration: none;
     font-weight: 700;
-}
+    }
 
-.auth-footer a:hover { text-decoration: underline; }
+    .auth-footer a:hover { text-decoration: underline; }
 
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
     .form-row { grid-template-columns: 1fr; }
     .auth-box { padding: 30px 20px; }
-}
+    }
 {% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-box industrial-shadow">
+    <div class="auth-container">
+        <div class="auth-box industrial-shadow">
 
-        <div class="auth-logo">
-            <div class="auth-logo-icon gradient-amber">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2d3548" stroke-width="2">
-                    <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <line x1="19" y1="8" x2="19" y2="14"/>
-                    <line x1="22" y1="11" x2="16" y2="11"/>
-                </svg>
-            </div>
-            <h1>ثبت‌نام</h1>
-            <p class="auth-subtitle">حساب کاربری جدید ایجاد کنید</p>
-        </div>
-
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <form method="post" class="auth-form">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="username">نام کاربری</label>
-                <input type="text" id="username" name="username" required
-                       placeholder="نام کاربری منحصر به فرد">
+            <div class="auth-logo">
+                <div class="auth-logo-icon gradient-amber">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2d3548" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <line x1="19" y1="8" x2="19" y2="14"/>
+                        <line x1="22" y1="11" x2="16" y2="11"/>
+                    </svg>
+                </div>
+                <h1>ثبت‌نام</h1>
+                <p class="auth-subtitle">حساب کاربری جدید ایجاد کنید</p>
             </div>
 
-            <div class="form-group">
-                <label for="phone_number">شماره تماس</label>
-                <input type="tel" id="phone_number" name="phone_number" required
-                       placeholder="به انگلیسی">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="first_name">نام</label>
+                    <input type="text" id="first_name" name="first_name" required
+                           placeholder="نام">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">نام خانوادگی</label>
+                    <input type="text" id="last_name" name="last_name" required
+                           placeholder="نام خانوادگی">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">نام کاربری</label>
+                    <input type="text" id="username" name="username" required
+                           placeholder="نام کاربری منحصر به فرد">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">شماره تماس</label>
+                    <input type="tel" id="phone_number" name="phone_number" required
+                           placeholder="به انگلیسی">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">رمز عبور</label>
+                    <input type="password" id="password" name="password" required
+                           placeholder="password">
+                </div>
+
+                <button type="submit" class="btn-amber gradient-amber btn-submit">ثبت‌نام</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>قبلاً ثبت‌نام کرده‌اید؟ <a href="{% url 'accounts:login' %}">وارد شوید</a></p>
             </div>
-
-            <div class="form-group">
-                <label for="password">رمز عبور</label>
-                <input type="password" id="password" name="password" required
-                       placeholder="password">
-            </div>
-
-            <button type="submit" class="btn-amber gradient-amber btn-submit">ثبت‌نام</button>
-        </form>
-
-        <div class="auth-footer">
-            <p>قبلاً ثبت‌نام کرده‌اید؟ <a href="{% url 'accounts:login' %}">وارد شوید</a></p>
         </div>
     </div>
-</div>
 {% endblock %}
