@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from django.core.exceptions import ValidationError
+from django.db.models import Model
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
@@ -25,7 +27,7 @@ def register(request):
             messages.error(request, 'این نام کاربری قبلاً استفاده شده است.')
             return redirect('accounts:register')
 
-        user = User.objects.create_user(
+        user = User(
             first_name=first_name,
             last_name=last_name,
             username=username,
@@ -34,7 +36,17 @@ def register(request):
 
         if phone_number:
             user.phone_number = phone_number
-            user.save()
+
+        user.set_password(password)
+
+        try:
+            user.full_clean()
+        except ValidationError as e:
+            for message in e.messages:
+                messages.error(request, message)
+            return render(request, 'accounts/register.html')
+
+        user.save()
 
         login(request, user)
         messages.success(request, 'ثبت‌نام با موفقیت انجام شد.')

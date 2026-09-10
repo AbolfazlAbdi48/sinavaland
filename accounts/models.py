@@ -1,9 +1,15 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import RegexValidator
+
+phone_validator = RegexValidator(
+    regex=r'^09\d{9}$',
+    message='شماره موبایل معتبر وارد کنید.'
+)
 
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
+    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True, validators=[phone_validator])
     is_golden = models.BooleanField(default=False, verbose_name='اشتراک طلایی')
     golden_expiry = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ انقضای طلایی')
 
