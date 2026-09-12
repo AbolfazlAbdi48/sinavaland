@@ -1,9 +1,9 @@
 from datetime import timedelta
 
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,28 +11,34 @@ from django.utils import timezone
 
 from .models import User, OTP
 from .otp_service import send_otp
+from .utils import get_safe_redirect_url
 
 
 @login_required
 def complete_profile(request):
     """ثبت‌نام"""
+
+    next_url = request.GET.get('next') or request.POST.get('next')
+
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
 
-        user = User.objects.filter(phone_number=request.user.phone_number).first()
+        request.user.first_name = first_name
+        request.user.last_name = last_name
+        request.user.save(update_fields=['first_name', 'last_name'])
 
-        if not user:
-            messages.error(request, 'کاربری با این شماره موبایل ثبت نشده است.')
-            return redirect('accounts:login')
+        next_url = get_safe_redirect_url(request, next_url)
 
-        user.first_name, user.last_name = first_name, last_name
-        user.save(update_fields=['first_name', 'last_name'])
+        if next_url:
+            return redirect(next_url)
 
-        messages.success(request, 'ثبت‌نام با موفقیت انجام شد.')
         return redirect('core:home')
 
-    return render(request, 'accounts/complete_profile.html')
+    return render(
+        request,
+        'accounts/complete_profile.html'
+    )
 
 
 def user_login(request):
@@ -40,6 +46,7 @@ def user_login(request):
     if request.method == 'POST':
         phone_number = request.POST.get('phone_number')
         code = request.POST.get('code')
+        next_url = request.POST.get('next')
 
         if not phone_number or not code:
             messages.error(
@@ -76,7 +83,17 @@ def user_login(request):
         login(request, user)
 
         if not user.first_name or not user.last_name:
+            if next_url:
+                return redirect(
+                    f'{reverse("accounts:complete-profile")}?next={next_url}'
+                )
+
             return redirect('accounts:complete-profile')
+
+        next_url = get_safe_redirect_url(request, next_url)
+
+        if next_url:
+            return redirect(next_url)
 
         messages.success(request, 'خوش آمدید!')
         return redirect('core:home')

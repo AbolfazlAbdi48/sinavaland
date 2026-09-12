@@ -184,7 +184,7 @@
                         <line x1="22" y1="11" x2="16" y2="11"/>
                     </svg>
                 </div>
-               <h1>ورود به حساب کاربری</h1>
+                <h1>ورود به حساب کاربری</h1>
                 <p class="auth-subtitle">به سینوالند خوش آمدید</p>
             </div>
 
@@ -198,6 +198,12 @@
 
             <form method="post" class="auth-form">
                 {% csrf_token %}
+
+                <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.GET.next }}"
+                >
 
                 <div class="form-group">
                     <label for="first_name">نام</label>

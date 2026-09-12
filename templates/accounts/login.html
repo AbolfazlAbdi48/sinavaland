@@ -200,6 +200,12 @@
             <form method="post" class="auth-form">
                 {% csrf_token %}
 
+                <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.GET.next }}"
+                >
+
                 <div class="form-group">
                     <label for="phone_number">شماره موبایل</label>
                     <input type="text" id="phone_number" name="phone_number" required
