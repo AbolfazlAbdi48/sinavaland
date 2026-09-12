@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from django.core.exceptions import ValidationError
-from django.db.models import Model
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
@@ -14,41 +13,22 @@ from .models import User, OTP
 from .otp_service import send_otp
 
 
+@login_required
 def register(request):
     """ثبت‌نام"""
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        phone_number = request.POST.get('phone_number')
-        password = request.POST.get('password')
 
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'این نام کاربری قبلاً استفاده شده است.')
-            return redirect('accounts:register')
+        user = User.objects.filter(phone_number=request.user.phone_number).first()
 
-        user = User(
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            password=password
-        )
+        if not user:
+            messages.error(request, 'کاربری با این شماره موبایل ثبت نشده است.')
+            return redirect('accounts:login')
 
-        if phone_number:
-            user.phone_number = phone_number
+        user.first_name, user.last_name = first_name, last_name
+        user.save(update_fields=['first_name', 'last_name'])
 
-        user.set_password(password)
-
-        try:
-            user.full_clean()
-        except ValidationError as e:
-            for message in e.messages:
-                messages.error(request, message)
-            return render(request, 'accounts/register.html')
-
-        user.save()
-
-        login(request, user)
         messages.success(request, 'ثبت‌نام با موفقیت انجام شد.')
         return redirect('core:home')
 
@@ -69,13 +49,6 @@ def user_login(request):
             return render(request, 'accounts/login.html')
 
         user = User.objects.filter(phone_number=phone_number).first()
-
-        if not user:
-            messages.error(
-                request,
-                'کاربری با این شماره موبایل وجود ندارد.'
-            )
-            return render(request, 'accounts/login.html')
 
         otp = OTP.objects.filter(
             user=user,
@@ -101,6 +74,9 @@ def user_login(request):
         otp.save(update_fields=['is_used'])
 
         login(request, user)
+
+        if not user.first_name or not user.last_name:
+            return redirect('accounts:register')
 
         messages.success(request, 'خوش آمدید!')
         return redirect('core:home')
@@ -131,13 +107,9 @@ def request_otp(request):
             status=400,
         )
 
-    user = User.objects.filter(phone_number=phone_number).first()
-
-    if not user:
-        return JsonResponse(
-            {"error": "کاربری با این شماره موبایل وجود ندارد."},
-            status=404,
-        )
+    user = User.objects.get_or_create(
+        phone_number=phone_number
+    )[0]
 
     last_otp = OTP.objects.filter(user=user).order_by('-created_at').first()
 
@@ -155,9 +127,18 @@ def request_otp(request):
                 status=429,
             )
 
-    send_otp(phone_number, user)
+    success = send_otp(user)
 
-    return JsonResponse({
-        "message": "کد تایید ارسال شد.",
-        "retry_after": 60,
-    })
+    if not success:
+        return JsonResponse(
+            {"error": "ارسال کد تایید با خطا مواجه شد."},
+            status=500,
+        )
+
+    return JsonResponse(
+        {
+            "message": "کد تایید با موفقیت ارسال شد.",
+            "retry_after": 60,
+        },
+        status=200,
+    )

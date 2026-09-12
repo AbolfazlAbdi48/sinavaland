@@ -34,11 +34,14 @@ def send_otp_sms(phone_number, code):
 
         if response.status_code == 200:
             print(f"Successfully sent OTP to {phone_number}. Response: {response.text}")
+            return True
         else:
             print(f"Error sending OTP to {phone_number}. Status: {response.status_code}, Response: {response.text}")
+            return False
 
     except Exception as e:
         print(f"An exception occurred while trying to send SMS: {e}")
+        return False
 
 
 def send_order_sms(phone_number, order_number, full_name, phone):
@@ -72,9 +75,12 @@ def send_order_sms(phone_number, order_number, full_name, phone):
 
         if response.status_code == 200:
             print(f"Successfully sent order SMS to {phone_number}. Response: {response.text}")
+            return True
         else:
             print(
                 f"Error sending order SMS to {phone_number}. Status: {response.status_code}, Response: {response.text}")
+            return False
 
     except Exception as e:
         print(f"SMS service error: {e}")
+        return False
