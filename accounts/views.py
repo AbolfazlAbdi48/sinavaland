@@ -82,7 +82,7 @@ def user_login(request):
 
         login(request, user)
 
-        if not user.first_name or not user.last_name:
+        if not user.first_name:
             if next_url:
                 return redirect(
                     f'{reverse("accounts:complete-profile")}?next={next_url}'
