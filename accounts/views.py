@@ -14,7 +14,7 @@ from .otp_service import send_otp
 
 
 @login_required
-def register(request):
+def complete_profile(request):
     """ثبت‌نام"""
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -32,7 +32,7 @@ def register(request):
         messages.success(request, 'ثبت‌نام با موفقیت انجام شد.')
         return redirect('core:home')
 
-    return render(request, 'accounts/register.html')
+    return render(request, 'accounts/complete_profile.html')
 
 
 def user_login(request):
@@ -76,7 +76,7 @@ def user_login(request):
         login(request, user)
 
         if not user.first_name or not user.last_name:
-            return redirect('accounts:register')
+            return redirect('accounts:complete-profile')
 
         messages.success(request, 'خوش آمدید!')
         return redirect('core:home')
