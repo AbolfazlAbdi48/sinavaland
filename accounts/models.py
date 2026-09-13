@@ -9,7 +9,7 @@ phone_validator = RegexValidator(
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=15, unique=True, blank=True, null=True, validators=[phone_validator])
+    username = models.CharField(max_length=15, unique=True, validators=[phone_validator])
     is_golden = models.BooleanField(default=False, verbose_name='اشتراک طلایی')
     golden_expiry = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ انقضای طلایی')
 
