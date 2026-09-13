@@ -58,12 +58,15 @@ def reserve_accommodation(request, slug):
         accommodation.save()
 
         messages.success(request, f'اقامتگاه "{accommodation.title}" رزرو شد.')
-        send_order_sms(
-            phone_number=config('MANAGER_PHONE_NUMBER'),
-            order_number=accommodation.code,
-            full_name=f"{request.user.first_name} {request.user.last_name}",
-            phone=request.user.username
-        )
+        manager_phone_numbers = config('MANAGER_PHONE_NUMBER').split(',')
+
+        for phone_number in manager_phone_numbers:
+            send_order_sms(
+                phone_number=phone_number.strip(),
+                order_number=accommodation.code,
+                full_name=f"{request.user.first_name} {request.user.last_name}",
+                phone=request.user.username
+            )
 
     return redirect('accommodations:detail', slug=slug)
 
