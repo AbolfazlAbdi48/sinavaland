@@ -1,7 +1,5 @@
 import secrets
 
-from django.http.response import JsonResponse
-
 from .models import OTP
 from .sms_service import send_otp_sms
 

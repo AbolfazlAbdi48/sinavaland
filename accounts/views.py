@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
@@ -121,6 +122,16 @@ def request_otp(request):
     if not phone_number:
         return JsonResponse(
             {"error": "شماره موبایل الزامی است."},
+            status=400,
+        )
+
+    username_field = User._meta.get_field('username')
+
+    try:
+        username_field.clean(phone_number, None)
+    except ValidationError as e:
+        return JsonResponse(
+            {"error": e.messages[0]},
             status=400,
         )
 

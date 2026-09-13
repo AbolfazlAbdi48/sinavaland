@@ -13,7 +13,7 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('password',)}),
-        ('Personal info', {'fields': ('username',)}),
+        ('Personal info', {'fields': ('username', 'first_name', 'last_name')}),
         ('Golden membership', {'fields': ('is_golden', 'golden_expiry')}),
         ('Reservations', {'fields': ('get_reservations_list',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
