@@ -55,7 +55,7 @@ def user_login(request):
             )
             return render(request, 'accounts/login.html')
 
-        user = User.objects.filter(phone_number=phone_number).first()
+        user = User.objects.filter(username=phone_number).first()
 
         otp = OTP.objects.filter(
             user=user,
@@ -125,7 +125,7 @@ def request_otp(request):
         )
 
     user = User.objects.get_or_create(
-        phone_number=phone_number
+        username=phone_number
     )[0]
 
     last_otp = OTP.objects.filter(user=user).order_by('-created_at').first()

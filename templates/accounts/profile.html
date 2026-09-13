@@ -259,12 +259,12 @@
     </div>
     <div class="profile-info">
         <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-        {% if user.phone_number %}
+        {% if user.username %}
         <div class="profile-phone">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
             </svg>
-            {{ user.phone_number }}
+            {{ user.username }}
         </div>
         {% endif %}
         <div class="profile-joined">عضویت از: {{ user.date_joined|date:"Y/m/d" }}</div>
@@ -332,7 +332,7 @@
                 </div>
                 <div class="info-item">
                     <span class="info-label">شماره تماس</span>
-                    <span class="info-value">{{ user.phone_number|default:"—" }}</span>
+                    <span class="info-value">{{ user.username|default:"—" }}</span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">تاریخ عضویت</span>

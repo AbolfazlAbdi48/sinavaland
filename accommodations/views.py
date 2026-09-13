@@ -62,7 +62,7 @@ def reserve_accommodation(request, slug):
             phone_number=config('MANAGER_PHONE_NUMBER'),
             order_number=accommodation.code,
             full_name=f"{request.user.first_name} {request.user.last_name}",
-            phone=request.user.phone_number
+            phone=request.user.username
         )
 
     return redirect('accommodations:detail', slug=slug)

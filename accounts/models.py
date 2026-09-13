@@ -9,13 +9,9 @@ phone_validator = RegexValidator(
 
 
 class User(AbstractUser):
-    username = None
-    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True, validators=[phone_validator])
+    username = models.CharField(max_length=15, unique=True, blank=True, null=True, validators=[phone_validator])
     is_golden = models.BooleanField(default=False, verbose_name='اشتراک طلایی')
     golden_expiry = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ انقضای طلایی')
-
-    USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = 'کاربر'
@@ -41,4 +37,4 @@ class OTP(models.Model):
         verbose_name_plural = 'کد های تایید'
 
     def __str__(self):
-        return self.user.phone_number
+        return self.user.username

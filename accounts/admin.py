@@ -7,14 +7,13 @@ from .models import User, OTP
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ['first_name', 'last_name', 'phone_number', 'get_reservation_count', 'is_golden', 'golden_expiry']
+    list_display = ['username', 'first_name', 'last_name', 'get_reservation_count', 'is_golden', 'golden_expiry']
     list_filter = ['is_golden', 'is_staff', 'is_superuser']
-    search_fields = ['first_name', 'last_name', 'phone_number']
-    ordering = ('phone_number',)
+    search_fields = ['first_name', 'last_name']
 
     fieldsets = (
         (None, {'fields': ('password',)}),
-        ('Personal info', {'fields': ('phone_number',)}),
+        ('Personal info', {'fields': ('username',)}),
         ('Golden membership', {'fields': ('is_golden', 'golden_expiry')}),
         ('Reservations', {'fields': ('get_reservations_list',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
@@ -26,7 +25,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('phone_number', 'password1', 'password2'),
+            'fields': ('password1', 'password2'),
         }),
     )
 

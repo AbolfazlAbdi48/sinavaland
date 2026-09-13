@@ -11,7 +11,7 @@ from datetime import timedelta
 
 def send_otp(user):
     code = f"{secrets.randbelow(1_000_000):06d}"
-    success = send_otp_sms(user.phone_number, code)
+    success = send_otp_sms(user.username, code)
 
     if not success:
         return False
