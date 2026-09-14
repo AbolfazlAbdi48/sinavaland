@@ -155,12 +155,7 @@ def request_otp(request):
                 status=429,
             )
 
-    print("REQUEST OTP - BEFORE SEND OTP")
-    print("REQUEST OTP - USER:", repr(user.username))
-
     success = send_otp(user)
-
-    print("REQUEST OTP - AFTER SEND OTP:", repr(success))
 
     if not success:
         return JsonResponse(
