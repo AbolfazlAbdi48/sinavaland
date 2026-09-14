@@ -245,7 +245,7 @@
             button.disabled = true;
             button.textContent = 'در حال ارسال...';
 
-            const response = await fetch("/accounts/request-otp/", {
+            const response = await fetch("{% url 'accounts:request-otp' %}", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",

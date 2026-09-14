@@ -41,6 +41,7 @@ def send_otp_sms(phone_number, code):
 
     except Exception as e:
         print(f"An exception occurred while trying to send SMS: {e}")
+        return False
 
 
 def send_order_sms(phone_number, order_number, full_name, phone):
