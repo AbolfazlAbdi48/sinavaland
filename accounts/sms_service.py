@@ -30,29 +30,17 @@ def send_otp_sms(phone_number, code):
     }
 
     try:
-        print("PHONE:", repr(phone_number))
-        print("PHONE ASCII:", phone_number.isascii())
-        print("CODE:", repr(code))
-        print("CODE ASCII:", code.isascii())
+        response = requests.post(API_URL, json=payload, headers=headers)
 
-        print("URL:", repr(API_URL))
-        print("TEMPLATE:", repr(OTP_TEMPLATE_ID))
-
-        response = requests.post(
-            API_URL,
-            json=payload,
-            headers=headers,
-            timeout=10,
-        )
-
-        print("STATUS:", response.status_code)
-        print("RESPONSE:", response.text)
-
-        return response.ok
+        if response.status_code == 200:
+            print(f"Successfully sent OTP to {phone_number}. Response: {response.text}")
+            return True
+        else:
+            print(f"Error sending OTP to {phone_number}. Status: {response.status_code}, Response: {response.text}")
+            return False
 
     except Exception as e:
-        print("SMS ERROR TYPE:", type(e).__name__)
-        print("SMS ERROR:", repr(e))
+        print(f"An exception occurred while trying to send SMS: {e}")
         return False
 
 
