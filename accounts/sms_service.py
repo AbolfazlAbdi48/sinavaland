@@ -30,6 +30,8 @@ def send_otp_sms(phone_number, code):
     }
 
     try:
+        print("STEP A")
+
         response = requests.post(
             API_URL,
             json=payload,
@@ -37,11 +39,14 @@ def send_otp_sms(phone_number, code):
             timeout=10,
         )
 
+        print("STEP B")
+
         return response.status_code == 200
 
-    except requests.RequestException:
-        return False
-
+    except Exception as e:
+        print("EXCEPTION TYPE:", type(e).__name__)
+        print("EXCEPTION REPR:", repr(e))
+        raise
 
 def send_order_sms(phone_number, order_number, full_name, phone):
     payload = {
