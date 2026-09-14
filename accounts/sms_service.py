@@ -46,7 +46,7 @@ def send_otp_sms(phone_number, code):
     except Exception as e:
         print("EXCEPTION TYPE:", type(e).__name__)
         print("EXCEPTION REPR:", repr(e))
-        raise
+        return False
 
 def send_order_sms(phone_number, order_number, full_name, phone):
     payload = {
