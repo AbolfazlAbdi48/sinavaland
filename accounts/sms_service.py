@@ -33,7 +33,11 @@ def send_otp_sms(phone_number, code):
         response = requests.post(API_URL, json=payload, headers=headers, timeout=10)
 
         if response.status_code == 200:
-            print(f"Successfully sent OTP to {phone_number}. Response: {response.text}")
+            print(
+                f"Successfully sent OTP to {phone_number}. "
+                f"Response: {response.text.encode('utf-8', errors='replace').decode('utf-8')}"
+            )
+            
             return True
         else:
             print(f"Error sending OTP to {phone_number}. Status: {response.status_code}, Response: {response.text}")
