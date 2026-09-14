@@ -24,24 +24,22 @@ def send_otp_sms(phone_number, code):
     }
 
     headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'text/plain',
-        'x-api-key': API_KEY
+        "Content-Type": "application/json",
+        "Accept": "text/plain",
+        "x-api-key": API_KEY,
     }
 
     try:
-        response = requests.post(API_URL, json=payload, headers=headers, timeout=10)
+        response = requests.post(
+            API_URL,
+            json=payload,
+            headers=headers,
+            timeout=10,
+        )
 
-        if response.status_code == 200:
-            print(f"Successfully sent OTP to {phone_number}")
-            return True
-        else:
-            print(f"Error sending OTP to {phone_number}")
-            return False
+        return response.status_code == 200
 
-    except requests.RequestException as e:
-        print(f"SMS REQUEST ERROR: {type(e).__name__}")
-        print(f"SMS REQUEST ERROR: {e}")
+    except requests.RequestException:
         return False
 
 
