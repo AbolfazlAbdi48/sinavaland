@@ -8,16 +8,30 @@ from datetime import timedelta
 
 
 def send_otp(user):
-    code = f"{secrets.randbelow(1_000_000):06d}"
-    success = send_otp_sms(user.username, code)
+    try:
+        code = f"{secrets.randbelow(1_000_000):06d}"
 
-    if not success:
+        print("STEP 1 - CODE:", code)
+        print("STEP 2 - USERNAME:", repr(user.username))
+
+        success = send_otp_sms(user.username, code)
+
+        print("STEP 3 - SMS SUCCESS:", success)
+
+        if not success:
+            return False
+
+        otp = OTP.objects.create(
+            user=user,
+            code=code,
+            expires_at=timezone.now() + timedelta(minutes=2)
+        )
+
+        print("STEP 4 - OTP CREATED:", otp.id)
+
+        return True
+
+    except Exception as e:
+        print("SEND OTP ERROR TYPE:", type(e).__name__)
+        print("SEND OTP ERROR:", repr(e))
         return False
-
-    OTP.objects.create(
-        user=user,
-        code=code,
-        expires_at=timezone.now() + timedelta(minutes=2)
-    )
-
-    return True
