@@ -30,7 +30,7 @@ def send_otp_sms(phone_number, code):
     }
 
     try:
-        print("STEP A")
+        print("STEP A - BEFORE REQUEST")
 
         response = requests.post(
             API_URL,
@@ -39,14 +39,17 @@ def send_otp_sms(phone_number, code):
             timeout=10,
         )
 
-        print("STEP B")
+        print("STEP B - AFTER REQUEST")
+        print("STATUS:", response.status_code)
 
         return response.status_code == 200
 
     except Exception as e:
-        print("EXCEPTION TYPE:", type(e).__name__)
-        print("EXCEPTION REPR:", repr(e))
-        return False
+        print("STEP C - EXCEPTION")
+        print("TYPE:", type(e).__name__)
+        print("REPR:", repr(e))
+        raise
+
 
 def send_order_sms(phone_number, order_number, full_name, phone):
     payload = {
