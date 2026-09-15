@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
 from .utils import generate_accommodation_code
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Accommodation(models.Model):
@@ -16,13 +17,16 @@ class Accommodation(models.Model):
         max_length=16,
         unique=True,
         blank=True,
-        editable=False,
+        editable=True,
         verbose_name='کد اقامتگاه'
     )
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(unique=True, allow_unicode=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name='دسته‌بندی')
-    description = models.TextField(verbose_name='توضیحات')
+    description = CKEditor5Field(
+        config_name='default',
+        blank=True,
+    )
     location = models.CharField(max_length=200, verbose_name='موقعیت')
     price_per_night = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='قیمت هر شب')
     capacity = models.PositiveIntegerField(verbose_name='ظرفیت')
