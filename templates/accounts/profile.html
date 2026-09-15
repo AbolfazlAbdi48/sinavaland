@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load jalali %}
+
 {% block title %}پروفایل - سیناوالند{% endblock %}
 
 {% block extra_css %}
@@ -267,7 +269,7 @@
             {{ user.username }}
         </div>
         {% endif %}
-        <div class="profile-joined">عضویت از: {{ user.date_joined|date:"Y/m/d" }}</div>
+        <div class="profile-joined">عضویت از: {{ user.date_joined|to_jalali }}</div>
     </div>
 </div>
 
@@ -336,7 +338,7 @@
                 </div>
                 <div class="info-item">
                     <span class="info-label">تاریخ عضویت</span>
-                    <span class="info-value">{{ user.date_joined|date:"Y/m/d H:i" }}</span>
+                    <span class="info-value">{{ user.date_joined|to_jalali:True }}</span>
                 </div>
             </div>
 
