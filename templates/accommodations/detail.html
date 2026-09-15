@@ -24,7 +24,7 @@
     transform: scale(1.03);
     }
 
-    .detail-other-images {
+    .accommodation-gallery {
     width: 100%;
     display: flex;
     margin: 0 auto 2.5rem;
@@ -33,7 +33,7 @@
     overflow-x: auto;
     }
 
-    .detail-other-images img {
+    .accommodation-gallery img {
     width: 25dvw;
     height: 30dvh;
     object-fit: cover;
@@ -312,6 +312,90 @@
     padding: 10px 14px;
     margin-bottom: 12px;
     }
+
+    .accommodation-gallery {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    }
+
+    .gallery-item {
+    flex: 0 0 250px;
+    height: 180px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    scroll-snap-align: start;
+    }
+
+    .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+    }
+
+    .gallery-image:hover {
+    transform: scale(1.05);
+    }
+
+    /* Modal */
+
+    .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.9);
+
+    align-items: center;
+    justify-content: center;
+    }
+
+    .modal-image {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    }
+
+    .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    }
+
+    .prev-image,
+    .next-image {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-size: 45px;
+    cursor: pointer;
+    }
+
+    .prev-image {
+    left: 30px;
+    }
+
+    .next-image {
+    right: 30px;
+    }
 {% endblock %}
 
 {% block content %}
@@ -396,12 +480,29 @@
         </div>
     {% endif %}
 
-    <div class="detail-other-images">
-        {% if accommodation.images %}
-            {% for image in accommodation.images.all %}
-                <img src="{{ image.image.url }}" alt="{{ accommodation.name }}">
-            {% endfor %}
-        {% endif %}
+    <div class="accommodation-gallery">
+        {% for image in accommodation.images.all %}
+            <div class="gallery-item">
+                <img
+                        src="{{ image.image.url }}"
+                        alt="{{ accommodation.title }}"
+                        class="gallery-image"
+                        onclick="openImage({{ forloop.counter0 }})"
+                >
+            </div>
+        {% empty %}
+            <p>تصویری برای این اقامتگاه ثبت نشده است.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal" onclick="closeImage()">&times;</span>
+
+        <img id="modalImage" class="modal-image">
+
+        <button class="prev-image" onclick="changeImage(-1)">&#10094;</button>
+        <button class="next-image" onclick="changeImage(1)">&#10095;</button>
     </div>
     <!-- Two-column layout -->
     <div class="detail-layout">
@@ -419,7 +520,7 @@
                 </span>
                     توضیحات
                 </h3>
-                <p>{{ accommodation.description }}</p>
+                <p>{{ accommodation.description|safe }}</p>
             </div>
         </div>
 
@@ -513,4 +614,55 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const images = [
+            {% for image in accommodation.images.all %}
+                "{{ image.image.url }}",
+            {% endfor %}
+        ];
+
+        let currentIndex = 0;
+
+        function openImage(index) {
+            currentIndex = index;
+
+            document.getElementById("modalImage").src = images[currentIndex];
+            document.getElementById("imageModal").style.display = "flex";
+        }
+
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            }
+
+            document.getElementById("modalImage").src = images[currentIndex];
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeImage();
+            }
+
+            if (event.key === "ArrowRight") {
+                changeImage(-1);
+            }
+
+            if (event.key === "ArrowLeft") {
+                changeImage(1);
+            }
+        });
+    </script>
 {% endblock %}
