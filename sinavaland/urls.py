@@ -20,6 +20,7 @@ urlpatterns = [
     path('marketplace/', include(('marketplace.urls', 'marketplace'), namespace='marketplace')),
     path('magazine/', include(('magazine.urls', 'magazine'), namespace='magazine')),
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('ckeditor5/', include('django_ckeditor_5.urls'))
 ]
 
 if settings.DEBUG:

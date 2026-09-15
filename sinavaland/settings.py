@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'magazine',
     'core',
     'pwa',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [
@@ -185,3 +186,21 @@ PWA_APP_SCREENSHOTS = [
         "type": "image/png"
     }
 ]
+
+CKEDITOR_5_CONFIGS = {
+    "default": {
+        "toolbar": [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "link",
+            "bulletedList",
+            "numberedList",
+            "blockQuote",
+            "|",
+            "undo",
+            "redo",
+        ],
+    },
+}
