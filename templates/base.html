@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}سینوا | سوئیس مازندران{% endblock %}</title>
-    <meta name="description" content="پلتفرم جامع سینوالند - اتصال تولیدکنندگان، تأمین‌کنندگان و خریداران" />
+    <meta name="description" content="پلتفرم جامع سینوالند - اتصال تولیدکنندگان، تأمین‌کنندگان و خریداران"/>
     {% progressive_web_app_meta %}
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+    <link rel="stylesheet" href="{% static 'datepicker/persian-datepicker.min.css' %}">
     <style>
         /* ===== Vazirmatn Font (Local) ===== */
         @font-face {
@@ -1533,159 +1533,162 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
 
         {% block extra_css %}{% endblock %}
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- Navbar -->
-        <nav class="navbar" id="navbar">
-            <div class="container">
-                <a href="{% url 'core:home' %}" class="navbar-brand">
-                    <div class="logo-icon gradient-industrial">
-                        <img alt="logo" src="{% static 'slogo.png' %}">
-                    </div>
-                    <span>سینوالند</span>
-                </a>
-
-                <div class="nav-links" id="desktopNav">
-                    <a href="{% url 'core:home' %}" class="nav-link">صفحه اصلی</a>
-                    <a href="{% url 'accommodations:list' %}" class="nav-link">رزرو اقامتگاه</a>
-                    <a href="{% url 'tours:list' %}" class="nav-link">تورها</a>
-                    <a href="{% url 'marketplace:list' %}" class="nav-link">بازارچه سوغاتی</a>
-                    <a href="{% url 'magazine:list' %}" class="nav-link">مجله گردشگری</a>
-                    <a href="{% url 'core:contact' %}" class="nav-link">تماس با ما</a>
-
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'accounts:profile' %}" class="nav-login gradient-amber">{{ user.first_name }} {{ user.last_name }}</a>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}" class="nav-login gradient-amber">ورود</a>
-                    {% endif %}
+<div class="page-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="{% url 'core:home' %}" class="navbar-brand">
+                <div class="logo-icon gradient-industrial">
+                    <img alt="logo" src="{% static 'slogo.png' %}">
                 </div>
+                <span>سینوالند</span>
+            </a>
 
-                <button class="mobile-toggle" onclick="toggleMobile()">
-                    <svg id="menuIcon" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 12h18M3 6h18M3 18h18" />
-                    </svg>
-                    <svg id="closeIcon" class="hidden" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="mobile-menu" id="mobileMenu">
+            <div class="nav-links" id="desktopNav">
                 <a href="{% url 'core:home' %}" class="nav-link">صفحه اصلی</a>
-                <a href="{% url 'accommodations:list' %}" class="nav-link">رزرو اقامتگاه </a>
+                <a href="{% url 'accommodations:list' %}" class="nav-link">رزرو اقامتگاه</a>
                 <a href="{% url 'tours:list' %}" class="nav-link">تورها</a>
                 <a href="{% url 'marketplace:list' %}" class="nav-link">بازارچه سوغاتی</a>
                 <a href="{% url 'magazine:list' %}" class="nav-link">مجله گردشگری</a>
                 <a href="{% url 'core:contact' %}" class="nav-link">تماس با ما</a>
 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'accounts:profile' %}" class="nav-login gradient-amber">{{ user.username }}</a>
+                    <a href="{% url 'accounts:profile' %}"
+                       class="nav-login gradient-amber">{{ user.first_name }} {{ user.last_name }}</a>
                 {% else %}
                     <a href="{% url 'accounts:login' %}" class="nav-login gradient-amber">ورود</a>
                 {% endif %}
             </div>
-        </nav>
 
-        <!-- Main Content -->
-        <main>
-            {% block content %}{% endblock %}
-        </main>
+            <button class="mobile-toggle" onclick="toggleMobile()">
+                <svg id="menuIcon" width="24" height="24" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+                <svg id="closeIcon" class="hidden" width="24" height="24"
+                     viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
 
-        <!-- Footer -->
-        <footer class="footer gradient-industrial">
-            <div class="container">
-                <div class="footer-grid">
-                    <div>
-                        <div class="footer-brand">
-                            <div class="f-logo">
-                                <img src="{% static 'slogo.png' %}" alt="logo">
-                            </div>
-                            <span>سینوالند</span>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="{% url 'core:home' %}" class="nav-link">صفحه اصلی</a>
+            <a href="{% url 'accommodations:list' %}" class="nav-link">رزرو اقامتگاه </a>
+            <a href="{% url 'tours:list' %}" class="nav-link">تورها</a>
+            <a href="{% url 'marketplace:list' %}" class="nav-link">بازارچه سوغاتی</a>
+            <a href="{% url 'magazine:list' %}" class="nav-link">مجله گردشگری</a>
+            <a href="{% url 'core:contact' %}" class="nav-link">تماس با ما</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="nav-login gradient-amber">{{ user.username }}</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="nav-login gradient-amber">ورود</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer gradient-industrial">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="f-logo">
+                            <img src="{% static 'slogo.png' %}" alt="logo">
                         </div>
-                        <p>اکوسیستم جامع سینوا</p>
+                        <span>سینوالند</span>
                     </div>
-                    <div>
-                        <h4>دسترسی سریع</h4>
-                        <ul>
-                            <li><a href="{% url 'core:home' %}">صفحه اصلی</a></li>
-                            <li><a href="{% url 'accommodations:list' %}">اقامتگاه‌ها</a></li>
-                            <li><a href="{% url 'tours:list' %}">تورها</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>خدمات</h4>
-                        <ul>
-                            <li><a href="{% url 'marketplace:list' %}">مارکت‌پلیس</a></li>
-                            <li><a href="{% url 'magazine:list' %}">مجله</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>تماس با ما</h4>
-                        <ul>
-                            <li><a href="{% url 'core:contact' %}">فرم تماس</a></li>
-                        </ul>
-                    </div>
+                    <p>اکوسیستم جامع سینوا</p>
                 </div>
-                <div class="footer-action">
-                    <button id="pwaInstallButton" class="install-button hidden" type="button" onclick="installPWA()">نصب اپلیکیشن</button>
+                <div>
+                    <h4>دسترسی سریع</h4>
+                    <ul>
+                        <li><a href="{% url 'core:home' %}">صفحه اصلی</a></li>
+                        <li><a href="{% url 'accommodations:list' %}">اقامتگاه‌ها</a></li>
+                        <li><a href="{% url 'tours:list' %}">تورها</a></li>
+                    </ul>
                 </div>
-                <div class="footer-bottom">
-                    © ۱۴۰۵ سینوالند. تمامی حقوق محفوظ است.
+                <div>
+                    <h4>خدمات</h4>
+                    <ul>
+                        <li><a href="{% url 'marketplace:list' %}">مارکت‌پلیس</a></li>
+                        <li><a href="{% url 'magazine:list' %}">مجله</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>تماس با ما</h4>
+                    <ul>
+                        <li><a href="{% url 'core:contact' %}">فرم تماس</a></li>
+                    </ul>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div class="footer-action">
+                <button id="pwaInstallButton" class="install-button hidden" type="button" onclick="installPWA()">نصب
+                    اپلیکیشن
+                </button>
+            </div>
+            <div class="footer-bottom">
+                © ۱۴۰۵ سینوالند. تمامی حقوق محفوظ است.
+            </div>
+        </div>
+    </footer>
+</div>
 
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        function toggleMobile() {
-            const menu = document.getElementById('mobileMenu');
-            const menuIcon = document.getElementById('menuIcon');
-            const closeIcon = document.getElementById('closeIcon');
+<!-- Mobile Menu Toggle Script -->
+<script>
+    function toggleMobile() {
+        const menu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
 
-            menu.classList.toggle('open');
-            menuIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
+        menu.classList.toggle('open');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+    }
+</script>
+
+<script>
+    let deferredPrompt;
+    const pwaInstallButton = document.getElementById('pwaInstallButton');
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        if (pwaInstallButton) {
+            pwaInstallButton.classList.remove('hidden');
         }
-    </script>
+    });
 
-    <script>
-        let deferredPrompt;
-        const pwaInstallButton = document.getElementById('pwaInstallButton');
-
-        window.addEventListener('beforeinstallprompt', (event) => {
-            event.preventDefault();
-            deferredPrompt = event;
+    function installPWA() {
+        if (!deferredPrompt) {
+            return;
+        }
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('PWA install accepted');
+            }
+            deferredPrompt = null;
             if (pwaInstallButton) {
-                pwaInstallButton.classList.remove('hidden');
+                pwaInstallButton.classList.add('hidden');
             }
         });
+    }
+</script>
 
-        function installPWA() {
-            if (!deferredPrompt) {
-                return;
-            }
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('PWA install accepted');
-                }
-                deferredPrompt = null;
-                if (pwaInstallButton) {
-                    pwaInstallButton.classList.add('hidden');
-                }
-            });
-        }
-    </script>
-
-    {% block extra_js %}{% endblock %}
+{% block extra_js %}{% endblock %}
 </body>
 </html>

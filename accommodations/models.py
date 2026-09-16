@@ -1,5 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 from django.conf import settings
 from .utils import generate_accommodation_code
 from django_ckeditor_5.fields import CKEditor5Field
@@ -13,6 +15,11 @@ class Accommodation(models.Model):
         ('ecolodge', 'بومگردی'),
     ]
 
+    STATUS_CHOICES = [
+        ('pending', 'در انتظار تایید'),
+        ('accepted', 'تایید شده'),
+    ]
+
     code = models.CharField(
         max_length=16,
         unique=True,
@@ -23,6 +30,8 @@ class Accommodation(models.Model):
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(unique=True, allow_unicode=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name='دسته‌بندی')
+    check_in = models.DateField(null=True, blank=True, verbose_name='تاریخ ورود')
+    check_out = models.DateField(null=True, blank=True, verbose_name='تاریخ خروج')
     description = CKEditor5Field(
         config_name='default',
         blank=True,
@@ -31,9 +40,10 @@ class Accommodation(models.Model):
     price_per_night = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='قیمت هر شب')
     capacity = models.PositiveIntegerField(verbose_name='ظرفیت')
     is_available = models.BooleanField(default=True, verbose_name='موجود')
+    status = models.CharField(max_length=16, choices=STATUS_CHOICES, null=True, blank=True, verbose_name='وضعیت')
     reserved_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
         blank=True,
         null=True,
         related_name='reserved_accommodations',
@@ -59,6 +69,22 @@ class Accommodation(models.Model):
         if not self.code:
             self.code = generate_accommodation_code(self.pk)
             super().save(update_fields=['code'])
+
+    def clean(self):
+        if self.check_in < timezone.localdate():
+            raise ValidationError(
+                'تاریخ شروع رزرو نمی‌توانند قبل از امروز باشند.'
+            )
+
+        if self.check_out < timezone.localdate():
+            raise ValidationError(
+                'تاریخ پایان رزرو نمی‌توانند قبل از امروز باشند.'
+            )
+
+        if self.check_in >= self.check_out:
+            raise ValidationError(
+                'تاریخ پایان رزرو باید بعد از تاریخ شروع رزرو باشد.'
+            )
 
     # ── aliases so templates can use .name and .available ──
     @property
