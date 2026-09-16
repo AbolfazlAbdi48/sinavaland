@@ -71,17 +71,17 @@ class Accommodation(models.Model):
             super().save(update_fields=['code'])
 
     def clean(self):
-        if self.check_in < timezone.localdate():
+        if self.check_in and self.check_in < timezone.localdate():
             raise ValidationError(
                 'تاریخ شروع رزرو نمی‌توانند قبل از امروز باشند.'
             )
 
-        if self.check_out < timezone.localdate():
+        if self.check_out and self.check_out < timezone.localdate():
             raise ValidationError(
                 'تاریخ پایان رزرو نمی‌توانند قبل از امروز باشند.'
             )
 
-        if self.check_in >= self.check_out:
+        if self.check_in and self.check_out and self.check_in >= self.check_out:
             raise ValidationError(
                 'تاریخ پایان رزرو باید بعد از تاریخ شروع رزرو باشد.'
             )
