@@ -16,7 +16,7 @@ urlpatterns = [
     path('', include('pwa.urls')),
     path('', include(('core.urls', 'core'), namespace='core')),
     path('accommodations/', include(('accommodations.urls', 'accommodations'), namespace='accommodations')),
-    path('tours/', include(('tours.urls', 'tours'), namespace='tours')),
+    path('estate/', include(('estate.urls', 'estate'), namespace='estate')),
     path('marketplace/', include(('marketplace.urls', 'marketplace'), namespace='marketplace')),
     path('magazine/', include(('magazine.urls', 'magazine'), namespace='magazine')),
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),

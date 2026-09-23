@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ tour.title }} - سیناوالند{% endblock %}
+{% block title %}{{ estate.title }} - سیناوالند{% endblock %}
 
 {% block extra_css %}
 /* ===== Hero ===== */
@@ -43,7 +43,7 @@
     margin-bottom: 10px;
 }
 
-.detail-hero-content .tour-destination {
+.detail-hero-content .estate-destination {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -52,7 +52,7 @@
     font-weight: 600;
 }
 
-.detail-hero-content .tour-destination svg {
+.detail-hero-content .estate-destination svg {
     color: var(--amber);
 }
 
@@ -314,37 +314,37 @@
 {% block content %}
 
 <!-- Back link -->
-<a href="{% url 'tours:list' %}" class="back-link">
+<a href="{% url 'estate:list' %}" class="back-link">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M9 18l6-6-6-6"/>
     </svg>
-    بازگشت به تورها
+    بازگشت به املاک و اسکان
 </a>
 
 <!-- Hero -->
-{% if tour.image %}
+{% if estate.image %}
 <div class="detail-hero">
-    <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+    <img src="{{ estate.image.url }}" alt="{{ estate.title }}">
     <div class="detail-hero-overlay"></div>
     <div class="detail-hero-content">
-        <h1>{{ tour.title }}</h1>
-        <div class="tour-destination">
+        <h1>{{ estate.title }}</h1>
+        <div class="estate-destination">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
             </svg>
-            {{ tour.destination }}
+            {{ estate.destination }}
         </div>
     </div>
 </div>
 {% else %}
 <div class="detail-hero" style="height:auto;">
     <div class="gradient-industrial" style="padding:80px 32px 60px;text-align:center;position:relative;">
-        <h1 style="font-size:2rem;color:var(--primary-fg);margin-bottom:10px;">{{ tour.title }}</h1>
-        <div class="tour-destination" style="justify-content:center;">
+        <h1 style="font-size:2rem;color:var(--primary-fg);margin-bottom:10px;">{{ estate.title }}</h1>
+        <div class="estate-destination" style="justify-content:center;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
             </svg>
-            {{ tour.destination }}
+            {{ estate.destination }}
         </div>
     </div>
 </div>
@@ -364,12 +364,12 @@
                         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
                     </svg>
                 </span>
-                درباره این تور
+                درباره این ملک
             </h2>
-            <p>{{ tour.description }}</p>
+            <p>{{ estate.description }}</p>
         </div>
 
-        {% if tour.itinerary %}
+        {% if estate.itinerary %}
         <div class="detail-section industrial-shadow">
             <h2>
                 <span class="section-icon gradient-industrial">
@@ -379,11 +379,11 @@
                 </span>
                 برنامه سفر
             </h2>
-            <div>{{ tour.itinerary|linebreaks }}</div>
+            <div>{{ estate.itinerary|linebreaks }}</div>
         </div>
         {% endif %}
 
-        {% if tour.included_services %}
+        {% if estate.included_services %}
         <div class="detail-section industrial-shadow">
             <h2>
                 <span class="section-icon" style="background:#d1fae5;">
@@ -393,11 +393,11 @@
                 </span>
                 خدمات شامل شده
             </h2>
-            <div>{{ tour.included_services|linebreaks }}</div>
+            <div>{{ estate.included_services|linebreaks }}</div>
         </div>
         {% endif %}
 
-        {% if tour.excluded_services %}
+        {% if estate.excluded_services %}
         <div class="detail-section industrial-shadow">
             <h2>
                 <span class="section-icon" style="background:#fee2e2;">
@@ -407,7 +407,7 @@
                 </span>
                 خدمات شامل نشده
             </h2>
-            <div>{{ tour.excluded_services|linebreaks }}</div>
+            <div>{{ estate.excluded_services|linebreaks }}</div>
         </div>
         {% endif %}
 
@@ -420,7 +420,7 @@
         <div class="booking-card industrial-shadow">
             <div class="booking-card-price">
                 <span class="price-label">قیمت هر نفر</span>
-                <span class="price-value">{{ tour.price|floatformat:0 }} تومان</span>
+                <span class="price-value">{{ estate.price|floatformat:0 }} تومان</span>
             </div>
 
             <div class="booking-card-details">
@@ -431,7 +431,7 @@
                         </svg>
                         مدت زمان
                     </span>
-                    <span class="detail-item-value">{{ tour.duration }} روز</span>
+                    <span class="detail-item-value">{{ estate.duration }} روز</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-item-label">
@@ -440,7 +440,7 @@
                         </svg>
                         تاریخ شروع
                     </span>
-                    <span class="detail-item-value">{{ tour.start_date|date:"Y/m/d" }}</span>
+                    <span class="detail-item-value">{{ estate.start_date|date:"Y/m/d" }}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-item-label">
@@ -449,7 +449,7 @@
                         </svg>
                         تاریخ پایان
                     </span>
-                    <span class="detail-item-value">{{ tour.end_date|date:"Y/m/d" }}</span>
+                    <span class="detail-item-value">{{ estate.end_date|date:"Y/m/d" }}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-item-label">
@@ -459,9 +459,9 @@
                         </svg>
                         ظرفیت
                     </span>
-                    <span class="detail-item-value">{{ tour.capacity }} نفر</span>
+                    <span class="detail-item-value">{{ estate.capacity }} نفر</span>
                 </div>
-                {% if tour.available_seats %}
+                {% if estate.available_seats %}
                 <div class="detail-item">
                     <span class="detail-item-label">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -470,7 +470,7 @@
                         </svg>
                         ظرفیت باقیمانده
                     </span>
-                    <span class="detail-item-value available">{{ tour.available_seats }} نفر</span>
+                    <span class="detail-item-value available">{{ estate.available_seats }} نفر</span>
                 </div>
                 {% endif %}
             </div>
@@ -490,9 +490,9 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
                             </svg>
-                            شما این تور را رزرو کرده‌اید
+                            شما این ملک را رزرو کرده‌اید
                         </div>
-                        <a href="{% url 'tours:cancel_reservation' tour.slug %}"
+                        <a href="{% url 'estate:cancel_reservation' estate.slug %}"
                            class="btn-danger"
                            onclick="return confirm('لغو رزرو؟')">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -501,14 +501,14 @@
                             لغو رزرو
                         </a>
                     {% else %}
-                        <form method="post" action="{% url 'tours:reserve' tour.slug %}"
-                              onsubmit="return confirm('رزرو این تور؟')">
+                        <form method="post" action="{% url 'estate:reserve' estate.slug %}"
+                              onsubmit="return confirm('رزرو این ملک؟')">
                             {% csrf_token %}
                             <button type="submit" class="btn-amber gradient-amber" style="width:100%;justify-content:center;border:none;">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
                                 </svg>
-                                رزرو تور
+                                رزرو ملک
                             </button>
                         </form>
                     {% endif %}

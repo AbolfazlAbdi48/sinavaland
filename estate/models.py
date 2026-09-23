@@ -1,9 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
-import datetime
 
-class Tour(models.Model):
+class Estate(models.Model):
     DURATION_CHOICES = [
         ('1day', 'یک روزه'),
         ('2day', 'دو روزه'),
@@ -23,20 +22,20 @@ class Tour(models.Model):
     capacity        = models.PositiveIntegerField(verbose_name='ظرفیت')
     start_date      = models.DateField(verbose_name='تاریخ شروع')
     end_date        = models.DateField(verbose_name='تاریخ پایان', blank=True, null=True)
-    image           = models.ImageField(upload_to='tours/', blank=True, null=True)
+    image           = models.ImageField(upload_to='estate/', blank=True, null=True)
     is_available    = models.BooleanField(default=True, verbose_name='موجود')
     reserved_by     = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
-        related_name='reserved_tours',
+        related_name='reserved_estate',
         verbose_name='رزرو شده توسط'
     )
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'تور'
-        verbose_name_plural = 'تورها'
+        verbose_name = 'ملک'
+        verbose_name_plural = 'املاک'
         ordering = ['start_date']
 
     def __str__(self):

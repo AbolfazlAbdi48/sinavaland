@@ -107,14 +107,14 @@ flex: 1;
 }
 
 /* ===== Tours Grid ===== */
-.tours-grid {
+.estate-grid {
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 gap: 24px;
 margin-bottom: 40px;
 }
 
-.tour-card {
+.estate-card {
 background: var(--card);
 border-radius: var(--radius);
 overflow: hidden;
@@ -124,29 +124,29 @@ display: flex;
 flex-direction: column;
 }
 
-.tour-card:hover {
+.estate-card:hover {
 transform: translateY(-4px);
 box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
 }
 
-.tour-card-img {
+.estate-card-img {
 position: relative;
 height: 200px;
 overflow: hidden;
 }
 
-.tour-card-img img {
+.estate-card-img img {
 width: 100%;
 height: 100%;
 object-fit: cover;
 transition: transform .4s;
 }
 
-.tour-card:hover .tour-card-img img {
+.estate-card:hover .estate-card-img img {
 transform: scale(1.05);
 }
 
-.tour-image-placeholder {
+.estate-image-placeholder {
 width: 100%;
 height: 100%;
 background: var(--muted);
@@ -157,7 +157,7 @@ color: var(--steel);
 font-size: .875rem;
 }
 
-.tour-card-badge {
+.estate-card-badge {
 position: absolute;
 top: 12px;
 right: 12px;
@@ -169,20 +169,20 @@ padding: 4px 10px;
 border-radius: 999px;
 }
 
-.tour-card-body {
+.estate-card-body {
 padding: 20px;
 display: flex;
 flex-direction: column;
 flex: 1;
 }
 
-.tour-card-body h3 {
+.estate-card-body h3 {
 font-size: 1.05rem;
 color: var(--fg);
 margin-bottom: 8px;
 }
 
-.tour-destination {
+.estate-destination {
 display: flex;
 align-items: center;
 gap: 5px;
@@ -191,27 +191,27 @@ font-size: .82rem;
 margin-bottom: 12px;
 }
 
-.tour-description {
+.estate-description {
 color: var(--muted-fg);
 font-size: .9rem;
 line-height: 1.7;
 margin-bottom: 14px;
 }
 
-.tour-price {
+.estate-price {
 font-size: 1.15rem;
 font-weight: 700;
 color: var(--navy);
 margin-top: auto;
 }
 
-.tour-price span {
+.estate-price span {
 font-size: .8rem;
 font-weight: 400;
 color: var(--muted-fg);
 }
 
-.tour-card-footer {
+.estate-card-footer {
 border-top: 1px solid var(--border);
 padding: 14px 20px;
 }
@@ -322,56 +322,56 @@ border: 1px solid var(--navy);
 
 </form>
 
-<div class="tours-grid">
+<div class="estate-grid">
 
 
-{% for tour in tours %}
+{% for est in estate %}
 
-<div class="tour-card animate-fade-in-up industrial-shadow">
+<div class="estate-card animate-fade-in-up industrial-shadow">
 
-    <div class="tour-card-img">
+    <div class="estate-card-img">
 
-        {% if tour.image %}
-            <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+        {% if est.image %}
+            <img src="{{ est.image.url }}" alt="{{ est.title }}">
         {% else %}
-            <div class="tour-image-placeholder">
+            <div class="estate-image-placeholder">
                 بدون تصویر
             </div>
         {% endif %}
 
-        <div class="tour-card-badge">
-            {{ tour.duration }} روزه
+        <div class="estate-card-badge">
+            {{ est.duration }} روزه
         </div>
 
     </div>
 
-    <div class="tour-card-body">
+    <div class="estate-card-body">
 
-        <h3>{{ tour.title }}</h3>
+        <h3>{{ est.title }}</h3>
 
-        <div class="tour-destination">
+        <div class="estate-destination">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
                 <circle cx="12" cy="10" r="3"/>
             </svg>
 
-            {{ tour.destination }}
+            {{ est.destination }}
         </div>
 
-        <p class="tour-description">
-            {{ tour.description|truncatewords:20 }}
+        <p class="estate-description">
+            {{ est.description|truncatewords:20 }}
         </p>
 
-        <div class="tour-price">
-            {{ tour.price|floatformat:0 }}
+        <div class="estate-price">
+            {{ est.price|floatformat:0 }}
             <span>تومان</span>
         </div>
 
     </div>
 
-    <div class="tour-card-footer">
+    <div class="estate-card-footer">
 
-        <a href="{% url 'tours:detail' tour.slug %}"
+        <a href="{% url 'estate:detail' est.slug %}"
            class="btn-amber gradient-amber"
            style="width:100%;justify-content:center;">
 
@@ -394,23 +394,23 @@ border: 1px solid var(--navy);
 
 </div>
 
-{% if tours.has_other_pages %}
+{% if estate.has_other_pages %}
 
 <div class="pagination">
 
 
-{% if tours.has_previous %}
-    <a href="?page={{ tours.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+{% if estate.has_previous %}
+    <a href="?page={{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
         قبلی
     </a>
 {% endif %}
 
 <span class="page-current">
-    صفحه {{ tours.number }} از {{ tours.paginator.num_pages }}
+    صفحه {{ estate.number }} از {{ estate.paginator.num_pages }}
 </span>
 
-{% if tours.has_next %}
-    <a href="?page={{ tours.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+{% if estate.has_next %}
+    <a href="?page={{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
         بعدی
     </a>
 {% endif %}

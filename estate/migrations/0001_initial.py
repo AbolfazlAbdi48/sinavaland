@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('capacity', models.PositiveIntegerField(verbose_name='ظرفیت')),
                 ('start_date', models.DateField(verbose_name='تاریخ شروع')),
                 ('end_date', models.DateField(blank=True, null=True, verbose_name='تاریخ پایان')),
-                ('image', models.ImageField(blank=True, null=True, upload_to='tours/')),
+                ('image', models.ImageField(blank=True, null=True, upload_to='estate/')),
                 ('is_available', models.BooleanField(default=True, verbose_name='موجود')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),

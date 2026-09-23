@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'accounts',
     'accommodations',
-    'tours',
+    'estate',
     'marketplace',
     'magazine',
     'core',
