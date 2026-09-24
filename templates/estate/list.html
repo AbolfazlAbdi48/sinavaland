@@ -1,423 +1,401 @@
 {% extends 'base.html' %}
 
-{% block title %}تورها - سیناوالند{% endblock %}
+{% load humanize %}
+
+{% block title %}املاک و اسکان - سیناوالند{% endblock %}
 
 {% block extra_css %}
 
-/* ===== Page Header ===== */
-.page-header {
-position: relative;
-padding: 80px 0 60px;
-overflow: hidden;
-text-align: center;
-}
+    /* ===== Page Header ===== */
+    .page-header {
+    position: relative;
+    padding: 80px 0 60px;
+    overflow: hidden;
+    text-align: center;
+    }
 
-.page-header-bg {
-position: absolute;
-inset: 0;
-}
+    .page-header-bg {
+    position: absolute;
+    inset: 0;
+    }
 
-.page-header-bg .overlay {
-position: absolute;
-inset: 0;
-opacity: .88;
-}
+    .page-header-bg .overlay {
+    position: absolute;
+    inset: 0;
+    opacity: .88;
+    }
 
-.page-header-content {
-position: relative;
-z-index: 10;
-}
+    .page-header-content {
+    position: relative;
+    z-index: 10;
+    }
 
-.page-header-content h1 {
-font-size: 2.25rem;
-color: var(--primary-fg);
-margin-bottom: 12px;
-}
+    .page-header-content h1 {
+    font-size: 2.25rem;
+    color: var(--primary-fg);
+    margin-bottom: 12px;
+    }
 
-.page-header-content p {
-color: rgba(250, 250, 250, .75);
-font-size: 1rem;
-}
+    .page-header-content p {
+    color: rgba(250, 250, 250, .75);
+    font-size: 1rem;
+    }
 
-@media (min-width: 768px) {
-.page-header-content h1 {
-font-size: 2.75rem;
-}
-}
+    @media (min-width: 768px) {
+    .page-header-content h1 {
+    font-size: 2.75rem;
+    }
+    }
 
-/* ===== Filters ===== */
-.filters-wrap {
-background: var(--card);
-border: 1px solid var(--border);
-border-radius: var(--radius);
-padding: 20px 24px;
-margin: 32px 0;
-display: flex;
-gap: 16px;
-flex-wrap: wrap;
-align-items: flex-end;
-}
+    /* ===== Filters ===== */
+    .filters-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 32px 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    }
 
-.filter-group {
-flex: 1;
-min-width: 180px;
-display: flex;
-flex-direction: column;
-gap: 6px;
-}
+    .filter-group {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    }
 
-.filter-group label {
-font-size: .8rem;
-font-weight: 600;
-color: var(--muted-fg);
-text-transform: uppercase;
-letter-spacing: .03em;
-}
+    .filter-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--muted-fg);
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    }
 
-.filter-group select,
-.filter-group input[type="text"] {
-padding: 10px 14px;
-border: 1px solid var(--input);
-border-radius: var(--radius);
-background: var(--bg);
-color: var(--fg);
-font-size: .9rem;
-transition: border-color .2s;
-width: 100%;
-}
+    .filter-group select,
+    .filter-group input[type="text"] {
+    padding: 10px 14px;
+    border: 1px solid var(--input);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--fg);
+    font-size: .9rem;
+    transition: border-color .2s;
+    width: 100%;
+    }
 
-.filter-group select:focus,
-.filter-group input[type="text"]:focus {
-outline: none;
-border-color: var(--amber);
-}
+    .filter-group select:focus,
+    .filter-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--amber);
+    }
 
-.search-group {
-flex: 2;
-min-width: 220px;
-}
+    .search-group {
+    flex: 2;
+    min-width: 220px;
+    }
 
-.search-row {
-display: flex;
-gap: 10px;
-}
+    .search-row {
+    display: flex;
+    gap: 10px;
+    }
 
-.search-row input {
-flex: 1;
-}
+    .search-row input {
+    flex: 1;
+    }
 
-/* ===== Tours Grid ===== */
-.estate-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-gap: 24px;
-margin-bottom: 40px;
-}
+    /* ===== Tours Grid ===== */
+    .estate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+    }
 
-.estate-card {
-background: var(--card);
-border-radius: var(--radius);
-overflow: hidden;
-border: 1px solid var(--border);
-transition: transform .25s, box-shadow .25s;
-display: flex;
-flex-direction: column;
-}
+    .estate-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform .25s, box-shadow .25s;
+    display: flex;
+    flex-direction: column;
+    }
 
-.estate-card:hover {
-transform: translateY(-4px);
-box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
-}
+    .estate-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
+    }
 
-.estate-card-img {
-position: relative;
-height: 200px;
-overflow: hidden;
-}
+    .estate-card-img {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    }
 
-.estate-card-img img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: transform .4s;
-}
+    .estate-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s;
+    }
 
-.estate-card:hover .estate-card-img img {
-transform: scale(1.05);
-}
+    .estate-card:hover .estate-card-img img {
+    transform: scale(1.05);
+    }
 
-.estate-image-placeholder {
-width: 100%;
-height: 100%;
-background: var(--muted);
-display: flex;
-align-items: center;
-justify-content: center;
-color: var(--steel);
-font-size: .875rem;
-}
+    .estate-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--steel);
+    font-size: .875rem;
+    }
 
-.estate-card-badge {
-position: absolute;
-top: 12px;
-right: 12px;
-background: var(--amber);
-color: var(--charcoal);
-font-size: .75rem;
-font-weight: 700;
-padding: 4px 10px;
-border-radius: 999px;
-}
+    .estate-card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--amber);
+    color: var(--charcoal);
+    font-size: .75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    }
 
-.estate-card-body {
-padding: 20px;
-display: flex;
-flex-direction: column;
-flex: 1;
-}
+    .estate-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    }
 
-.estate-card-body h3 {
-font-size: 1.05rem;
-color: var(--fg);
-margin-bottom: 8px;
-}
+    .estate-card-body h3 {
+    font-size: 1.05rem;
+    color: var(--fg);
+    margin-bottom: 8px;
+    }
 
-.estate-destination {
-display: flex;
-align-items: center;
-gap: 5px;
-color: var(--muted-fg);
-font-size: .82rem;
-margin-bottom: 12px;
-}
+    .estate-destination {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--muted-fg);
+    font-size: .82rem;
+    margin-bottom: 12px;
+    }
 
-.estate-description {
-color: var(--muted-fg);
-font-size: .9rem;
-line-height: 1.7;
-margin-bottom: 14px;
-}
+    .estate-description {
+    color: var(--muted-fg);
+    font-size: .9rem;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    }
 
-.estate-price {
-font-size: 1.15rem;
-font-weight: 700;
-color: var(--navy);
-margin-top: auto;
-}
+    .estate-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: auto;
+    }
 
-.estate-price span {
-font-size: .8rem;
-font-weight: 400;
-color: var(--muted-fg);
-}
+    .estate-price span {
+    font-size: .8rem;
+    font-weight: 400;
+    color: var(--muted-fg);
+    }
 
-.estate-card-footer {
-border-top: 1px solid var(--border);
-padding: 14px 20px;
-}
+    .estate-card-footer {
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+    }
 
-/* ===== Empty State ===== */
-.no-results {
-grid-column: 1 / -1;
-text-align: center;
-padding: 60px 20px;
-color: var(--muted-fg);
-}
+    /* ===== Empty State ===== */
+    .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted-fg);
+    }
 
-/* ===== Pagination ===== */
-.pagination {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 6px;
-margin: 40px 0 60px;
-flex-wrap: wrap;
-}
+    /* ===== Pagination ===== */
+    .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 40px 0 60px;
+    flex-wrap: wrap;
+    }
 
-.pagination a,
-.pagination span {
-padding: 8px 16px;
-border-radius: var(--radius);
-font-size: .875rem;
-font-weight: 600;
-text-decoration: none;
-}
+    .pagination a,
+    .pagination span {
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: .875rem;
+    font-weight: 600;
+    text-decoration: none;
+    }
 
-.pagination a {
-background: var(--card);
-border: 1px solid var(--border);
-color: var(--fg);
-}
+    .pagination a {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    }
 
-.pagination a:hover {
-background: var(--muted);
-}
+    .pagination a:hover {
+    background: var(--muted);
+    }
 
-.page-current {
-background: var(--navy);
-color: var(--primary-fg);
-border: 1px solid var(--navy);
-}
+    .page-current {
+    background: var(--navy);
+    color: var(--primary-fg);
+    border: 1px solid var(--navy);
+    }
 
 {% endblock %}
 
 {% block content %}
+    <div class="page-header" style="margin: 0 -1.5rem;">
+        <div class="page-header-bg">
+            <div class="overlay gradient-industrial"></div>
+        </div>
 
-<div class="page-header" style="margin: 0 -1.5rem;">
-    <div class="page-header-bg">
-        <div class="overlay gradient-industrial"></div>
-    </div>
-
-
-<div class="page-header-content container">
-    <h1>املاک و اسکان</h1>
-    <p>بهترین املاک داخلی و خارجی را با ما تجربه کنید</p>
-</div>
-
-
-</div>
-
-<form method="get">
-    <div class="filters-wrap industrial-shadow">
-
-
-    <div class="filter-group">
-        <label for="duration">مدت زمان</label>
-
-        <select name="duration"
-                id="duration"
-                onchange="this.form.submit()">
-
-            <option value="">همه</option>
-
-            <option value="1" {% if request.GET.duration == '1' %}selected{% endif %}>یک روزه</option>
-            <option value="2" {% if request.GET.duration == '2' %}selected{% endif %}>دو روزه</option>
-            <option value="3" {% if request.GET.duration == '3' %}selected{% endif %}>سه روزه</option>
-            <option value="5" {% if request.GET.duration == '5' %}selected{% endif %}>پنج روزه</option>
-            <option value="7" {% if request.GET.duration == '7' %}selected{% endif %}>هفت روزه</option>
-
-        </select>
-    </div>
-
-    <div class="filter-group search-group">
-        <label for="search">جستجو</label>
-
-        <div class="search-row">
-            <input type="text"
-                   name="search"
-                   id="search"
-                   placeholder="جستجو در عنوان یا مقصد..."
-                   value="{{ request.GET.search }}">
-
-            <button type="submit"
-                    class="btn-amber gradient-amber"
-                    style="white-space:nowrap;border:none;">
-                جستجو
-            </button>
+        <div class="page-header-content container">
+            <h1>املاک و اسکان</h1>
+            <p>بهترین املاک داخلی و خارجی را با ما تجربه کنید</p>
         </div>
     </div>
 
-</div>
+    <form method="get">
+        <div class="filters-wrap industrial-shadow">
+            <div class="filter-group">
+                <label for="duration">مدت زمان</label>
 
+                <select name="duration"
+                        id="duration"
+                        onchange="this.form.submit()">
 
-</form>
-
-<div class="estate-grid">
-
-
-{% for est in estate %}
-
-<div class="estate-card animate-fade-in-up industrial-shadow">
-
-    <div class="estate-card-img">
-
-        {% if est.image %}
-            <img src="{{ est.image.url }}" alt="{{ est.title }}">
-        {% else %}
-            <div class="estate-image-placeholder">
-                بدون تصویر
+                    <option value="">همه</option>
+                    <option value="1day" {% if request.GET.duration == '1day' %}selected{% endif %}>یک روزه</option>
+                    <option value="2day" {% if request.GET.duration == '2day' %}selected{% endif %}>دو روزه</option>
+                    <option value="3day" {% if request.GET.duration == '3day' %}selected{% endif %}>سه روزه</option>
+                    <option value="week" {% if request.GET.duration == 'week' %}selected{% endif %}>هفت روزه</option>
+                </select>
             </div>
-        {% endif %}
 
-        <div class="estate-card-badge">
-            {{ est.duration }} روزه
+            <div class="filter-group search-group">
+                <label for="search">جستجو</label>
+                <div class="search-row">
+                    <input type="text"
+                           name="search"
+                           id="search"
+                           placeholder="جستجو در عنوان یا مقصد..."
+                           value="{{ request.GET.search }}">
+
+                    <button type="submit"
+                            class="btn-amber gradient-amber"
+                            style="white-space:nowrap;border:none;">
+                        جستجو
+                    </button>
+                </div>
+            </div>
         </div>
+    </form>
 
+    <div class="estate-grid">
+        {% for est in estate %}
+            <div class="estate-card animate-fade-in-up industrial-shadow">
+                <div class="estate-card-img">
+                    {% if est.images %}
+                        {% with image=est.images.first %}
+                            {% if image %}
+                                <img src="{{ image.image.url }}" alt="{{ est.name }}">
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <div class="estate-image-placeholder">
+                            بدون تصویر
+                        </div>
+                    {% endif %}
+                    <div class="estate-card-badge">
+                        {% if est.duration == 'week' %}
+                            یک هفته
+                        {% elif est.duration == '3day' %}
+                            سه روزه
+                        {% elif est.duration == '2day' %}
+                            دو روزه
+                        {% else %}
+                            یک روزه
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="estate-card-body">
+                    <h3>{{ est.title }}</h3>
+
+                    <div class="estate-destination">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        {{ est.destination }}
+                    </div>
+
+                    <p class="estate-description">
+                        {{ est.description|truncatewords:20 }}
+                    </p>
+
+                    <div class="estate-price">
+                        {{ est.price|intcomma }}
+                        <span>تومان</span>
+                    </div>
+                </div>
+
+                <div class="estate-card-footer">
+                    <a href="{% url 'estate:detail' est.slug %}"
+                       class="btn-amber gradient-amber"
+                       style="width:100%;justify-content:center;">
+                        مشاهده جزئیات
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="no-results">
+                <p>ملک مورد نظر یافت نشد.</p>
+            </div>
+        {% endfor %}
     </div>
 
-    <div class="estate-card-body">
+    {% if estate.has_other_pages %}
+        <div class="pagination">
+            {% if estate.has_previous %}
+                <a href="?page=
+                        {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    قبلی
+                </a>
+            {% endif %}
 
-        <h3>{{ est.title }}</h3>
-
-        <div class="estate-destination">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-            </svg>
-
-            {{ est.destination }}
-        </div>
-
-        <p class="estate-description">
-            {{ est.description|truncatewords:20 }}
-        </p>
-
-        <div class="estate-price">
-            {{ est.price|floatformat:0 }}
-            <span>تومان</span>
-        </div>
-
-    </div>
-
-    <div class="estate-card-footer">
-
-        <a href="{% url 'estate:detail' est.slug %}"
-           class="btn-amber gradient-amber"
-           style="width:100%;justify-content:center;">
-
-            مشاهده جزئیات
-
-        </a>
-
-    </div>
-
-</div>
-
-{% empty %}
-
-<div class="no-results">
-    <p>تور مورد نظر یافت نشد.</p>
-</div>
-
-{% endfor %}
-
-
-</div>
-
-{% if estate.has_other_pages %}
-
-<div class="pagination">
-
-
-{% if estate.has_previous %}
-    <a href="?page={{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
-        قبلی
-    </a>
-{% endif %}
-
-<span class="page-current">
+            <span class="page-current">
     صفحه {{ estate.number }} از {{ estate.paginator.num_pages }}
 </span>
 
-{% if estate.has_next %}
-    <a href="?page={{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
-        بعدی
-    </a>
-{% endif %}
+            {% if estate.has_next %}
+                <a href="?page=
 
-
-</div>
-
-{% endif %}
-
+                        {{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    بعدی
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

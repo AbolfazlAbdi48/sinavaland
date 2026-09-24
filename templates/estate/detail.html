@@ -1,67 +1,35 @@
 {% extends 'base.html' %}
 
+{% load humanize %}{% load static %}{% load jalali %}
+
+
 {% block title %}{{ estate.title }} - سیناوالند{% endblock %}
 
 {% block extra_css %}
-/* ===== Hero ===== */
-.detail-hero {
-    position: relative;
-    height: 420px;
-    overflow: hidden;
-    margin: 0 -1.5rem 40px;
-}
+    /* =========================================================
+    ESTATE DETAIL PAGE
+    ========================================================= */
 
-.detail-hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .6s;
-}
+    .estate-detail-page {
+    direction: rtl;
+    min-height: 100vh;
+    background: var(--bg, #18191c);
+    color: var(--fg, #f5f5f5);
+    padding: 24px 0 70px;
+    }
 
-.detail-hero:hover img {
-    transform: scale(1.03);
-}
+    .estate-detail-container {
+    width: min(100%, 1180px);
+    margin: 0 auto;
+    padding: 0 24px;
+    }
 
-.detail-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(26,39,68,.78) 0%, rgba(26,39,68,.15) 60%, transparent 100%);
-}
+    /* =========================================================
+    Back Link
+    ========================================================= */
 
-.detail-hero-content {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 28px 32px;
-    z-index: 10;
-}
-
-.detail-hero-content h1 {
-    font-size: 2rem;
-    color: var(--primary-fg);
-    margin-bottom: 10px;
-}
-
-.detail-hero-content .estate-destination {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(250,250,250,.85);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.detail-hero-content .estate-destination svg {
-    color: var(--amber);
-}
-
-@media (min-width: 768px) {
-    .detail-hero-content h1 { font-size: 2.5rem; }
-}
-
-/* ===== Back Link ===== */
-.back-link {
+    /* ===== Back Link ===== */
+    .back-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -70,474 +38,1504 @@
     color: var(--muted-fg);
     margin-bottom: 28px;
     transition: color .2s;
-}
+    }
 
-.back-link:hover { color: var(--amber); }
+    .back-link:hover {
+    color: var(--amber);
+    }
 
-/* ===== Two-column layout ===== */
-.detail-layout {
+
+    /* =========================================================
+    MAIN LAYOUT
+    ========================================================= */
+
+    .estate-detail-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 60px;
-}
 
-@media (min-width: 1024px) {
-    .detail-layout { grid-template-columns: 1fr 340px; }
-}
+    grid-template-columns:
+    minmax(0, 500px)
+    minmax(360px, 450px);
 
-/* ===== Content sections ===== */
-.detail-main {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+    gap: 62px;
 
-.detail-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-}
+    align-items: start;
+    justify-content: center;
+    }
 
-.detail-section h2 {
-    font-size: 1.05rem;
-    color: var(--fg);
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--amber);
+
+    /* =========================================================
+    IMAGE COLUMN
+    ========================================================= */
+
+    .estate-media-column {
+    min-width: 0;
+    }
+
+
+    /* =========================================================
+    MAIN IMAGE
+    ========================================================= */
+
+    .estate-main-image {
+    width: 100%;
+
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    border-radius: 4px;
+
+    background: #222326;
+    }
+
+    .estate-main-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform .3s ease;
+    }
+
+    .estate-main-image:hover img {
+    transform: scale(1.01);
+    }
+
+
+    /* =========================================================
+    IMAGE FOOTER
+    ========================================================= */
+
+    .estate-image-footer {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
+    justify-content: space-between;
 
-.detail-section h2 .section-icon {
+    padding: 10px 2px;
+
+    color: #8c8e93;
+
+    font-size: 11px;
+    }
+
+    .estate-image-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    }
+
+
+    /* =========================================================
+    RIGHT INFORMATION
+    ========================================================= */
+
+    .estate-info {
+    min-width: 0;
+    }
+
+    .estate-title {
+    margin: 0 0 5px;
+
+    color: var(--fg, #fff);
+
+    font-size: 22px;
+    line-height: 1.7;
+    font-weight: 700;
+    }
+
+    .estate-location {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--muted-fg, #a0a0a0);
+
+    font-size: 13px;
+    }
+
+    .estate-location svg {
+    flex-shrink: 0;
+    }
+
+
+    /* =========================================================
+    WARNING
+    ========================================================= */
+
+    .estate-warning {
+    display: block;
+    align-items: center;
+    width: 100% !important;
+    gap: 9px;
+
+    padding: 14px 0;
+    }
+
+    .estate-warning-icon {
+    flex-shrink: 0;
+
+    color: #9da0a6;
+    }
+
+    .estate-warning-text {
+    flex: 1;
+
+    color: var(--fg, #e8e8e8);
+
+    font-size: 13px;
+    }
+
+    .estate-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #d93c3c;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+
+    padding: 9px 18px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: background .2s ease;
+    }
+
+    .estate-contact-btn:hover {
+    background: #bd3030;
+    color: #fff;
+    }
+
+
+    /* =========================================================
+    ACTION BUTTONS
+    ========================================================= */
+
+    .estate-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    margin: 15px 0 18px;
+    }
+
+    .estate-action-btn {
     width: 28px;
     height: 28px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
 
-.detail-section p,
-.detail-section div {
-    color: var(--muted-fg);
-    line-height: 1.9;
-    font-size: .925rem;
-}
+    padding: 0;
 
-/* ===== Sidebar ===== */
-.detail-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-@media (min-width: 1024px) {
-    .detail-sidebar { position: sticky; top: 84px; align-self: start; }
-}
-
-/* ===== Booking Card ===== */
-.booking-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-
-.booking-card-price {
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.price-label {
-    font-size: .8rem;
-    color: var(--muted-fg);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .03em;
-}
-
-.price-value {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--navy);
-}
-
-.booking-card-details {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-}
-
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: .875rem;
-}
-
-.detail-item:last-child { border-bottom: none; }
-
-.detail-item-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--muted-fg);
-    font-weight: 600;
-}
-
-.detail-item-label svg { color: var(--amber); flex-shrink: 0; }
-
-.detail-item-value {
-    color: var(--fg);
-    font-weight: 500;
-}
-
-.detail-item-value.available {
-    color: #065f46;
-    font-weight: 700;
-}
-
-.booking-card-actions {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.booking-note {
-    text-align: center;
-    font-size: .78rem;
-    color: var(--muted-fg);
-}
-
-/* ===== Auth / reservation states ===== */
-.reserved-notice {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: .85rem;
-    color: #065f46;
-    background: #d1fae5;
-    border-radius: var(--radius);
-    padding: 10px 14px;
-}
-
-.btn-danger {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: var(--radius);
+
+    background: transparent;
+
+    border: none;
+
+    color: #9a9ca1;
+
+    cursor: pointer;
+    }
+
+    .estate-action-btn:hover {
+    color: #fff;
+    }
+
+
+    /* =========================================================
+    ESTATE DETAILS
+    ========================================================= */
+
+    .estate-details {
+    border-top: 1px solid var(--border, #303136);
+    }
+
+    .estate-detail-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    min-height: 50px;
+
+    border-bottom: 1px solid var(--border, #303136);
+
+    font-size: 13px;
+    }
+
+    .estate-detail-label,
+    .estate-detail-value {
+    display: flex;
+    align-items: center;
+    }
+
+    .estate-detail-label {
+    justify-content: flex-start;
+
+    color: var(--muted-fg, #a0a0a0);
+    }
+
+    .estate-detail-value {
+    justify-content: flex-end;
+
+    color: var(--fg, #f1f1f1);
+
+    font-weight: 500;
+    }
+
+
+    /* =========================================================
+    PRICE
+    ========================================================= */
+
+    .estate-price-section {
+    margin-top: 10px;
+    }
+
+    .estate-price-title {
+    margin: 0;
+
+    padding: 13px 0 7px;
+
+    color: var(--fg, #fff);
+
+    font-size: 15px;
     font-weight: 700;
-    font-size: .875rem;
+    }
+
+    .estate-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 43px;
+
+    border-bottom: 1px solid var(--border, #303136);
+
+    font-size: 12px;
+    }
+
+    .estate-price-label {
+    color: var(--muted-fg, #a0a0a0);
+    }
+
+    .estate-price-value {
+    color: var(--fg, #ededed);
+
+    font-weight: 500;
+    }
+
+
+    /* =========================================================
+    RESERVATION
+    ========================================================= */
+
+    .estate-reservation {
+    margin-top: 18px;
+    }
+
+    .estate-reservation form {
+    margin: 0;
+    }
+
+    .estate-reserve-btn,
+    .estate-cancel-btn,
+    .estate-login-btn {
+    width: 100%;
+
+    min-height: 44px;
+
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition: .2s ease;
+    }
+
+    .estate-cancel-btn{
     background: #fee2e2;
     color: #991b1b;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    transition: background .2s;
-    text-decoration: none;
-}
+    }
 
-.btn-danger:hover { background: #fecaca; }
+    /* Login */
 
-.btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: var(--radius);
-    font-weight: 700;
-    font-size: .875rem;
+    .estate-login-btn {
     background: transparent;
     color: var(--navy);
     border: 1.5px solid var(--navy);
-    cursor: pointer;
-    width: 100%;
-    transition: background .2s, color .2s;
-    text-decoration: none;
-}
+    }
 
-.btn-outline:hover { background: var(--navy); color: var(--primary-fg); }
+    .estate-login-btn:hover {
+    background: var(--navy);
+    color: var(--primary-fg);
+    }
 
-/* ===== Messages ===== */
-.messages { display: flex; flex-direction: column; gap: 8px; }
 
-.alert {
-    padding: 10px 14px;
-    border-radius: var(--radius);
-    font-size: .875rem;
-}
+    /* Reserved */
 
-.alert-success { background: #d1fae5; color: #065f46; }
-.alert-error   { background: #fee2e2; color: #991b1b; }
-.alert-warning { background: #fef3c7; color: #92400e; }
-.alert-info    { background: #dbeafe; color: #1e40af; }
+    .estate-reserved {
+    display: flex;
+    align-items: center;
 
-/* ===== Contact Card ===== */
-.contact-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
+    gap: 7px;
+
+    margin-bottom: 10px;
+
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    padding: 11px 13px;
+
+    font-size: 12px;
+    }
+
+    .estate-booking-note {
+    margin: 10px 0 0;
+
+    color: #777a80;
+
+    font-size: 11px;
+
     text-align: center;
-}
+    }
 
-.contact-card h3 {
-    font-size: 1rem;
-    color: var(--fg);
-    margin-bottom: 8px;
-}
 
-.contact-card p {
-    font-size: .875rem;
-    color: var(--muted-fg);
-    margin-bottom: 16px;
-}
+    /* =========================================================
+    MESSAGES
+    ========================================================= */
+
+    .estate-messages {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 14px;
+    }
+
+    .estate-alert {
+    padding: 10px 12px;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+    }
+
+    .estate-alert-success {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    }
+
+    .estate-alert-error {
+    background: rgba(220, 70, 70, .13);
+    color: #ff9d9d;
+    }
+
+    .estate-alert-warning {
+    background: rgba(220, 170, 50, .13);
+    color: #e6c878;
+    }
+
+    .estate-alert-info {
+    background: rgba(70, 130, 200, .13);
+    color: #9fc5eb;
+    }
+
+
+    /* =========================================================
+    DESCRIPTION
+    DESKTOP:
+    زیر عکس
+    ========================================================= */
+
+    .estate-description-section {
+    width: 100%;
+
+    margin-top: 25px;
+    }
+
+    .estate-description {
+    border: 1px solid var(--border, #303136);
+
+    border-radius: 4px;
+
+    padding: 18px;
+    }
+
+    .estate-description-title {
+    margin: 0 0 12px;
+
+    color: var(--fg, #fff);
+
+    font-size: 15px;
+    font-weight: 600;
+    }
+
+    .estate-description-text {
+    margin: 0;
+
+    color: #a8aaae;
+
+    font-size: 12px;
+
+    line-height: 2;
+    }
+
+
+    /* =========================================================
+    EXTRA SECTIONS
+    ========================================================= */
+
+    .estate-extra-section {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border, #303136);
+    }
+
+    .estate-extra-title {
+    margin: 0 0 10px;
+
+    color: var(--fg, #fff);
+
+    font-size: 14px;
+    }
+
+    .estate-extra-content {
+    color: #a8aaae;
+
+    font-size: 12px;
+
+    line-height: 2;
+    }
+
+
+    /* =========================================================
+    HELP / CONTACT
+    ========================================================= */
+
+    .estate-help {
+    margin-top: 22px;
+
+    padding: 18px;
+
+    border: 1px solid var(--border, #303136);
+
+    border-radius: 4px;
+    }
+
+    .estate-help-title {
+    margin: 0 0 7px;
+
+    color: var(--fg, #fff);
+
+    font-size: 14px;
+    }
+
+    .estate-help-text {
+    margin: 0 0 14px;
+
+    color: #888b90;
+
+    font-size: 12px;
+    }
+
+    .estate-help-link {
+    width: 100%;
+    min-height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 4px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    transition: .2s ease;
+    }
+
+
+    /* =========================================================
+    RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+    .estate-detail-grid {
+    display: flex;
+    flex-direction: column;
+
+    gap: 28px;
+    }
+
+    .estate-media-column {
+    display: contents;
+    }
+
+    .estate-info {
+    order: 2;
+
+    width: 100%;
+    }
+
+    .estate-main-image {
+    order: 1;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 10;
+    }
+
+    .estate-image-footer {
+    order: 1;
+    }
+
+    .estate-description-section {
+    order: 3;
+
+    width: 100%;
+
+    margin-top: 0;
+    }
+    }
+
+
+    /* =========================================================
+    MOBILE
+    ========================================================= */
+
+    @media (max-width: 600px) {
+
+    .estate-detail-page {
+    padding-top: 15px;
+    }
+
+    .estate-detail-container {
+    padding: 0 14px;
+    }
+
+    .estate-breadcrumb {
+    margin-bottom: 18px;
+
+    font-size: 10px;
+    }
+
+    .estate-title {
+    font-size: 19px;
+    }
+
+    .estate-location {
+    font-size: 12px;
+    }
+
+    .estate-warning {
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+    }
+
+    .estate-warning-text {
+    flex: 1 1 calc(100% - 35px);
+    }
+
+    .estate-contact-btn {
+    width: 100%;
+
+    margin-top: 4px;
+    }
+
+    .estate-detail-row {
+    min-height: 46px;
+
+    font-size: 12px;
+    }
+
+    .estate-price-row {
+    min-height: 42px;
+
+    font-size: 11px;
+    }
+
+    .estate-main-image {
+    aspect-ratio: 4 / 3;
+    }
+
+    .estate-description-section {
+    margin-top: 0;
+    }
+    }
+
+    /* =========================================================
+    IMAGE CAROUSEL
+    ========================================================= */
+
+    .estate-carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #222326;
+    }
+
+    .estate-carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    }
+
+    .estate-carousel-slide {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity .3s ease;
+    }
+
+    .estate-carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    }
+
+    .estate-carousel-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    }
+
+
+    /* Arrow buttons */
+
+    .estate-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 50%;
+
+    background: rgba(20,20,22,.65);
+    color: #fff;
+
+    cursor: pointer;
+    z-index: 5;
+
+    transition: .2s ease;
+    }
+
+    .estate-carousel-btn:hover {
+    background: rgba(20,20,22,.9);
+    }
+
+    .estate-carousel-btn svg {
+    width: 18px;
+    height: 18px;
+    }
+
+    .estate-carousel-prev {
+    right: 14px;
+    }
+
+    .estate-carousel-next {
+    left: 14px;
+    }
+
+
+    /* Counter */
+
+    .estate-carousel-counter {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 4px;
+
+    background: rgba(20,20,22,.7);
+    color: #fff;
+
+    font-size: 11px;
+
+    direction: ltr;
+    }
+
+
+    /* Dots */
+
+    .estate-carousel-dots {
+    position: absolute;
+
+    bottom: 12px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    z-index: 5;
+    }
+
+    .estate-carousel-dot {
+    width: 6px;
+    height: 6px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.5);
+
+    cursor: pointer;
+
+    transition: .2s ease;
+    }
+
+    .estate-carousel-dot.active {
+    width: 18px;
+    border-radius: 4px;
+    background: #fff;
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 900px) {
+
+    .estate-carousel {
+    aspect-ratio: 16 / 10;
+    }
+
+    }
+
+    @media (max-width: 600px) {
+
+    .estate-carousel {
+    aspect-ratio: 4 / 3;
+    }
+
+    .estate-carousel-btn {
+    width: 34px;
+    height: 34px;
+    }
+
+    .estate-carousel-prev {
+    right: 9px;
+    }
+
+    .estate-carousel-next {
+    left: 9px;
+    }
+
+    .estate-carousel-counter {
+    top: 9px;
+    left: 9px;
+    }
+
+    .estate-carousel-dots {
+    bottom: 9px;
+    }
+    }
+
+    /* =========================================================
+    OWNER PHONE ACCORDION
+    ========================================================= */
+
+    .estate-owner-phone {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+    max-height .3s ease,
+    opacity .25s ease,
+    margin-top .3s ease;
+    }
+
+    .estate-owner-phone.open {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 10px;
+    }
+
+    .estate-owner-phone-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 14px 16px;
+
+    }
+
+    .estate-owner-phone-label {
+    color: #999;
+    font-size: 12px;
+    }
+
+    .estate-owner-phone-number {
+    color: #d93c3c;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none !important;
+    direction: ltr;
+    }
+
+    .estate-owner-phone-number:hover {
+    text-decoration: underline;
+    }
+
+    /* Disabled state of contact button */
+
+    .estate-contact-btn:disabled {
+    cursor: default;
+    opacity: .55;
+    background: #303136;
+    }
 {% endblock %}
 
+
 {% block content %}
+    <div class="estate-detail-page">
+        <div class="estate-detail-container">
 
-<!-- Back link -->
-<a href="{% url 'estate:list' %}" class="back-link">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M9 18l6-6-6-6"/>
-    </svg>
-    بازگشت به املاک و اسکان
-</a>
-
-<!-- Hero -->
-{% if estate.image %}
-<div class="detail-hero">
-    <img src="{{ estate.image.url }}" alt="{{ estate.title }}">
-    <div class="detail-hero-overlay"></div>
-    <div class="detail-hero-content">
-        <h1>{{ estate.title }}</h1>
-        <div class="estate-destination">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            {{ estate.destination }}
-        </div>
-    </div>
-</div>
-{% else %}
-<div class="detail-hero" style="height:auto;">
-    <div class="gradient-industrial" style="padding:80px 32px 60px;text-align:center;position:relative;">
-        <h1 style="font-size:2rem;color:var(--primary-fg);margin-bottom:10px;">{{ estate.title }}</h1>
-        <div class="estate-destination" style="justify-content:center;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            {{ estate.destination }}
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Layout -->
-<div class="detail-layout">
-
-    <!-- Main Content -->
-    <div class="detail-main">
-
-        <!-- Description -->
-        <div class="detail-section industrial-shadow">
-            <h2>
-                <span class="section-icon gradient-amber">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d3548" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                </span>
-                درباره این ملک
-            </h2>
-            <p>{{ estate.description }}</p>
-        </div>
-
-        {% if estate.itinerary %}
-        <div class="detail-section industrial-shadow">
-            <h2>
-                <span class="section-icon gradient-industrial">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-                    </svg>
-                </span>
-                برنامه سفر
-            </h2>
-            <div>{{ estate.itinerary|linebreaks }}</div>
-        </div>
-        {% endif %}
-
-        {% if estate.included_services %}
-        <div class="detail-section industrial-shadow">
-            <h2>
-                <span class="section-icon" style="background:#d1fae5;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#065f46" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
-                    </svg>
-                </span>
-                خدمات شامل شده
-            </h2>
-            <div>{{ estate.included_services|linebreaks }}</div>
-        </div>
-        {% endif %}
-
-        {% if estate.excluded_services %}
-        <div class="detail-section industrial-shadow">
-            <h2>
-                <span class="section-icon" style="background:#fee2e2;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-                    </svg>
-                </span>
-                خدمات شامل نشده
-            </h2>
-            <div>{{ estate.excluded_services|linebreaks }}</div>
-        </div>
-        {% endif %}
-
-    </div>
-
-    <!-- Sidebar -->
-    <div class="detail-sidebar">
-
-        <!-- Booking Card -->
-        <div class="booking-card industrial-shadow">
-            <div class="booking-card-price">
-                <span class="price-label">قیمت هر نفر</span>
-                <span class="price-value">{{ estate.price|floatformat:0 }} تومان</span>
-            </div>
-
-            <div class="booking-card-details">
-                <div class="detail-item">
-                    <span class="detail-item-label">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                        مدت زمان
-                    </span>
-                    <span class="detail-item-value">{{ estate.duration }} روز</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-item-label">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                        تاریخ شروع
-                    </span>
-                    <span class="detail-item-value">{{ estate.start_date|date:"Y/m/d" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-item-label">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                        تاریخ پایان
-                    </span>
-                    <span class="detail-item-value">{{ estate.end_date|date:"Y/m/d" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-item-label">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                        </svg>
-                        ظرفیت
-                    </span>
-                    <span class="detail-item-value">{{ estate.capacity }} نفر</span>
-                </div>
-                {% if estate.available_seats %}
-                <div class="detail-item">
-                    <span class="detail-item-label">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 9V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-2"/>
-                            <path d="M14 15l5-5-5-5"/>
-                        </svg>
-                        ظرفیت باقیمانده
-                    </span>
-                    <span class="detail-item-value available">{{ estate.available_seats }} نفر</span>
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="booking-card-actions">
-                {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% if user.is_authenticated %}
-                    {% if user_has_reserved %}
-                        <div class="reserved-notice">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
-                            </svg>
-                            شما این ملک را رزرو کرده‌اید
-                        </div>
-                        <a href="{% url 'estate:cancel_reservation' estate.slug %}"
-                           class="btn-danger"
-                           onclick="return confirm('لغو رزرو؟')">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-                            </svg>
-                            لغو رزرو
-                        </a>
-                    {% else %}
-                        <form method="post" action="{% url 'estate:reserve' estate.slug %}"
-                              onsubmit="return confirm('رزرو این ملک؟')">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-amber gradient-amber" style="width:100%;justify-content:center;border:none;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
-                                </svg>
-                                رزرو ملک
-                            </button>
-                        </form>
-                    {% endif %}
-                {% else %}
-                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-outline">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
-                        </svg>
-                        برای رزرو وارد شوید
-                    </a>
-                {% endif %}
-
-                <p class="booking-note">با رزرو آنلاین، تخفیف ویژه دریافت کنید</p>
-            </div>
-        </div>
-
-        <!-- Contact Card -->
-        <div class="contact-card industrial-shadow">
-            <h3>نیاز به مشاوره دارید؟</h3>
-            <p>تیم ما آماده پاسخگویی به سوالات شماست</p>
-            <a href="{% url 'core:contact' %}" class="btn-amber gradient-amber" style="width:100%;justify-content:center;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
+            <!-- Back link -->
+            <a href="{% url 'estate:list' %}" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
                 </svg>
-                تماس با ما
+                بازگشت به املاک و اسکان
             </a>
+
+            <!-- =====================================================
+                 TOP CONTENT
+                 ===================================================== -->
+
+            <div class="estate-detail-grid">
+
+                <!-- =================================================
+                     RIGHT: ESTATE INFORMATION
+                     ================================================= -->
+
+                <section class="estate-info">
+                    <!-- Title -->
+
+                    <h1 class="estate-title">
+                        {{ estate.title }}
+                    </h1>
+
+                    <!-- Location -->
+
+                    <div class="estate-location">
+                        <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                        >
+                            <path
+                                    d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"
+                            />
+                            <circle
+                                    cx="12"
+                                    cy="10"
+                                    r="3"
+                            />
+                        </svg>
+                        <span>
+                        {{ estate.destination }}
+                    </span>
+                    </div>
+
+                    <!-- Warning -->
+
+                    <div class="estate-warning">
+                        {% if user.is_authenticated %}
+                            <button
+                                    type="button"
+                                    class="estate-contact-btn"
+                                    id="showOwnerPhoneBtn"
+                            >
+                                اطلاعات تماس
+                            </button>
+
+                            <div
+                                    class="estate-owner-phone"
+                                    id="ownerPhoneAccordion"
+                            >
+                                <div class="estate-owner-phone-inner">
+
+            <span class="estate-owner-phone-label">
+                شماره موبایل
+            </span>
+
+                                    <a
+                                            href="tel:{{ estate.owner_phone_number }}"
+                                            class="estate-owner-phone-number"
+                                    >
+                                        {{ estate.owner_phone_number }}
+                                    </a>
+
+                                </div>
+                            </div>
+                        {% else %}
+                            <a
+                                    href="{% url 'accounts:login' %}?next={{ request.path }}"
+                                    class="estate-contact-btn"
+                            >
+                                اطلاعات تماس
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Details -->
+
+                    <div class="estate-details">
+                        <div class="estate-detail-row">
+                        <span class="estate-detail-label">
+                            مدت زمان
+                        </span>
+                            <span class="estate-detail-value">
+                                {% if estate.duration == 'week' %}
+                                    یک هفته
+                                {% elif estate.duration == '3day' %}
+                                    سه روزه
+                                {% elif estate.duration == '2day' %}
+                                    دو روزه
+                                {% else %}
+                                    یک روزه
+                                {% endif %}
+                        </span>
+                        </div>
+                        <div class="estate-detail-row">
+                        <span class="estate-detail-label">
+                            تاریخ شروع
+                        </span>
+
+                            <span class="estate-detail-value">
+                            {{ estate.start_date|to_jalali }}
+                        </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                        <span class="estate-detail-label">
+                            تاریخ پایان
+                        </span>
+                            <span class="estate-detail-value">
+                            {{ estate.end_date|to_jalali }}
+                        </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                        <span class="estate-detail-label">
+                            ظرفیت
+                        </span>
+                            <span class="estate-detail-value">
+                            {{ estate.capacity }} نفر
+                        </span>
+                        </div>
+
+                        {% if estate.available_seats %}
+                            <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                ظرفیت باقیمانده
+                            </span>
+                                <span class="estate-detail-value">
+                                {{ estate.available_seats }} نفر
+                            </span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Price -->
+
+                    <div class="estate-price-section">
+                        <h2 class="estate-price-title">
+                            قیمت
+                        </h2>
+
+                        <div class="estate-price-row">
+                        <span class="estate-price-label">
+                            قیمت اصلی
+                        </span>
+                            <span class="estate-price-value">
+                            {{ estate.price|intcomma }} تومان
+                        </span>
+                        </div>
+
+                        <div class="estate-price-row">
+                        <span class="estate-price-label">
+                            قیمت هر نفر
+                        </span>
+                            <span class="estate-price-value">
+                            {{ estate.price|intcomma }} تومان
+                        </span>
+                        </div>
+                    </div>
+
+                    <!-- Help -->
+
+                    <div class="estate-help">
+                        <h3 class="estate-help-title">
+                            نیاز به مشاوره دارید؟
+                        </h3>
+
+                        <p class="estate-help-text">
+                            تیم ما آماده پاسخگویی به سوالات شماست
+                        </p>
+
+                        <a
+                                href="{% url 'core:contact' %}"
+                                class="estate-help-link btn-amber gradient-amber"
+                        >
+                            تماس با ما
+                        </a>
+                    </div>
+                </section>
+
+                <!-- =================================================
+                     IMAGE COLUMN
+                     ================================================= -->
+
+                <section class="estate-media-column">
+                    <div
+                            class="estate-carousel"
+                            id="estateCarousel"
+                    >
+
+                        {% if estate.images.all %}
+
+                            <div class="estate-carousel-track">
+
+                                {% for image in estate.images.all %}
+
+                                    <div
+                                            class="estate-carousel-slide {% if forloop.first %}active{% endif %}"
+                                            data-slide="{{ forloop.counter0 }}"
+                                    >
+
+                                        <img
+                                                src="{{ image.image.url }}"
+                                                alt="{{ estate.title }} - تصویر {{ forloop.counter }}"
+                                        >
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            {% if estate.images.all|length > 1 %}
+
+                                <!-- Counter -->
+
+                                <div class="estate-carousel-counter">
+
+                    <span id="estateCurrentSlide">
+                        1
+                    </span>
+
+                                    <span>/</span>
+
+                                    <span>
+                        {{ estate.images.all|length }}
+                    </span>
+
+                                </div>
+
+
+                                <!-- Previous -->
+
+                                <button
+                                        type="button"
+                                        class="estate-carousel-btn estate-carousel-prev"
+                                        id="estateCarouselPrev"
+                                        aria-label="تصویر قبلی"
+                                >
+
+                                    <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                    >
+                                        <path d="M15 18l-6-6 6-6"/>
+                                    </svg>
+
+                                </button>
+
+
+                                <!-- Next -->
+
+                                <button
+                                        type="button"
+                                        class="estate-carousel-btn estate-carousel-next"
+                                        id="estateCarouselNext"
+                                        aria-label="تصویر بعدی"
+                                >
+
+                                    <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                    >
+                                        <path d="M9 18l6-6-6-6"/>
+                                    </svg>
+
+                                </button>
+
+
+                                <!-- Dots -->
+
+                                <div class="estate-carousel-dots">
+
+                                    {% for image in estate.images.all %}
+
+                                        <button
+                                                type="button"
+                                                class="estate-carousel-dot {% if forloop.first %}active{% endif %}"
+                                                data-slide="{{ forloop.counter0 }}"
+                                                aria-label="تصویر {{ forloop.counter }}"
+                                        ></button>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            <div
+                                    class="estate-carousel-empty"
+                                    style="
+                    width:100%;
+                    height:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                "
+                            >
+                <span style="color:#777;font-size:13px;">
+                    تصویری برای این ملک ثبت نشده است
+                </span>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Image info -->
+
+                    <div class="estate-image-footer">
+
+                    </div>
+
+                    <!-- =================================================
+                         DESCRIPTION
+                         ================================================= -->
+
+                    <section class="estate-description-section">
+
+                        <!-- Description -->
+
+                        <div class="estate-description">
+                            <h2 class="estate-description-title">
+                                توضیحات
+                            </h2>
+
+                            <p class="estate-description-text">
+                                {{ estate.description }}
+                            </p>
+                        </div>
+
+                        <!-- Itinerary -->
+
+                        {% if estate.itinerary %}
+                            <div class="estate-extra-section">
+                                <h2 class="estate-extra-title">
+                                    برنامه سفر
+                                </h2>
+
+                                <div class="estate-extra-content">
+                                    {{ estate.itinerary|linebreaks }}
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+                        <!-- Included services -->
+
+                        {% if estate.included_services %}
+                            <div class="estate-extra-section">
+                                <h2 class="estate-extra-title">
+                                    خدمات شامل شده
+                                </h2>
+
+                                <div class="estate-extra-content">
+                                    {{ estate.included_services|linebreaks }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Excluded services -->
+
+                        {% if estate.excluded_services %}
+                            <div class="estate-extra-section">
+                                <h2 class="estate-extra-title">
+                                    خدمات شامل نشده
+                                </h2>
+
+                                <div class="estate-extra-content">
+                                    {{ estate.excluded_services|linebreaks }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </section>
+                </section>
+            </div>
         </div>
-
     </div>
-</div>
+{% endblock %}
 
+{% block extra_js %}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const carousel = document.getElementById('estateCarousel');
+
+            if (!carousel) {
+                return;
+            }
+
+            const slides = Array.from(
+                carousel.querySelectorAll('.estate-carousel-slide')
+            );
+
+            if (slides.length <= 1) {
+                return;
+            }
+
+            const prevButton = document.getElementById(
+                'estateCarouselPrev'
+            );
+
+            const nextButton = document.getElementById(
+                'estateCarouselNext'
+            );
+
+            const dots = Array.from(
+                carousel.querySelectorAll('.estate-carousel-dot')
+            );
+
+            const currentSlideElement =
+                document.getElementById('estateCurrentSlide');
+
+            let currentIndex = 0;
+
+
+            function showSlide(index) {
+
+                if (index < 0) {
+                    index = slides.length - 1;
+                }
+
+                if (index >= slides.length) {
+                    index = 0;
+                }
+
+                currentIndex = index;
+
+
+                slides.forEach(function (slide, i) {
+
+                    slide.classList.toggle(
+                        'active',
+                        i === currentIndex
+                    );
+
+                });
+
+
+                dots.forEach(function (dot, i) {
+
+                    dot.classList.toggle(
+                        'active',
+                        i === currentIndex
+                    );
+
+                });
+
+
+                if (currentSlideElement) {
+
+                    currentSlideElement.textContent =
+                        currentIndex + 1;
+
+                }
+
+            }
+
+
+            nextButton.addEventListener(
+                'click',
+                function () {
+                    showSlide(currentIndex + 1);
+                }
+            );
+
+
+            prevButton.addEventListener(
+                'click',
+                function () {
+                    showSlide(currentIndex - 1);
+                }
+            );
+
+
+            dots.forEach(function (dot) {
+
+                dot.addEventListener(
+                    'click',
+                    function () {
+
+                        showSlide(
+                            Number(dot.dataset.slide)
+                        );
+
+                    }
+                );
+
+            });
+
+
+            /* Swipe */
+
+            let touchStartX = 0;
+
+
+            carousel.addEventListener(
+                'touchstart',
+                function (event) {
+
+                    touchStartX =
+                        event.changedTouches[0].screenX;
+
+                },
+                {passive: true}
+            );
+
+
+            carousel.addEventListener(
+                'touchend',
+                function (event) {
+
+                    const touchEndX =
+                        event.changedTouches[0].screenX;
+
+                    const difference =
+                        touchStartX - touchEndX;
+
+
+                    if (Math.abs(difference) < 50) {
+                        return;
+                    }
+
+
+                    if (difference > 0) {
+
+                        showSlide(currentIndex + 1);
+
+                    } else {
+
+                        showSlide(currentIndex - 1);
+
+                    }
+
+                },
+                {passive: true}
+            );
+
+
+            showSlide(0);
+
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const button = document.getElementById('showOwnerPhoneBtn');
+            const accordion = document.getElementById('ownerPhoneAccordion');
+
+            if (!button || !accordion) {
+                return;
+            }
+
+            button.addEventListener('click', function () {
+
+                accordion.classList.add('open');
+
+                button.disabled = true;
+
+            });
+
+        });
+    </script>
 {% endblock %}
