@@ -5,8 +5,8 @@ from .models import Estate, EstateImage
 @admin.register(Estate)
 class EstateAdmin(admin.ModelAdmin):
     list_display = ['title', 'destination', 'get_reservation_count', 'duration', 'price', 'start_date', 'capacity',
-                    'is_available']
-    list_filter = ['duration', 'is_available', 'start_date']
+                    'is_available', 'is_vip']
+    list_filter = ['duration', 'is_available', 'is_vip', 'start_date']
     search_fields = ['title', 'get_reservation_count', 'destination', 'description']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_available']

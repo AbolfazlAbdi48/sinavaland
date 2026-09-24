@@ -26,7 +26,8 @@ class Estate(models.Model):
     start_date = models.DateField(verbose_name='تاریخ شروع')
     end_date = models.DateField(verbose_name='تاریخ پایان', blank=True, null=True)
     is_available = models.BooleanField(default=True, verbose_name='موجود')
-    owner_phone_number = models.CharField(max_length=11, blank=True, null=True, verbose_name='شماره تماس مالک',
+    is_vip = models.BooleanField(default=False, verbose_name='ویژه')
+    owner_phone_number = models.CharField(max_length=11, verbose_name='شماره تماس مالک',
                                           validators=[phone_validator])
     reserved_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
