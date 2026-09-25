@@ -1,4 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 from django.conf import settings
 
@@ -50,6 +52,22 @@ class Estate(models.Model):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
+
+    def clean(self):
+        if self.start_date and self.start_date < timezone.localdate():
+            raise ValidationError(
+                'تاریخ شروع نمی‌توانند قبل از امروز باشند.'
+            )
+
+        if self.end_date and self.end_date < timezone.localdate():
+            raise ValidationError(
+                'تاریخ پایان نمی‌توانند قبل از امروز باشند.'
+            )
+
+        if self.start_date and self.end_date and self.start_date >= self.end_date:
+            raise ValidationError(
+                'تاریخ پایان باید بعد از تاریخ شروع باشد.'
+            )
 
     @property
     def available_seats(self):
