@@ -113,7 +113,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    margin: 0 24px 40px;
     }
 
     .estate-card {
@@ -261,10 +261,13 @@
     border: 1px solid var(--navy);
     }
 
+    form {
+    margin: 0 24px;
+    }
 {% endblock %}
 
 {% block content %}
-    <div class="page-header" style="margin: 0 -1.5rem;">
+    <div class="page-header">
         <div class="page-header-bg">
             <div class="overlay gradient-industrial"></div>
         </div>
@@ -380,6 +383,9 @@
         <div class="pagination">
             {% if estate.has_previous %}
                 <a href="?page=
+
+
+
                         {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -391,6 +397,9 @@
 
             {% if estate.has_next %}
                 <a href="?page=
+
+
+
 
                         {{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی

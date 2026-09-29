@@ -108,9 +108,9 @@
     /* ===== Articles Grid ===== */
     .articles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    margin: 0 24px 40px;
     }
 
     .article-card {
@@ -246,11 +246,15 @@
     border: 1px solid var(--navy);
     }
 
+    form{
+    margin: 0 24px;
+    }
+
 {% endblock %}
 
 {% block content %}
 
-    <div class="page-header" style="margin: 0 -1.5rem;">
+    <div class="page-header">
         <div class="page-header-bg">
             <div class="overlay gradient-industrial"></div>
         </div>
@@ -396,6 +400,9 @@
 
             {% if articles.has_previous %}
                 <a href="?page=
+
+
+
                         {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -407,6 +414,9 @@
 
             {% if articles.has_next %}
                 <a href="?page=
+
+
+
                         {{ articles.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی
                 </a>

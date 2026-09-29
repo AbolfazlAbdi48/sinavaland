@@ -122,7 +122,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    margin: 0 24px 40px;
     }
 
     .acc-card {
@@ -274,11 +274,15 @@
     color: var(--primary-fg);
     border: 1px solid var(--navy);
     }
+
+    form {
+        margin: 0 24px;
+    }
 {% endblock %}
 
 {% block content %}
     <!-- Page Header -->
-    <div class="page-header" style="margin: 0 -1.5rem;">
+    <div class="page-header">
         <div class="page-header-bg">
             <div class="overlay gradient-industrial"></div>
         </div>
@@ -389,6 +393,7 @@
                 <a href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">ابتدا</a>
                 <a href="?page=
 
+
                         {{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -397,8 +402,10 @@
             {% if page_obj.has_next %}
                 <a href="?page=
 
+
                         {{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
                 <a href="?page=
+
 
                         {{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">انتها</a>
             {% endif %}
