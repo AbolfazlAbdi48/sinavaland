@@ -103,6 +103,7 @@
     color: var(--fg);
     font-size: .9rem;
     transition: border-color .2s;
+    width: 100%;
     }
 
     .search-row input:focus { outline: none; border-color: var(--amber); }
@@ -376,6 +377,7 @@
             {% if products.has_previous %}
                 <a href="?page=
 
+
                         {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -383,6 +385,7 @@
 
             {% if products.has_next %}
                 <a href="?page=
+
 
                         {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
             {% endif %}
