@@ -22,7 +22,6 @@ def estate_list(request):
 
     return render(request, 'estate/list.html', {
         'estate': estate,
-        'durations': Estate.DURATION_CHOICES,
     })
 
 

@@ -1,20 +1,11 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from django.conf import settings
 
 from accounts.models import phone_validator
 
 
 class Estate(models.Model):
-    DURATION_CHOICES = [
-        ('1day', 'یک روزه'),
-        ('2day', 'دو روزه'),
-        ('3day', 'سه روزه'),
-        ('week', 'یک هفته'),
-    ]
-
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(unique=True, allow_unicode=True)
     destination = models.CharField(max_length=200, verbose_name='مقصد')
