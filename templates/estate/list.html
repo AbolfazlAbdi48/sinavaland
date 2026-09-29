@@ -280,21 +280,6 @@
 
     <form method="get">
         <div class="filters-wrap industrial-shadow">
-            <div class="filter-group">
-                <label for="duration">مدت زمان</label>
-
-                <select name="duration"
-                        id="duration"
-                        onchange="this.form.submit()">
-
-                    <option value="">همه</option>
-                    <option value="1day" {% if request.GET.duration == '1day' %}selected{% endif %}>یک روزه</option>
-                    <option value="2day" {% if request.GET.duration == '2day' %}selected{% endif %}>دو روزه</option>
-                    <option value="3day" {% if request.GET.duration == '3day' %}selected{% endif %}>سه روزه</option>
-                    <option value="week" {% if request.GET.duration == 'week' %}selected{% endif %}>هفت روزه</option>
-                </select>
-            </div>
-
             <div class="filter-group search-group">
                 <label for="search">جستجو</label>
                 <div class="search-row">
@@ -375,6 +360,7 @@
 
 
 
+
                         {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -386,6 +372,7 @@
 
             {% if estate.has_next %}
                 <a href="?page=
+
 
 
 
