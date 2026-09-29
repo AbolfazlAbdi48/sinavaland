@@ -48,7 +48,7 @@ class Estate(models.Model):
     @property
     def price_per_meter(self):
         if self.area:
-            return self.total_price / self.area
+            return self.total_price // self.area
         return 0
 
 
