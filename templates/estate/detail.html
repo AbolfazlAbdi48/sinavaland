@@ -1044,59 +1044,79 @@
 
                     <div class="estate-details">
                         <div class="estate-detail-row">
-                        <span class="estate-detail-label">
-                            مدت زمان
-                        </span>
-                            <span class="estate-detail-value">
-                                {% if estate.duration == 'week' %}
-                                    یک هفته
-                                {% elif estate.duration == '3day' %}
-                                    سه روزه
-                                {% elif estate.duration == '2day' %}
-                                    دو روزه
-                                {% else %}
-                                    یک روزه
-                                {% endif %}
-                        </span>
-                        </div>
-                        <div class="estate-detail-row">
-                        <span class="estate-detail-label">
-                            تاریخ شروع
-                        </span>
-
-                            <span class="estate-detail-value">
-                            {{ estate.start_date|to_jalali }}
-                        </span>
-                        </div>
-
-                        <div class="estate-detail-row">
-                        <span class="estate-detail-label">
-                            تاریخ پایان
-                        </span>
-                            <span class="estate-detail-value">
-                            {{ estate.end_date|to_jalali }}
-                        </span>
-                        </div>
-
-                        <div class="estate-detail-row">
-                        <span class="estate-detail-label">
-                            ظرفیت
-                        </span>
-                            <span class="estate-detail-value">
-                            {{ estate.capacity }} نفر
-                        </span>
-                        </div>
-
-                        {% if estate.available_seats %}
-                            <div class="estate-detail-row">
                             <span class="estate-detail-label">
-                                ظرفیت باقیمانده
+                                متراژ
                             </span>
-                                <span class="estate-detail-value">
-                                {{ estate.available_seats }} نفر
+                            <span class="estate-detail-value">
+                                {{ estate.area }} متر
                             </span>
-                            </div>
-                        {% endif %}
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                سال ساخت
+                            </span>
+                            <span class="estate-detail-value">
+                                {{ estate.construction_year }}
+                            </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                تعداد اتاق
+                            </span>
+                            <span class="estate-detail-value">
+                                {{ estate.rooms }}
+                            </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                طبقه
+                            </span>
+                            <span class="estate-detail-value">
+                                {{ estate.floor }}
+                            </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                استخر
+                            </span>
+                            <span class="estate-detail-value">
+                                {% if estate.has_pool %}
+                                    دارد
+                                {% else %}
+                                    ندارد
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                پارکینگ
+                            </span>
+                            <span class="estate-detail-value">
+                                {% if estate.has_parking %}
+                                    دارد
+                                {% else %}
+                                    ندارد
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="estate-detail-row">
+                            <span class="estate-detail-label">
+                                انبار
+                            </span>
+                            <span class="estate-detail-value">
+                                {% if estate.has_storage %}
+                                    دارد
+                                {% else %}
+                                    ندارد
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Price -->
@@ -1108,19 +1128,19 @@
 
                         <div class="estate-price-row">
                         <span class="estate-price-label">
-                            قیمت اصلی
+                            قیمت کل
                         </span>
                             <span class="estate-price-value">
-                            {{ estate.price|intcomma }} تومان
+                            {{ estate.total_price|intcomma }} تومان
                         </span>
                         </div>
 
                         <div class="estate-price-row">
                         <span class="estate-price-label">
-                            قیمت هر نفر
+                            قیمت هر متر
                         </span>
                             <span class="estate-price-value">
-                            {{ estate.price|intcomma }} تومان
+                            {{ estate.price_per_meter|intcomma }} تومان
                         </span>
                         </div>
                     </div>

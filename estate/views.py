@@ -6,7 +6,7 @@ from .models import Estate
 
 
 def estate_list(request):
-    estate = Estate.objects.filter(is_available=True).order_by('start_date')
+    estate = Estate.objects.filter(is_available=True).order_by('created_at')
 
     duration = request.GET.get('duration')
     if duration:
@@ -29,13 +29,8 @@ def estate_list(request):
 def estate_detail(request, slug):
     estate = get_object_or_404(Estate, slug=slug, is_available=True)
 
-    user_has_reserved = False
-    if request.user.is_authenticated:
-        user_has_reserved = request.user in estate.reserved_by.all()
-
     return render(request, 'estate/detail.html', {
         'estate': estate,
-        'user_has_reserved': user_has_reserved,
     })
 
 
