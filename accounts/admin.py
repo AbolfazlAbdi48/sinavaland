@@ -30,28 +30,15 @@ class UserAdmin(BaseUserAdmin):
     )
 
     def get_reservation_count(self, obj):
-        tours = obj.reserved_tours.count()
         accommodations = obj.reserved_accommodations.count()
-        total = tours + accommodations
-        return f"{total} ({tours}T + {accommodations}A)"
+        return f"{accommodations}A)"
 
     get_reservation_count.short_description = 'Reservations'
 
     def get_reservations_list(self, obj):
-        tours = obj.reserved_tours.all()
         accommodations = obj.reserved_accommodations.all()
 
-        html = "<strong>Tours:</strong><br>"
-        if tours:
-            html += "<ul>"
-            for tour in tours:
-                url = reverse('admin:tours_tour_change', args=[tour.pk])
-                html += f'<li><a href="{url}">{tour.title}</a></li>'
-            html += "</ul>"
-        else:
-            html += "None<br>"
-
-        html += "<br><strong>Accommodations:</strong><br>"
+        html = "<br><strong>Accommodations:</strong><br>"
         if accommodations:
             html += "<ul>"
             for acc in accommodations:

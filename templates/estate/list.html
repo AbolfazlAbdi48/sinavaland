@@ -280,6 +280,28 @@
 
     <form method="get">
         <div class="filters-wrap industrial-shadow">
+            <div class="filter-group">
+                <label for="lowest-price">کمترین قیمت (تومان)</label>
+                <div class="lowest-price-row">
+                    <input type="text"
+                           name="lowest_price"
+                           id="lowest-price"
+                           placeholder="کمترین قیمت..."
+                           value="{{ request.GET.lowest_price }}">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="highest-price">بیشترین قیمت (تومان)</label>
+                <div class="highest-price-row">
+                    <input type="text"
+                           name="highest_price"
+                           id="highest-price"
+                           placeholder="بیشترین قیمت..."
+                           value="{{ request.GET.highest_price }}">
+                </div>
+            </div>
+
             <div class="filter-group search-group">
                 <label for="search">جستجو</label>
                 <div class="search-row">
@@ -361,6 +383,9 @@
 
 
 
+
+
+
                         {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -372,6 +397,9 @@
 
             {% if estate.has_next %}
                 <a href="?page=
+
+
+
 
 
 

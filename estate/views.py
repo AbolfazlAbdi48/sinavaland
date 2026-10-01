@@ -8,9 +8,14 @@ from .models import Estate
 def estate_list(request):
     estate = Estate.objects.filter(is_available=True).order_by('created_at')
 
-    duration = request.GET.get('duration')
-    if duration:
-        estate = estate.filter(duration=duration)
+    lowest_price = request.GET.get('lowest_price')
+    highest_price = request.GET.get('highest_price')
+
+    if lowest_price:
+        estate = estate.filter(total_price__gte=lowest_price)
+    
+    if highest_price:
+        estate = estate.filter(total_price__lte=highest_price)
 
     search = request.GET.get('search')
     if search:
