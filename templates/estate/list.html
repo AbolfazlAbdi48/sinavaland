@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load humanize %}
+{% load humanize %}{% load static %}
 
 {% block title %}املاک و اسکان - سیناوالند{% endblock %}
 
@@ -264,6 +264,15 @@
     form {
     margin: 0 24px;
     }
+
+    .messages {
+    margin-top: 1rem;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    }
+
 {% endblock %}
 
 {% block content %}
@@ -279,6 +288,14 @@
     </div>
 
     <form method="get">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <span class="alert alert-{{ message.tags }}">{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="filters-wrap industrial-shadow">
             <div class="filter-group">
                 <label for="lowest-price">کمترین قیمت (تومان)</label>
@@ -386,6 +403,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                         {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -397,6 +423,15 @@
 
             {% if estate.has_next %}
                 <a href="?page=
+
+
+
+
+
+
+
+
+
 
 
 

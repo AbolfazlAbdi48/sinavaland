@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -11,11 +12,16 @@ def estate_list(request):
     lowest_price = request.GET.get('lowest_price')
     highest_price = request.GET.get('highest_price')
 
-    if lowest_price:
-        estate = estate.filter(total_price__gte=lowest_price)
-    
-    if highest_price:
-        estate = estate.filter(total_price__lte=highest_price)
+    try:
+        if lowest_price:
+            estate = estate.filter(total_price__gte=lowest_price)
+
+        if highest_price:
+            estate = estate.filter(total_price__lte=highest_price)
+
+    except ValidationError:
+        messages.error(request, 'لطفا در فیلدهای قیمت مقادیر عددی وارد کنید.')
+        return render(request, 'estate/list.html')
 
     search = request.GET.get('search')
     if search:
