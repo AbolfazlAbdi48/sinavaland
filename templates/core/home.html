@@ -293,15 +293,17 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div style="margin: 0 auto; text-align: center">
-                    <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
-                       style="margin-top: 30px;">رزرو اقامتگاه
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
-                </div>
+                {% if accommodations %}
+                    <div style="margin: 0 auto; text-align: center">
+                        <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
+                           style="margin-top: 30px;">رزرو اقامتگاه
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
             </section>
 
             <!-- Team Image+Text (reversed) -->
@@ -343,15 +345,17 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div style="margin: 0 auto; text-align: center">
-                    <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
-                       style="margin-top: 30px;"> ارتباط با واحد بازارچه
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
-                </div>
+                {% if products %}
+                    <div style="margin: 0 auto; text-align: center">
+                        <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
+                           style="margin-top: 30px;"> ارتباط با واحد بازارچه
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
             </section>
             <!-- Full-width Banner -->
             <section class="full-banner">
@@ -417,15 +421,17 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div style="margin: 0 auto; text-align: center">
-                    <a href="{% url 'estate:list' %}" class="btn-amber gradient-amber"
-                       style="margin-top: 30px;">املاک و اسکان
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
-                </div>
+                {% if estate %}
+                    <div style="margin: 0 auto; text-align: center">
+                        <a href="{% url 'estate:list' %}" class="btn-amber gradient-amber"
+                           style="margin-top: 30px;">املاک و اسکان
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
             </section>
 
             <!-- How it works -->
@@ -486,15 +492,17 @@
 
                         {% endfor %}
                     </div>
-                    <div style="margin: 0 auto; text-align: center">
-                        <a href="{% url 'magazine:list' %}" class="btn-amber gradient-amber"
-                           style="margin-top: 30px;"> مجله گردشگری
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </a>
-                    </div>
+                    {% if articles %}
+                        <div style="margin: 0 auto; text-align: center">
+                            <a href="{% url 'magazine:list' %}" class="btn-amber gradient-amber"
+                               style="margin-top: 30px;"> مجله گردشگری
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </section>
 
