@@ -101,70 +101,6 @@
     padding: 14px 20px;
     }
 
-    .acc-card-location {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--muted-fg);
-    font-size: .82rem;
-    margin-bottom: 14px;
-    }
-
-    .acc-card-location svg {
-    flex-shrink: 0;
-    color: var(--amber);
-    }
-
-    .acc-card-price {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 16px;
-    margin-top: auto;
-    }
-
-    .acc-card-price span {
-    font-size: .8rem;
-    font-weight: 400;
-    color: var(--muted-fg);
-    }
-
-    .product-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    margin-bottom: 14px;
-    }
-
-    .price-stack { display: flex; flex-direction: column; gap: 2px; }
-
-    .price-old {
-    font-size: .8rem;
-    color: var(--muted-fg);
-    text-decoration: line-through;
-    }
-
-    .price-final {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--navy);
-    }
-
-    .product-stock-label {
-    font-size: .78rem;
-    color: var(--muted-fg);
-    }
-
-    /* ===== Empty State ===== */
-    .no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--muted-fg);
-    }
-
 {% endblock %}
 
 {% block content %}
@@ -303,6 +239,19 @@
                     </a>
                 </div>
             </section>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style="margin: 0 auto; text-align: center">
+                    <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
+                       style="margin-top: 30px;">رزرو اقامتگاه
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
 
             <!-- Team Image+Text (reversed) -->
             <section class="img-text-section" style="background:var(--muted)" id="market">
@@ -337,6 +286,41 @@
                             </article>
                         {% empty %}
 
+            <!-- Team Image+Text (reversed) -->
+            <section class="img-text-section" style="background:var(--muted)" id="market">
+                <div class="container" style="position:relative;z-index:10">
+                    <div class="section-header">
+                        <h2>بازارچه سوغاتی</h2>
+                        <p>تامین تمام نیاز های سفر در فروشگاه سینوا</p>
+                    </div>
+
+                    <div class="articles-grid">
+                        {% for product in products %}
+                            <article class="article-card animate-fade-in-up industrial-shadow">
+                                <div class="article-image-wrap">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                                             class="article-image">
+                                    {% else %}
+                                        <div class="article-image-placeholder">
+                                            بدون تصویر
+                                        </div>
+                                    {% endif %}
+                                    <div class="article-category">
+                                        {{ product.get_category_display }}
+                                    </div>
+                                </div>
+                                <div class="article-content">
+                                    <h3>{{ product.title }}</h3>
+                                    <p class="article-excerpt">
+                                        {{ product.description|truncatewords:25 }}
+                                    </p>
+                                </div>
+                            </article>
+                        {% empty %}
+
+                            <div class="no-results">
+                                <p>محصولی یافت نشد.</p>
                             <div class="no-results">
                                 <p>محصولی یافت نشد.</p>
                             </div>
@@ -476,12 +460,29 @@
                 {{ article.created_at| to_jalali }}
             </span>
                                         </div>
+
+                                    </div>
+                                    <div class="article-footer">
+
+                                        <a href="{% url 'magazine:detail' article.slug %}"
+                                           class="btn-amber gradient-amber"
+                                           style="width:100%;justify-content:center;">
+
+                                            ادامه مطلب
+
+                                        </a>
+
+                                    </div>
+
                                 </article>
+
                             {% endif %}
                         {% empty %}
+
                             <div class="no-results">
                                 <p>مقاله‌ای یافت نشد.</p>
                             </div>
+
                         {% endfor %}
                     </div>
                     <div style="margin: 0 auto; text-align: center;">
