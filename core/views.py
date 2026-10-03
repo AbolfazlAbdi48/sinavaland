@@ -3,14 +3,26 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import ContactMessage
+
 from magazine.models import Article
+from accommodations.models import Accommodation
+from estate.models import Estate
+from marketplace.models import Product
 
 
 def home(request):
     """صفحه اصلی"""
+
     articles = Article.objects.all()[:3]
+    accommodations = Accommodation.objects.all()[:3]
+    estate = Estate.objects.all()[:3]
+    products = Product.objects.all()[:3]
+
     return render(request, 'core/home.html', {
-        "articles": articles
+        "articles": articles,
+        "accommodations": accommodations,
+        "estate": estate,
+        "products": products
     })
 
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static %}{% load humanize %}{% load jalali %}
 {% block title %}صفحه اصلی - سینوالند{% endblock %}
 
 {% block extra_css %}
@@ -101,6 +101,62 @@
     padding: 14px 20px;
     }
 
+    .acc-card-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--muted-fg);
+    font-size: .82rem;
+    margin-bottom: 14px;
+    }
+
+    .acc-card-location svg {
+    flex-shrink: 0;
+    color: var(--amber);
+    }
+
+    .acc-card-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    margin-top: auto;
+    }
+
+    .acc-card-price span {
+    font-size: .8rem;
+    font-weight: 400;
+    color: var(--muted-fg);
+    }
+
+    .product-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    margin-bottom: 14px;
+    }
+
+    .price-stack { display: flex; flex-direction: column; gap: 2px; }
+
+    .price-old {
+    font-size: .8rem;
+    color: var(--muted-fg);
+    text-decoration: line-through;
+    }
+
+    .price-final {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    }
+
+    .product-stock-label {
+    font-size: .78rem;
+    color: var(--muted-fg);
+    }
+
 {% endblock %}
 
 {% block content %}
@@ -183,112 +239,110 @@
 
             <!-- CNC Image+Text -->
             <section class="img-text-section" style="background:var(--bg)" id="home">
-                <div class="container">
-                    <div class="img-text-grid">
-                        <div class="img-block industrial-shadow"><img src="{% static 'homemain.jpg' %}"
-                                                                      alt="ماشین‌کاری CNC"/>
-                        </div>
-                        <div class="text-block">
-                            <div class="icon-box gradient-amber">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
-                                     stroke-width="2">
-                                    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
-                                </svg>
-                            </div>
-                            <h2>رزرو اقامتگاه</h2>
-                            <p>تجربه اصیل اقامت در مازندران با سینوالند</p>
-                            <ul class="check-list">
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    اقامت در منطقه ای اصیل و پر از آرامش
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    دسترسی راحت از طریق اتوبان تهران شمال
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    فول پکیج امکانات رفاهی
-                                </li>
-                            </ul>
-                            <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
-                               style="margin-top: 30px;">رزرو
-                                اقامتگاه
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </a>
-                        </div>
+                <div class="container" style="position:relative;z-index:10">
+                    <div class="section-header">
+                        <h2>اقامتگاه ها</h2>
                     </div>
+
+                    <div class="articles-grid">
+                        {% for accommodation in accommodations %}
+                            <article class="article-card animate-fade-in-up industrial-shadow">
+                                <div class="article-image-wrap">
+                                    {% if accommodation.images %}
+                                        {% with image=accommodation.images.first %}
+                                            {% if image %}
+                                                <img src="{{ image.image.url }}" alt="{{ accommodation.name }}"
+                                                     class="article-image">
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% else %}
+                                        <div class="article-image-placeholder">
+                                            بدون تصویر
+                                        </div>
+                                    {% endif %}
+                                    <div class="article-category">
+                                        {{ accommodation.get_category_display }}
+                                    </div>
+                                </div>
+                                <div class="article-content">
+                                    <h3>{{ accommodation.title }}</h3>
+                                    <div class="acc-card-location">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                            <circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        {{ accommodation.location }}
+                                    </div>
+                                </div>
+                            </article>
+                        {% empty %}
+
+                            <div class="no-results">
+                                <p>اقامتگاهی یافت نشد.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style="margin: 0 auto; text-align: center">
+                    <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
+                       style="margin-top: 30px;">رزرو اقامتگاه
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
                 </div>
             </section>
 
-
             <!-- Team Image+Text (reversed) -->
-            <section class="img-text-section" style="background:var(--muted)" id="tour">
-                <div class="container">
-                    <div class="img-text-grid">
-                        <div class="img-block industrial-shadow" style="order:1"><img src="{% static 'tour.png' %}"
-                                                                                      alt="تیم مهندسین"/></div>
-                        <div class="text-block" style="order:2">
-                            <div class="icon-box gradient-industrial">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                     stroke-width="2">
-                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                                </svg>
-                            </div>
-                            <h2>تور آرامش سینوا</h2>
-                            <p>تور های مازندران سینوالند، خاص، متفاوت و پر از آرامش...</p>
-                            <ul class="check-list">
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    تور آرامش سینوالند
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    خاص و متفاوت
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    رویایی و خاطره ساز
-                                </li>
-                            </ul>
-                            <a href="{% url 'estate:list' %}" class="btn-amber gradient-amber" style="margin-top: 30px;">رزرو
-                                تور آرامش
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </a>
-                        </div>
+            <section class="img-text-section" style="background:var(--muted)" id="market">
+                <div class="container" style="position:relative;z-index:10">
+                    <div class="section-header">
+                        <h2>بازارچه سوغاتی</h2>
+                        <p>تامین تمام نیاز های سفر در فروشگاه سینوا</p>
                     </div>
+
+                    <div class="articles-grid">
+                        {% for product in products %}
+                            <article class="article-card animate-fade-in-up industrial-shadow">
+                                <div class="article-image-wrap">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                                             class="article-image">
+                                    {% else %}
+                                        <div class="article-image-placeholder">
+                                            بدون تصویر
+                                        </div>
+                                    {% endif %}
+                                    <div class="article-category">
+                                        {{ product.get_category_display }}
+                                    </div>
+                                </div>
+                                <div class="article-content">
+                                    <h3>{{ product.title }}</h3>
+                                    <p class="article-excerpt">
+                                        {{ product.description|truncatewords:25 }}
+                                    </p>
+                                </div>
+                            </article>
+                        {% empty %}
+
+                            <div class="no-results">
+                                <p>محصولی یافت نشد.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style="margin: 0 auto; text-align: center">
+                    <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
+                       style="margin-top: 30px;"> ارتباط با واحد بازارچه
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
                 </div>
             </section>
 
@@ -310,95 +364,64 @@
                 </div>
             </section>
 
-            <!-- Services -->
-            <section class="services-section" id="market">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>بازارچه سینوالند</h2>
-                        <p>اصالت مازندران، در هر سفارشی که می‌دهید
-                        </p>
-                    </div>
-                    <div class="services-grid">
-                        <div class="service-card industrial-shadow">
-                            <div class="s-icon gradient-industrial">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                     stroke-width="2">
-                                    <path
-                                            d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
-                                </svg>
-                            </div>
-                            <h3>محصولات ارگانیک و طبیعی</h3>
-                            <p>مجموعه ای از خوراکی های محلی که با عشق درست شده اند</p>
-                        </div>
-                        <div class="service-card industrial-shadow">
-                            <div class="s-icon gradient-industrial">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
-                                     stroke-width="2">
-                                    <path
-                                            d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
-                                </svg>
-                            </div>
-                            <h3>صنایع دستی</h3>
-                            <p>صنایع دستی مازندران برای خانه‌هایی که به اصالت اهمیت می‌دهند</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Automation Image+Text -->
             <section class="img-text-section" style="background:var(--bg)">
-                <div class="container">
-                    <div class="img-text-grid">
-                        <div class="img-block industrial-shadow"><img src="{% static 'prmain.jpg' %}"
-                                                                      alt="خط تولید اتوماتیک"/>
-                        </div>
-                        <div class="text-block">
-                            <div class="icon-box gradient-amber">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d3548"
-                                     stroke-width="2">
-                                    <path d="M12 20V10M18 20V4M6 20v-4"/>
-                                </svg>
-                            </div>
-                            <h2>محصولات ارگانیک و خاص سینوا</h2>
-                            <p>محصولاتی که برای سلامت شما فرآوری شده اند</p>
-                            <ul class="check-list">
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    انواع مربا و خوراکی های میوه ای.
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    میوه های خاص و ارگانیک مازندران.
-                                </li>
-                                <li>
-                                    <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                         stroke="#f59e0b" stroke-width="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                                        <path d="M22 4L12 14.01l-3-3"/>
-                                    </svg>
-                                    زیتون، روغن زیتون، صابون زیتون و ... ارگانیک و بدون مواد شیمیایی.
-                                </li>
-                            </ul>
-                            <a href="{% url 'marketplace:list' %}" class="btn-amber gradient-amber"
-                               style="margin-top: 30px;">ارتباط
-                                با واحد بازارچه
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </a>
-                        </div>
+                <div class="container" style="position:relative;z-index:10">
+                    <div class="section-header">
+                        <h2>سرمایه گذاری</h2>
+                        <p>فرصت های سرمایه گذاری و خرید ملک</p>
                     </div>
+
+                    <div class="articles-grid">
+                        {% for est in estate %}
+                            <article class="article-card animate-fade-in-up industrial-shadow">
+                                <div class="article-image-wrap">
+                                    {% if est.images %}
+                                        {% with image=est.images.first %}
+                                            {% if image %}
+                                                <img src="{{ image.image.url }}" alt="{{ est.title }}"
+                                                     class="article-image">
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% else %}
+                                        <div class="article-image-placeholder">
+                                            بدون تصویر
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="article-content">
+                                    <h3>{{ est.title }}</h3>
+                                    <p class="article-excerpt">
+                                        {{ est.description|truncatewords:25 }}
+                                    </p>
+
+                                    <div class="acc-card-location">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                            <circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        {{ est.destination }}
+                                    </div>
+                                </div>
+                            </article>
+                        {% empty %}
+
+                            <div class="no-results">
+                                <p>محصولی یافت نشد.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div style="margin: 0 auto; text-align: center">
+                    <a href="{% url 'estate:list' %}" class="btn-amber gradient-amber"
+                       style="margin-top: 30px;"> املاک و اسکان
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
                 </div>
             </section>
 
@@ -408,10 +431,10 @@
                     <img src="{% static 'gears-detail.jpg' %}" alt="چرخ‌دنده"/>
                     <div class="overlay"></div>
                 </div>
-                {% if articles %}
-                    <div class="container" style="position:relative;z-index:10">
+
+                <div class="container" style="position:relative;z-index:10">
                     <div class="section-header">
-                        <h2>وبلاگ</h2>
+                        <h2>مجله سینوا</h2>
                     </div>
 
                     <div class="articles-grid">
@@ -438,42 +461,30 @@
                                             {{ article.excerpt|truncatewords:25 }}
                                         </p>
                                         <div class="article-meta">
-            <span>
-                نویسنده:
+                                            <span>نویسنده:
                 {{ article.author.get_full_name|default:article.author.username }}
             </span>
-
-                                            <span>
-                {{ article.published_at|date:"Y/m/d" }}
+                                            <span>تاریخ انتشار:
+                {{ article.created_at| to_jalali }}
             </span>
                                         </div>
-
-                                    </div>
-                                    <div class="article-footer">
-
-                                        <a href="{% url 'magazine:detail' article.slug %}"
-                                           class="btn-amber gradient-amber"
-                                           style="width:100%;justify-content:center;">
-
-                                            ادامه مطلب
-
-                                        </a>
-
-                                    </div>
-
                                 </article>
-
                             {% endif %}
                         {% empty %}
-
                             <div class="no-results">
                                 <p>مقاله‌ای یافت نشد.</p>
                             </div>
-
                         {% endfor %}
                     </div>
-                {% endif %}
-
+                    <div style="margin: 0 auto; text-align: center;">
+                        <a href="{% url 'magazine:list' %}" class="btn-amber gradient-amber"
+                           style="margin-top: 30px;"> مجله گردشگری
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </section>
 
