@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load jalali %}
 {% block title %}مجله گردشگری - سیناوالند{% endblock %}
 
 {% block extra_css %}
@@ -361,8 +362,8 @@
                 {{ article.author.get_full_name|default:article.author.username }}
             </span>
 
-                        <span>
-                {{ article.published_at|date:"Y/m/d" }}
+                        <span> تاریخ انتشار:
+                {{ article.created_at|to_jalali }}
             </span>
                     </div>
 
@@ -403,6 +404,7 @@
 
 
 
+
                         {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -414,6 +416,7 @@
 
             {% if articles.has_next %}
                 <a href="?page=
+
 
 
 
