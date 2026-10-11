@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.text import slugify
 from accounts.models import User
 
+from django_ckeditor_5.fields import CKEditor5Field
+
 class Article(models.Model):
     CATEGORY_CHOICES = [
         ('travel', 'سفر'),
@@ -14,7 +16,11 @@ class Article(models.Model):
     slug = models.SlugField(unique=True, allow_unicode=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name='دسته‌بندی')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='نویسنده')
-    content = models.TextField(verbose_name='محتوا')
+    content = CKEditor5Field(
+        config_name='default',
+        blank=True,
+        verbose_name='محتوا'
+    )
     excerpt = models.TextField(max_length=300, verbose_name='خلاصه')
     image = models.ImageField(upload_to='article/', blank=True, null=True)
     is_published = models.BooleanField(default=False, verbose_name='منتشر شده')
