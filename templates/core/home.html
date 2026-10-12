@@ -347,7 +347,7 @@
                                             {{ product.title }}
                                         </h3>
                                         <p class="article-excerpt">
-                                            {{ product.description|truncatewords:25 }}
+                                            {{ product.description | truncatewords:15 | safe }}
                                         </p>
 
                                         <div class="product-card-footer">

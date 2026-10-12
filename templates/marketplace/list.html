@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block title %}فروشگاه - سیناوالند{% endblock %}
 
 {% block extra_css %}
@@ -340,10 +342,10 @@
                     <div class="product-card-footer">
                         <div class="price-stack">
                             {% if product.discount_price %}
-                                <span class="price-old">{{ product.price|floatformat:0 }} تومان</span>
-                                <span class="price-final">{{ product.discount_price|floatformat:0 }} تومان</span>
+                                <span class="price-old">{{ product.price|intcomma }} تومان</span>
+                                <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
                             {% else %}
-                                <span class="price-final">{{ product.price|floatformat:0 }} تومان</span>
+                                <span class="price-final">{{ product.price|intcomma }} تومان</span>
                             {% endif %}
                         </div>
                         <span class="product-stock-label">موجودی: {{ product.stock }}</span>
