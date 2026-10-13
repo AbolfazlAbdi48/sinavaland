@@ -119,105 +119,197 @@
     }
 
     .product-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: transform .25s, box-shadow .25s;
+    min-width: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+
+    background: var(--card);
+    border-radius: var(--radius);
+
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
     }
 
     .product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px -4px rgba(26,39,68,.15);
+    border-color: var(--amber);
+    box-shadow: 0 10px 28px rgba(26, 39, 68, .12);
     }
 
     .product-card-img {
     position: relative;
-    height: 220px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
     overflow: hidden;
+    background: var(--muted);
     }
 
     .product-card-img img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .4s;
+    transition: transform .4s ease;
     }
 
-    .product-card:hover .product-card-img img { transform: scale(1.05); }
+    .product-card:hover .product-card-img img { transform: scale(1.04); }
 
     .product-card-img-placeholder {
     width: 100%;
     height: 100%;
-    background: var(--muted);
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--muted);
     color: var(--steel);
-    font-size: .875rem;
     }
 
     .product-card-badge {
     position: absolute;
     top: 12px;
     right: 12px;
+    max-width: calc(100% - 24px);
+    padding: 5px 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     background: var(--amber);
     color: var(--charcoal);
-    font-size: .72rem;
-    font-weight: 700;
-    padding: 4px 10px;
     border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
     }
 
     .product-card-body {
-    padding: 20px;
+    min-width: 0;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    padding: 18px 18px 12px;
     }
 
     .product-card-body h3 {
-    font-size: 1.05rem;
+    margin: 0 0 12px;
     color: var(--fg);
-    margin-bottom: 6px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
     }
 
     .product-card-desc {
-    font-size: .85rem;
+    min-width: 0;
+    width: 100%;
+    height: 6.8em;
+    flex: 0 0 6.8em;
+    margin: 0;
+    overflow: hidden;
+
     color: var(--muted-fg);
-    line-height: 1.6;
-    margin-bottom: 14px;
-    flex: 1;
+    font-size: .85rem;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    }
+
+    /* Rich text: paragraphs and lists */
+
+    .product-card-desc p {
+    margin: 0 0 4px;
+    }
+
+    .product-card-desc ul,
+    .product-card-desc ol {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 18px 0 0;
+    }
+
+    .product-card-desc li {
+    max-width: 100%;
+    margin: 0 0 3px;
+    padding: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    }
+
+    .product-card-desc img,
+    .product-card-desc table {
+    max-width: 100%;
     }
 
     .product-card-footer {
+    margin-top: auto;
+    padding: 14px 18px;
+
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    padding-top: 14px;
+    align-items: center;
+    gap: 10px;
+
     border-top: 1px solid var(--border);
-    margin-bottom: 14px;
     }
 
-    .price-stack { display: flex; flex-direction: column; gap: 2px; }
+    .price-stack {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    }
 
     .price-old {
-    font-size: .8rem;
     color: var(--muted-fg);
+    font-size: .8rem;
     text-decoration: line-through;
     }
 
     .price-final {
-    font-size: 1.15rem;
-    font-weight: 700;
     color: var(--navy);
+    font-size: 1.08rem;
+    font-weight: 800;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
     }
 
     .product-stock-label {
-    font-size: .78rem;
+    flex-shrink: 0;
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     color: var(--muted-fg);
+    font-size: .76rem;
+    }
+
+    .product-btn {
+    width: auto;
+    min-height: 44px;
+    margin: 0 18px 18px !important;
+    padding: 10px 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 700;
     }
 
     /* ===== Empty State ===== */
@@ -264,6 +356,59 @@
 
     form {
     margin: 0 24px;
+    }
+
+    /* ===== Responsive ===== */
+
+    @media (max-width: 640px) {
+    .product-card-body {
+    padding: 13px 12px 10px;
+    }
+
+    .product-card-body h3 {
+    font-size: .92rem;
+    margin-bottom: 9px;
+    }
+
+    .product-card-desc {
+    height: 6.8em;
+    flex-basis: 6.8em;
+    font-size: .78rem;
+    line-height: 1.7;
+    }
+
+    .product-card-footer {
+    padding: 12px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    }
+
+    .price-final {
+    font-size: .96rem;
+    }
+
+    .product-stock-label {
+    font-size: .72rem;
+    }
+
+    .product-btn {
+    margin: 0 10px 12px !important;
+    padding: 9px 5px;
+    font-size: .8rem;
+    }
+    }
+
+    @media (max-width: 360px) {
+    .product-card-footer {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    }
+
+    .price-final {
+    font-size: .88rem;
+    }
     }
 {% endblock %}
 
@@ -337,29 +482,30 @@
 
                 <div class="product-card-body">
                     <h3>{{ product.title }}</h3>
-                    <p class="product-card-desc">{{ product.description|truncatewords:15|safe }}</p>
-
-                    <div class="product-card-footer">
-                        <div class="price-stack">
-                            {% if product.discount_price %}
-                                <span class="price-old">{{ product.price|intcomma }} تومان</span>
-                                <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
-                            {% else %}
-                                <span class="price-final">{{ product.price|intcomma }} تومان</span>
-                            {% endif %}
-                        </div>
-                        <span class="product-stock-label">موجودی: {{ product.stock }}</span>
+                    <div class="product-card-desc">
+                        {{ product.description|truncatewords:15|safe }}
                     </div>
-
-                    <a href="{% url 'marketplace:detail' product.slug %}" class="btn-amber gradient-amber"
-                       style="width:100%;justify-content:center;">
-                        مشاهده جزئیات
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </a>
                 </div>
+                <div class="product-card-footer">
+                    <div class="price-stack">
+                        {% if product.discount_price %}
+                            <span class="price-old">{{ product.price|intcomma }} تومان</span>
+                            <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
+                        {% else %}
+                            <span class="price-final">{{ product.price|intcomma }} تومان</span>
+                        {% endif %}
+                    </div>
+                    <span class="product-stock-label">موجودی: {{ product.stock }}</span>
+                </div>
+
+                <a href="{% url 'marketplace:detail' product.slug %}" class="btn-amber gradient-amber product-btn"
+                   style="justify-content:center;">
+                    مشاهده جزئیات
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </a>
             </div>
 
         {% empty %}
@@ -380,6 +526,36 @@
                 <a href="?page=
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -387,6 +563,36 @@
 
             {% if products.has_next %}
                 <a href="?page=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                         {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
