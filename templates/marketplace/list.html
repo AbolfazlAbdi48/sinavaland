@@ -337,7 +337,7 @@
 
                 <div class="product-card-body">
                     <h3>{{ product.title }}</h3>
-                    <p class="product-card-desc">{{ product.description|truncatewords:15 }}</p>
+                    <p class="product-card-desc">{{ product.description|truncatewords:15|safe }}</p>
 
                     <div class="product-card-footer">
                         <div class="price-stack">
