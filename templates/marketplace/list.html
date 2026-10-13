@@ -483,7 +483,7 @@
                 <div class="product-card-body">
                     <h3>{{ product.title }}</h3>
                     <div class="product-card-desc">
-                        {{ product.description|truncatewords:15|safe }}
+                        {{ product.description|truncatewords_html:15|safe }}
                     </div>
                 </div>
                 <div class="product-card-footer">
@@ -523,78 +523,13 @@
     {% if products.has_other_pages %}
         <div class="pagination">
             {% if products.has_previous %}
-                <a href="?page=
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
+                <a href="?page={{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
             <span class="page-current">صفحه {{ products.number }} از {{ products.paginator.num_pages }}</span>
 
             {% if products.has_next %}
                 <a href="?page=
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
             {% endif %}
         </div>
