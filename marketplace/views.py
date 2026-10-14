@@ -29,15 +29,6 @@ def product_list(request):
 
 
 def product_detail(request, slug):
-    print("=== PERSIAN SLUG DEBUG ===")
-    print("REQUEST PATH:", repr(request.path))
-    print("PATH INFO:", repr(request.path_info))
-    print("SCRIPT NAME:", repr(request.META.get("SCRIPT_NAME")))
-    print("SCRIPT URL:", repr(request.META.get("SCRIPT_URL")))
-    print("REDIRECT URL:", repr(request.META.get("REDIRECT_URL")))
-    print("RAW PATH INFO:", repr(request.META.get("PATH_INFO")))
-    print("RECEIVED SLUG:", repr(slug))
-
     product = get_object_or_404(
         Product,
         slug=slug,
