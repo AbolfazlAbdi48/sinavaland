@@ -30,4 +30,10 @@ def product_list(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_available=True)
-    return render(request, "marketplace/detail.html", {"product": product})
+    return render(
+        request,
+        "marketplace/detail.html",
+        {"product": product},
+    )
+
+
