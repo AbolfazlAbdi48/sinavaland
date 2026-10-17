@@ -5,6 +5,41 @@
 {% block title %}{{ product.title }} - سیناوالند{% endblock %}
 
 {% block extra_css %}
+    .alert {
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: .875rem;
+    margin-bottom: 8px;
+    }
+
+    .alert-success  { background: #d1fae5; color: #065f46; }
+    .alert-error    { background: #fee2e2; color: #991b1b; }
+    .alert-warning  { background: #fef3c7; color: #92400e; }
+
+    .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: .875rem;
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    transition: background .2s, color .2s;
+    text-decoration: none;
+    }
+
+    .btn-outline:hover {
+    background: var(--navy);
+    color: var(--primary-fg);
+    }
+
+
     /* ===== Back Link ===== */
     .back-link {
     display: inline-flex;
@@ -291,6 +326,14 @@
                 {% endif %}
             </div>
 
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <!-- Stock -->
             {% if product.stock > 10 %}
                 <div class="stock-badge available">
@@ -339,27 +382,61 @@
 
             <!-- Actions -->
             <div class="product-actions">
-                {% if product.stock > 0 %}
-                    <button class="btn-amber gradient-amber"
-                            style="width:100%;justify-content:center;border:none;padding:14px 24px;font-size:.95rem;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-outline">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="2">
-                            <circle cx="9" cy="21" r="1"/>
-                            <circle cx="20" cy="21" r="1"/>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                            <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
                         </svg>
-                        افزودن به سبد خرید
-                    </button>
-                    <button class="btn-buy">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                        خرید سریع
-                    </button>
+                        برای ثبت سفارش وارد شوید
+                    </a>
                 {% else %}
-                    <div class="btn-disabled">اطلاع از موجود شدن</div>
+                    {% if not is_in_cart %}
+                        {% if product.stock > 0 %}
+                            <form action="{% url 'cart:cart-add' %}" method="post">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                                <button type="submit" class="btn-amber gradient-amber"
+                                        style="width:100%;justify-content:center;border:none;padding:14px 24px;font-size:.95rem;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"/>
+                                        <circle cx="20" cy="21" r="1"/>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                                    </svg>
+                                    افزودن به سبد خرید
+                                </button>
+                            </form>
+                            <button class="btn-buy">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                                خرید سریع
+                            </button>
+                        {% else %}
+                            <div class="btn-disabled">اطلاع از موجود شدن</div>
+                        {% endif %}
+
+                    {% else %}
+                        <button
+                                class="avail-badge unavailable"
+                                style="width:100%;justify-content:center;border:none;padding:14px 24px;font-size:.95rem;"
+                                disabled
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg>
+                            این محصول در سبد خرید شما موجود است.
+                        </button>
+                    {% endif %}
                 {% endif %}
+
             </div>
 
             <!-- Meta -->
