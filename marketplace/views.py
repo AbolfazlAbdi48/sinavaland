@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+
 from .models import Product
+from cart import services
 
 
 def product_list(request):
@@ -30,10 +32,17 @@ def product_list(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_available=True)
+    is_in_cart = False
+
+    if request.user.is_authenticated:
+        cart = services.get_cart(request.user)
+        is_in_cart = services.is_product_in_cart(cart, product)
+
     return render(
         request,
         "marketplace/detail.html",
-        {"product": product},
+        {
+            "product": product,
+            "is_in_cart": is_in_cart,
+        },
     )
-
-
