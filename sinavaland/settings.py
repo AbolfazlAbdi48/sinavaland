@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'marketplace',
     'magazine',
     'core',
+    'cart',
     'pwa',
     'django_ckeditor_5',
 ]
