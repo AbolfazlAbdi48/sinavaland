@@ -180,6 +180,13 @@
     background: #f1eaf8;
     }
 
+    .cart-product-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
     .cart-product-info {
     min-width: 0;
     }
@@ -228,7 +235,7 @@
     align-items: flex-end;
     justify-content: space-between;
     align-self: stretch;
-    gap: 20px;
+    gap: 8px;
     }
 
     .cart-quantity {
@@ -538,7 +545,6 @@
 
     .cart-layout {
     grid-template-columns: 1fr;
-    gap: 20px;
     }
 
     .cart-sidebar {
@@ -546,56 +552,19 @@
     }
 
     .cart-card-header {
-    padding: 19px;
-    }
-
-    .cart-product {
     padding: 18px;
     }
 
-    .cart-summary {
-    padding: 22px;
-    }
-
-    .cart-trust-card {
-    margin-top: 12px;
-    }
-
-    .cart-empty {
-    padding: 42px 18px;
-    }
-
-    .cart-empty h2 {
-    font-size: 18px;
-    }
-    }
-
-    @media (max-width: 380px) {
-    .cart-container {
-    width: calc(100% - 20px);
-    }
-
-    .cart-step {
-    flex-direction: column;
-    text-align: center;
-    white-space: normal;
-    }
-
-    .cart-step-line {
-    width: 28px;
-    margin-bottom: 24px;
-    }
-
     .cart-product {
-    grid-template-columns: 66px minmax(0, 1fr);
+    grid-template-columns: 70px minmax(0, 1fr);
     gap: 12px;
-    padding: 15px;
+    padding: 17px;
     }
 
     .cart-product-image {
-    width: 66px;
-    height: 74px;
-    font-size: 31px;
+    width: 70px;
+    height: 78px;
+    font-size: 32px;
     }
 
     .cart-product-title {
@@ -606,30 +575,27 @@
     font-size: 11px;
     }
 
-    .cart-product-price {
-    font-size: 13px;
+    .cart-product-actions {
+    grid-column: 1 / -1;
+    }
+
+    .cart-summary {
+    padding: 20px;
     }
     }
+
 {% endblock %}
 
 {% block content %}
     <section class="cart-page">
         <div class="cart-container">
-
-            <header class="cart-heading">
-                <div>
-                    <a href="{% url 'marketplace:list' %}" class="back-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2"
-                             aria-hidden="true">
-                            <path d="M9 18l6-6-6-6"/>
-                        </svg>
-                        بازگشت به بازارچه سوغاتی
-                    </a>
-                </div>
-            </header>
-
-            {% if cart_has_items|default:True %}
+            {% if cart_has_items %}
+                <a href="{% url 'magazine:list' %}" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                    بازگشت به بازارچه سوغاتی
+                </a>
 
                 <div class="cart-steps" aria-label="مراحل خرید">
                     <div class="cart-step active">
@@ -658,134 +624,64 @@
 
                             <div class="cart-card-header">
                                 <h2>محصولات سبد خرید</h2>
-                                <span id="cart-item-count">۳ کالا</span>
+                                <span id="cart-item-count">{{ cart_items|length }} کالا</span>
                             </div>
 
-                            <article class="cart-product" data-price="250000">
-                                <div class="cart-product-image food"
-                                     aria-label="تصویر نمونه محصول">🎁
-                                </div>
-
-                                <div class="cart-product-info">
-                                    <span class="cart-product-category">سوغات محلی</span>
-                                    <h3 class="cart-product-title">پک سوغات سنتی مازندران</h3>
-                                    <p class="cart-product-description">بسته‌بندی مناسب هدیه</p>
-
-                                    <div class="cart-product-price">
-                                        <span class="product-price-value">۲۵۰٬۰۰۰</span>
-                                        <small>تومان</small>
-                                    </div>
-                                </div>
-
-                                <div class="cart-product-actions">
-                                    <div class="cart-quantity">
-                                        <button type="button" class="quantity-increase"
-                                                aria-label="افزایش تعداد">+
-                                        </button>
-                                        <span class="quantity-value">۱</span>
-                                        <button type="button" class="quantity-decrease"
-                                                aria-label="کاهش تعداد" disabled>−
-                                        </button>
+                            {% for item in cart_items %}
+                                <article
+                                        class="cart-product"
+                                        data-item-id="{{ item.pk }}"
+                                        data-stock="{{ item.product.stock }}"
+                                        data-price="{{ item.product.price }}">
+                                    <div class="cart-product-image food">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}">
+                                        {% endif %}
                                     </div>
 
-                                    <button type="button" class="cart-remove">
-                                        <svg viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="1.8"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             aria-hidden="true">
-                                            <path d="M3 6h18"/>
-                                            <path d="M8 6V4h8v2"/>
-                                            <path d="m19 6-1 14H6L5 6"/>
-                                            <path d="M10 11v5M14 11v5"/>
-                                        </svg>
-                                        حذف
-                                    </button>
-                                </div>
-                            </article>
+                                    <div class="cart-product-info">
+                                        <span class="cart-product-category">{{ item.product.category }}</span>
+                                        <h3 class="cart-product-title">{{ item.product.title }}</h3>
 
-                            <article class="cart-product" data-price="180000">
-                                <div class="cart-product-image handicraft"
-                                     aria-label="تصویر نمونه محصول">🏺
-                                </div>
-
-                                <div class="cart-product-info">
-                                    <span class="cart-product-category">صنایع دستی</span>
-                                    <h3 class="cart-product-title">ظرف سفالی دست‌ساز</h3>
-                                    <p class="cart-product-description">ساخته‌شده با هنر دست</p>
-
-                                    <div class="cart-product-price">
-                                        <span class="product-price-value">۱۸۰٬۰۰۰</span>
-                                        <small>تومان</small>
-                                    </div>
-                                </div>
-
-                                <div class="cart-product-actions">
-                                    <div class="cart-quantity">
-                                        <button type="button" class="quantity-increase"
-                                                aria-label="افزایش تعداد">+
-                                        </button>
-                                        <span class="quantity-value">۱</span>
-                                        <button type="button" class="quantity-decrease"
-                                                aria-label="کاهش تعداد" disabled>−
-                                        </button>
+                                        <div class="cart-product-price">
+                                            <span class="product-price-value">{{ item.product.price|floatformat:0 }}</span>
+                                            <small>تومان</small>
+                                        </div>
                                     </div>
 
-                                    <button type="button" class="cart-remove">
-                                        <svg viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="1.8"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             aria-hidden="true">
-                                            <path d="M3 6h18"/>
-                                            <path d="M8 6V4h8v2"/>
-                                            <path d="m19 6-1 14H6L5 6"/>
-                                            <path d="M10 11v5M14 11v5"/>
-                                        </svg>
-                                        حذف
-                                    </button>
-                                </div>
-                            </article>
+                                    <div class="cart-product-actions">
+                                        <div class="cart-quantity">
+                                            <button type="button" class="quantity-increase"
+                                                    aria-label="افزایش تعداد">+
+                                            </button>
+                                            <span class="quantity-value"
+                                                  data-quantity="{{ item.quantity }}">{{ item.quantity }}</span>
+                                            <button type="button" class="quantity-decrease"
+                                                    aria-label="کاهش تعداد" disabled>−
+                                            </button>
+                                        </div>
 
-                            <article class="cart-product" data-price="120000">
-                                <div class="cart-product-image souvenir"
-                                     aria-label="تصویر نمونه محصول">🍪
-                                </div>
+                                        <small style="color: #e31010; font-size: .75rem; margin: 0 auto;">موجودی: {{ item.product.stock }}</small>
 
-                                <div class="cart-product-info">
-                                    <span class="cart-product-category">خوراکی محلی</span>
-                                    <h3 class="cart-product-title">شیرینی سنتی محلی</h3>
-                                    <p class="cart-product-description">بسته ۵۰۰ گرمی</p>
+                                        <form method="post" action="{% url 'cart:cart-delete' item_id=item.pk %}">
+                                            {% csrf_token %}
 
-                                    <div class="cart-product-price">
-                                        <span class="product-price-value">۱۲۰٬۰۰۰</span>
-                                        <small>تومان</small>
+                                            <button type="submit" class="cart-remove">
+                                                <svg viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor" stroke-width="1.8"
+                                                     stroke-linecap="round" stroke-linejoin="round"
+                                                     aria-hidden="true">
+                                                    <path d="M3 6h18"/>
+                                                    <path d="M8 6V4h8v2"/>
+                                                    <path d="m19 6-1 14H6L5 6"/>
+                                                    <path d="M10 11v5M14 11v5"/>
+                                                </svg>
+                                                حذف
+                                            </button>
+                                        </form>
                                     </div>
-                                </div>
-
-                                <div class="cart-product-actions">
-                                    <div class="cart-quantity">
-                                        <button type="button" class="quantity-increase"
-                                                aria-label="افزایش تعداد">+
-                                        </button>
-                                        <span class="quantity-value">۱</span>
-                                        <button type="button" class="quantity-decrease"
-                                                aria-label="کاهش تعداد" disabled>−
-                                        </button>
-                                    </div>
-
-                                    <button type="button" class="cart-remove">
-                                        <svg viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="1.8"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             aria-hidden="true">
-                                            <path d="M3 6h18"/>
-                                            <path d="M8 6V4h8v2"/>
-                                            <path d="m19 6-1 14H6L5 6"/>
-                                            <path d="M10 11v5M14 11v5"/>
-                                        </svg>
-                                        حذف
-                                    </button>
-                                </div>
-                            </article>
+                                </article>
+                            {% endfor %}
 
                         </section>
                     </div>
@@ -796,12 +692,12 @@
 
                             <div class="cart-summary-row">
                                 <span>تعداد محصولات</span>
-                                <strong id="cart-summary-count">۳ کالا</strong>
+                                <strong id="cart-summary-count">{{ cart_items|length }} کالا</strong>
                             </div>
 
                             <div class="cart-summary-row">
                                 <span>جمع محصولات</span>
-                                <strong id="cart-subtotal">۵۵۰٬۰۰۰ تومان</strong>
+                                <strong id="cart-subtotal">در حال محاسبه…</strong>
                             </div>
 
                             <div class="cart-summary-row">
@@ -814,20 +710,25 @@
                             <div class="cart-summary-row cart-summary-total">
                                 <span>مبلغ قابل پرداخت</span>
                                 <div>
-                                    <strong id="cart-total">۵۵۰٬۰۰۰</strong>
+                                    <strong id="cart-total">در حال محاسبه…</strong>
                                     <small>تومان</small>
                                 </div>
                             </div>
 
-                            <button type="button" class="cart-checkout-button">
-                                ادامه فرایند خرید
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="1.8"
-                                     stroke-linecap="round" stroke-linejoin="round"
-                                     aria-hidden="true">
-                                    <path d="m15 18-6-6 6-6"/>
-                                </svg>
-                            </button>
+                            <form method="post" action="{% url 'cart:cart-edit' %}" id="checkout-form">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="cart_data" id="cart-data" value="">
+                                <button type="submit" class="cart-checkout-button">
+                                    ادامه فرایند خرید
+                                    <svg viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="1.8"
+                                         stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true">
+                                        <path d="m15 18-6-6 6-6"/>
+                                    </svg>
+                                </button>
+                            </form>
 
                             <p class="cart-summary-caption">
                                 جزئیات نهایی سفارش در مرحله بعد نمایش داده می‌شود.
@@ -883,15 +784,17 @@
             if (!cart) return;
 
             const productsContainer = cart.querySelector(".cart-main");
-            if (!productsContainer) return;
+            const checkoutForm = cart.querySelector("#checkout-form");
+            const cartDataInput = cart.querySelector("#cart-data");
 
-            const countElement = cart.querySelector("#cart-item-count");
-            const summaryCountElement = cart.querySelector("#cart-summary-count");
             const subtotalElement = cart.querySelector("#cart-subtotal");
             const totalElement = cart.querySelector("#cart-total");
+            const itemCountElement = cart.querySelector("#cart-item-count");
+            const summaryCountElement = cart.querySelector("#cart-summary-count");
 
             const formatNumber = (number) =>
-                new Intl.NumberFormat("fa-IR", {
+                new Intl.NumberFormat("en-US", {
+                    useGrouping: true,
                     maximumFractionDigits: 0
                 }).format(number);
 
@@ -904,66 +807,108 @@
                     .replace(/[٠-٩]/g, digit =>
                         String(digit.charCodeAt(0) - 1632)
                     )
-                    .replace(/[٬،,\\s]/g, "");
+                    .replace(/[٬،,\s]/g, "");
 
                 return Number(normalized);
             }
 
-            function updateCart() {
-                const products = [
-                    ...productsContainer.querySelectorAll(".cart-product")
-                ];
+            function getCartProducts() {
+                if (!productsContainer) return [];
 
-                let totalQuantity = 0;
+                return Array.from(
+                    productsContainer.querySelectorAll(".cart-product")
+                );
+            }
+
+            function getProductQuantity(product) {
+                const quantityElement =
+                    product.querySelector(".quantity-value");
+
+                return parseLocalizedNumber(
+                    quantityElement?.textContent
+                );
+            }
+
+            function updateCartTotals() {
+                const products = getCartProducts();
                 let subtotal = 0;
+                let totalQuantity = 0;
 
                 products.forEach(product => {
-                    const price = parseLocalizedNumber(product.dataset.price);
-                    const quantityElement = product.querySelector(".quantity-value");
-                    const priceElement = product.querySelector(".product-price-value");
-                    const decreaseButton = product.querySelector(".quantity-decrease");
+                    const unitPrice = parseLocalizedNumber(
+                        product.dataset.price
+                    );
 
-                    if (!quantityElement || !Number.isFinite(price) || price < 0) {
+                    const stock = parseLocalizedNumber(
+                        product.dataset.stock
+                    );
+
+                    const quantityElement =
+                        product.querySelector(".quantity-value");
+
+                    const linePriceElement =
+                        product.querySelector(".product-price-value");
+
+                    const increaseButton =
+                        product.querySelector(".quantity-increase");
+
+                    const decreaseButton =
+                        product.querySelector(".quantity-decrease");
+
+                    const quantity = getProductQuantity(product);
+
+                    if (
+                        !quantityElement ||
+                        !Number.isFinite(unitPrice) ||
+                        !Number.isInteger(quantity) ||
+                        quantity < 1 ||
+                        !Number.isFinite(stock)
+                    ) {
                         return;
                     }
 
-                    const quantity = parseLocalizedNumber(quantityElement.textContent);
+                    const lineTotal = unitPrice * quantity;
 
-                    if (!Number.isFinite(quantity) || quantity < 1) {
-                        return;
-                    }
-
+                    subtotal += lineTotal;
                     totalQuantity += quantity;
-                    subtotal += price * quantity;
 
-                    // نمایش تعداد با اعداد فارسی
-                    quantityElement.textContent = formatNumber(quantity);
-
-                    // نمایش قیمت کل همان محصول
-                    if (priceElement) {
-                        priceElement.textContent = formatNumber(price * quantity);
+                    if (linePriceElement) {
+                        linePriceElement.textContent =
+                            formatNumber(lineTotal);
                     }
 
-                    // جلوگیری از کاهش تعداد به کمتر از یک
+                    quantityElement.textContent =
+                        formatNumber(quantity);
+
+                    if (increaseButton) {
+                        increaseButton.disabled =
+                            quantity >= stock;
+                    }
+
                     if (decreaseButton) {
-                        decreaseButton.disabled = quantity <= 1;
+                        decreaseButton.disabled =
+                            quantity <= 1;
                     }
                 });
 
-                if (countElement) {
-                    countElement.textContent = `${formatNumber(totalQuantity)} کالا`;
-                }
-
-                if (summaryCountElement) {
-                    summaryCountElement.textContent = `${formatNumber(totalQuantity)} کالا`;
-                }
-
                 if (subtotalElement) {
-                    subtotalElement.textContent = `${formatNumber(subtotal)} تومان`;
+                    subtotalElement.textContent =
+                        `${formatNumber(subtotal)} تومان`;
                 }
 
                 if (totalElement) {
-                    totalElement.textContent = formatNumber(subtotal);
+                    totalElement.textContent =
+                        formatNumber(subtotal);
+                }
+
+                if (itemCountElement) {
+                    itemCountElement.textContent =
+                        `${formatNumber(products.length)} کالا`;
+                }
+
+                if (summaryCountElement) {
+                    summaryCountElement.textContent =
+                        `${formatNumber(totalQuantity)} عدد`;
                 }
 
                 if (products.length === 0) {
@@ -973,9 +918,12 @@
 
             function showEmptyCart() {
                 const layout = cart.querySelector(".cart-layout");
-                if (!layout) return;
 
-                layout.remove();
+                if (cart.querySelector(".cart-empty")) return;
+
+                if (layout) {
+                    layout.remove();
+                }
 
                 const emptyCart = document.createElement("section");
                 emptyCart.className = "cart-card cart-empty";
@@ -994,52 +942,138 @@
 
                 const link = document.createElement("a");
                 link.href = "{% url 'marketplace:list' %}";
-                link.className = "cart-checkout-button cart-empty-button";
+                link.className =
+                    "cart-checkout-button cart-empty-button";
                 link.textContent = "مشاهده محصولات";
 
                 emptyCart.append(icon, title, description, link);
-                cart.querySelector(".cart-container").appendChild(emptyCart);
+
+                const container =
+                    cart.querySelector(".cart-container");
+
+                if (container) {
+                    container.appendChild(emptyCart);
+                }
+
+                if (subtotalElement) {
+                    subtotalElement.textContent = "0 تومان";
+                }
+
+                if (totalElement) {
+                    totalElement.textContent = "0";
+                }
             }
 
-            productsContainer.addEventListener("click", event => {
-                const button = event.target.closest("button");
-                if (!button) return;
+            // افزایش و کاهش تعداد محصولات
+            if (productsContainer) {
+                productsContainer.addEventListener("click", event => {
+                    const button = event.target.closest("button");
 
-                const product = button.closest(".cart-product");
-                if (!product) return;
-
-                const quantityElement = product.querySelector(".quantity-value");
-                if (!quantityElement) return;
-
-                const quantity = parseLocalizedNumber(quantityElement.textContent);
-
-                if (!Number.isFinite(quantity)) {
-                    console.error("Invalid product quantity:", quantityElement.textContent);
-                    return;
-                }
-
-                if (button.classList.contains("quantity-increase")) {
-                    quantityElement.textContent = formatNumber(quantity + 1);
-                    updateCart();
-                    return;
-                }
-
-                if (button.classList.contains("quantity-decrease")) {
-                    if (quantity > 1) {
-                        quantityElement.textContent = formatNumber(quantity - 1);
-                        updateCart();
+                    if (
+                        !button ||
+                        !productsContainer.contains(button)
+                    ) {
+                        return;
                     }
-                    return;
-                }
 
-                if (button.classList.contains("cart-remove")) {
-                    product.remove();
-                    updateCart();
-                }
-            });
+                    // دکمه حذف باید فرم خودش را ارسال کند.
+                    if (button.type === "submit") return;
 
-            // محاسبه اولیه مجموع سبد خرید
-            updateCart();
+                    const product = button.closest(".cart-product");
+                    if (!product) return;
+
+                    const quantityElement =
+                        product.querySelector(".quantity-value");
+
+                    if (!quantityElement) return;
+
+                    const quantity = getProductQuantity(product);
+
+                    if (
+                        !Number.isInteger(quantity) ||
+                        quantity < 1
+                    ) {
+                        return;
+                    }
+
+                    if (
+                        button.classList.contains("quantity-increase")
+                    ) {
+                        const stock = parseLocalizedNumber(
+                            product.dataset.stock
+                        );
+
+                        if (
+                            !Number.isInteger(stock) ||
+                            quantity >= stock
+                        ) {
+                            return;
+                        }
+
+                        quantityElement.textContent =
+                            formatNumber(quantity + 1);
+
+                        updateCartTotals();
+                        return;
+                    }
+
+                    if (
+                        button.classList.contains("quantity-decrease")
+                    ) {
+                        if (quantity > 1) {
+                            quantityElement.textContent =
+                                formatNumber(quantity - 1);
+
+                            updateCartTotals();
+                        }
+                    }
+                });
+            }
+
+            // آماده‌سازی تمام آیتم‌ها در یک input مخفی
+            if (checkoutForm && cartDataInput) {
+                checkoutForm.addEventListener("submit", event => {
+                    const products = getCartProducts();
+
+                    if (products.length === 0) {
+                        event.preventDefault();
+                        return;
+                    }
+
+                    const cartItems = [];
+                    const seenIds = new Set();
+
+                    for (const product of products) {
+                        const itemId = Number(product.dataset.itemId);
+                        const quantity = getProductQuantity(product);
+
+                        if (
+                            !Number.isSafeInteger(itemId) ||
+                            itemId <= 0 ||
+                            seenIds.has(itemId) ||
+                            !Number.isSafeInteger(quantity) ||
+                            quantity < 1
+                        ) {
+                            event.preventDefault();
+                            cartDataInput.value = "";
+
+                            alert("اطلاعات سبد خرید معتبر نیست.");
+                            return;
+                        }
+
+                        seenIds.add(itemId);
+
+                        cartItems.push({
+                            item_id: itemId,
+                            quantity: quantity
+                        });
+                    }
+
+                    cartDataInput.value = JSON.stringify(cartItems);
+                });
+            }
+
+            updateCartTotals();
         });
     </script>
 {% endblock %}
