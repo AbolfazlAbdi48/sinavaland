@@ -3,6 +3,73 @@
 {% block title %}صفحه اصلی - سینوالند{% endblock %}
 
 {% block extra_css %}
+
+
+    /* ===== Card Actions ===== */
+
+    .card-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    }
+
+    .card-action .btn-amber {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 150px;
+    min-height: 42px;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    }
+
+    /* ===== Section Action ===== */
+
+    .section-action {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0;
+    padding: 0 16px;
+    }
+
+    /* ===== Responsive ===== */
+
+    @media (max-width: 640px) {
+    .card-action {
+    margin-top: 10px;
+    }
+
+    .card-action .btn-amber {
+    min-width: 0;
+    min-height: 40px;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    }
+
+    .section-action {
+    margin-top: 16px;
+    }
+
+    .section-action .btn-amber {
+    max-width: 100%;
+    text-align: center;
+    }
+    }
+
+    @media (max-width: 360px) {
+    .card-action .btn-amber {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    }
+
+    .section-action {
+    margin-top: 12px;
+    }
+    }
+
+
     /* ===== Articles Grid ===== */
     .articles-grid {
     display: grid;
@@ -246,6 +313,10 @@
     padding: 13px 12px 10px;
     }
 
+    .hero-content {
+    margin: 0 1.5rem;
+    }
+
     .product-card-body h3 {
     font-size: .92rem;
     margin-bottom: 9px;
@@ -285,6 +356,67 @@
     font-size: .88rem;
     }
     }
+
+
+    /* ===== Fix responsive card overlap ===== */
+
+    .articles-grid {
+    align-items: stretch;
+    grid-auto-rows: auto;
+    }
+
+    .articles-grid > .accommodation-item,
+    .articles-grid > .product-item,
+    .articles-grid > .estate-item {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    min-width: 0;
+    height: 100%;
+    position: relative;
+    }
+
+    .articles-grid > .accommodation-item > .article-link,
+    .articles-grid > .product-item > .article-link,
+    .articles-grid > .estate-item > .article-link {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    }
+
+    .articles-grid .article-card {
+    height: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    }
+
+    .articles-grid .card-action {
+    position: static;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    margin: 12px 0 0;
+    padding-bottom: 4px;
+    }
+
+    @media (max-width: 640px) {
+    .articles-grid {
+    row-gap: 28px;
+    }
+
+    .articles-grid > .accommodation-item,
+    .articles-grid > .product-item,
+    .articles-grid > .estate-item {
+    height: auto;
+    }
+
+    .articles-grid .card-action {
+    margin-top: 10px;
+    padding-bottom: 0;
+    }
+    }
+
 
 {% endblock %}
 
@@ -375,45 +507,54 @@
 
                     <div class="articles-grid">
                         {% for accommodation in accommodations %}
-                            <a href="{% url 'accommodations:detail' slug=accommodation.slug %}">
-                                <article class="article-card animate-fade-in-up industrial-shadow">
-                                    <div class="article-image-wrap">
-                                        {% if accommodation.images %}
-                                            {% with image=accommodation.images.first %}
-                                                {% if image %}
-                                                    <img src="{{ image.image.url }}" alt="{{ accommodation.name }}"
-                                                         class="article-image">
-                                                {% endif %}
-                                            {% endwith %}
-                                        {% else %}
-                                            <div class="article-image-placeholder">
-                                                بدون تصویر
+                            <div class="accommodation-item">
+                                <a href="{% url 'accommodations:detail' slug=accommodation.slug %}">
+                                    <article class="article-card animate-fade-in-up industrial-shadow">
+                                        <div class="article-image-wrap">
+                                            {% if accommodation.images %}
+                                                {% with image=accommodation.images.first %}
+                                                    {% if image %}
+                                                        <img src="{{ image.image.url }}" alt="{{ accommodation.name }}"
+                                                             class="article-image">
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% else %}
+                                                <div class="article-image-placeholder">
+                                                    بدون تصویر
+                                                </div>
+                                            {% endif %}
+                                            <div class="article-category">
+                                                {{ accommodation.get_category_display }}
                                             </div>
-                                        {% endif %}
-                                        <div class="article-category">
-                                            {{ accommodation.get_category_display }}
                                         </div>
-                                    </div>
-                                    <div class="article-content">
-                                        <h3>
-                                            {{ accommodation.title }}
-                                        </h3>
-                                        <div class="acc-card-location">
-                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor"
-                                                 stroke-width="2">
-                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                                <circle cx="12" cy="10" r="3"/>
-                                            </svg>
-                                            {{ accommodation.location }}
+                                        <div class="article-content">
+                                            <h3>
+                                                {{ accommodation.title }}
+                                            </h3>
+                                            <div class="acc-card-location">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor"
+                                                     stroke-width="2">
+                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                                    <circle cx="12" cy="10" r="3"/>
+                                                </svg>
+                                                {{ accommodation.location }}
+                                            </div>
+                                            <div class="acc-card-price">
+                                                {{ accommodation.price_per_night | intcomma }} تومان
+                                                <span>/ شب</span>
+                                            </div>
                                         </div>
-                                        <div class="acc-card-price">
-                                            {{ accommodation.price_per_night | intcomma }} تومان
-                                            <span>/ شب</span>
-                                        </div>
-                                    </div>
-                                </article>
-                            </a>
+                                    </article>
+                                </a>
+
+                                <div class="card-action">
+                                    <a href="{% url 'accommodations:detail' slug=accommodation.slug %}"
+                                       class="btn-amber gradient-amber">
+                                        رزرو اقامت
+                                    </a>
+                                </div>
+                            </div>
                         {% empty %}
 
                             <div class="no-results">
@@ -424,8 +565,7 @@
                 </div>
                 {% if accommodations %}
                     <div style="margin: 0 auto; text-align: center">
-                        <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber"
-                           style="margin-top: 30px;">رزرو اقامتگاه
+                        <a href="{% url 'accommodations:list' %}" class="btn-amber gradient-amber">رزرو اقامتگاه
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
                                 <path d="M15 18l-6-6 6-6"/>
@@ -445,42 +585,51 @@
 
                     <div class="articles-grid">
                         {% for product in products %}
-                            <a href="{% url 'marketplace:detail' slug=product.slug %}">
-                                <article class="article-card animate-fade-in-up industrial-shadow">
-                                    <div class="article-image-wrap">
-                                        {% if product.image %}
-                                            <img src="{{ product.image.url }}" alt="{{ product.title }}"
-                                                 class="article-image">
-                                        {% else %}
-                                            <div class="article-image-placeholder">
-                                                بدون تصویر
-                                            </div>
-                                        {% endif %}
-                                        <div class="article-category">
-                                            {{ product.get_category_display }}
-                                        </div>
-                                    </div>
-                                    <div class="article-content">
-                                        <h3>
-                                            {{ product.title }}
-                                        </h3>
-                                        <div class="article-excerpt">
-                                            {{ product.description | truncatewords:10 | safe }}
-                                        </div>
-                                    </div>
-
-                                    <div class="product-card-footer">
-                                        <div class="price-stack">
-                                            {% if product.discount_price %}
-                                                <span class="price-old">{{ product.price|intcomma }} تومان</span>
-                                                <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
+                            <div class="product-item">
+                                <a href="{% url 'marketplace:detail' slug=product.slug %}">
+                                    <article class="article-card animate-fade-in-up industrial-shadow">
+                                        <div class="article-image-wrap">
+                                            {% if product.image %}
+                                                <img src="{{ product.image.url }}" alt="{{ product.title }}"
+                                                     class="article-image">
                                             {% else %}
-                                                <span class="price-final">{{ product.price|intcomma }} تومان</span>
+                                                <div class="article-image-placeholder">
+                                                    بدون تصویر
+                                                </div>
                                             {% endif %}
+                                            <div class="article-category">
+                                                {{ product.get_category_display }}
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
-                            </a>
+                                        <div class="article-content">
+                                            <h3>
+                                                {{ product.title }}
+                                            </h3>
+                                            <div class="article-excerpt">
+                                                {{ product.description | truncatewords:10 | safe }}
+                                            </div>
+                                        </div>
+
+                                        <div class="product-card-footer">
+                                            <div class="price-stack">
+                                                {% if product.discount_price %}
+                                                    <span class="price-old">{{ product.price|intcomma }} تومان</span>
+                                                    <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
+                                                {% else %}
+                                                    <span class="price-final">{{ product.price|intcomma }} تومان</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </article>
+                                </a>
+
+                                <div class="card-action">
+                                    <a href="{% url 'marketplace:detail' slug=product.slug %}"
+                                       class="btn-amber gradient-amber">
+                                        رزرو محصول
+                                    </a>
+                                </div>
+                            </div>
                         {% empty %}
 
                             <div class="no-results">
@@ -529,41 +678,50 @@
 
                     <div class="articles-grid">
                         {% for est in estate %}
-                            <a href="{% url 'estate:detail' slug=est.slug %}">
-                                <article class="article-card animate-fade-in-up industrial-shadow">
-                                    <div class="article-image-wrap">
-                                        {% if est.images %}
-                                            {% with image=est.images.first %}
-                                                {% if image %}
-                                                    <img src="{{ image.image.url }}" alt="{{ est.name }}"
-                                                         class="article-image">
-                                                {% endif %}
-                                            {% endwith %}
-                                        {% else %}
-                                            <div class="article-image-placeholder">
-                                                بدون تصویر
+                            <div class="estate-item">
+                                <a href="{% url 'estate:detail' slug=est.slug %}">
+                                    <article class="article-card animate-fade-in-up industrial-shadow">
+                                        <div class="article-image-wrap">
+                                            {% if est.images %}
+                                                {% with image=est.images.first %}
+                                                    {% if image %}
+                                                        <img src="{{ image.image.url }}" alt="{{ est.name }}"
+                                                             class="article-image">
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% else %}
+                                                <div class="article-image-placeholder">
+                                                    بدون تصویر
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="article-content">
+                                            <h3>{{ est.title }}</h3>
+                                            <div class="acc-card-location">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor"
+                                                     stroke-width="2">
+                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                                    <circle cx="12" cy="10" r="3"/>
+                                                </svg>
+                                                {{ est.destination }}
                                             </div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="article-content">
-                                        <h3>{{ est.title }}</h3>
-                                        <div class="acc-card-location">
-                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor"
-                                                 stroke-width="2">
-                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                                <circle cx="12" cy="10" r="3"/>
-                                            </svg>
-                                            {{ est.destination }}
-                                        </div>
 
-                                        <div class="estate-price">
-                                            {{ est.total_price|intcomma }}
-                                            <span>تومان</span>
+                                            <div class="estate-price">
+                                                {{ est.total_price|intcomma }}
+                                                <span>تومان</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
-                            </a>
+                                    </article>
+                                </a>
+
+                                <div class="card-action">
+                                    <a href="{% url 'estate:detail' slug=est.slug %}"
+                                       class="btn-amber gradient-amber">
+                                        مشاهده ملک
+                                    </a>
+                                </div>
+                            </div>
                         {% empty %}
                             <div class="no-results">
                                 <p>ملکی یافت نشد.</p>
