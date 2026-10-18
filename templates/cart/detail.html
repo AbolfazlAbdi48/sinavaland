@@ -661,7 +661,9 @@
                                             </button>
                                         </div>
 
-                                        <small style="color: #e31010; font-size: .75rem; margin: 0 auto;">موجودی: {{ item.product.stock }}</small>
+                                        {% if item.product.stock < 5 %}
+                                            <small style="color: #e31010; font-size: .75rem; margin: 0 auto;">موجودی کمتر از 5 عدد</small>
+                                        {% endif %}
 
                                         <form method="post" action="{% url 'cart:cart-delete' item_id=item.pk %}">
                                             {% csrf_token %}
