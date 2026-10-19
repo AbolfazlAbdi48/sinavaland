@@ -148,14 +148,22 @@ def edit_cart(request):
 @login_required
 @require_POST
 def remove_cart_item(request, item_id):
-    item = get_object_or_404(
-        CartItem,
-        pk=item_id,
-        cart__user=request.user,
-        cart__status=Cart.Status.ACTIVE
+    cart = get_object_or_404(
+        Cart,
+        user=request.user,
+        status=Cart.Status.ACTIVE
     )
 
+    item = cart.items.filter(pk=item_id).first()
+
+    if not item:
+        messages.error(request, 'محصول موردنظر یافت نشد.')
+        return redirect('cart:cart-detail')
+
     item.delete()
+
+    if cart.items.count() == 0:
+        cart.delete()
 
     messages.success(request, 'محصول از سبد خرید حذف شد.')
     return redirect('cart:cart-detail')
