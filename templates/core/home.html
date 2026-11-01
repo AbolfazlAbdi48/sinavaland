@@ -478,22 +478,26 @@
             <section class="stats">
                 <div class="container">
                     <div class="stats-grid">
-                        <div class="stat-item animate-count-up">
-                            <div class="stat-number">۲,۵۰۰+</div>
-                            <div class="stat-label">تولیدکننده صنایع دستی</div>
-                        </div>
-                        <div class="stat-item animate-count-up">
-                            <div class="stat-number">۱,۰۰۰+</div>
-                            <div class="stat-label">محصول ارگانیک و طبیعی</div>
-                        </div>
-                        <div class="stat-item animate-count-up">
-                            <div class="stat-number">۸۵+</div>
-                            <div class="stat-label">اقامتگاه</div>
-                        </div>
-                        <div class="stat-item animate-count-up">
-                            <div class="stat-number">۹+</div>
-                            <div class="stat-label">تور سینوالند</div>
-                        </div>
+                        {% if accommodations_count > 0 %}
+                            <div class="stat-item animate-count-up">
+                                <div class="stat-number">{{ accommodations_count }}</div>
+                                <div class="stat-label">اقامتگاه</div>
+                            </div>
+                        {% endif %}
+
+                        {% if estate_count > 0 %}
+                            <div class="stat-item animate-count-up">
+                                <div class="stat-number">{{ estate_count }}</div>
+                                <div class="stat-label">املاک و اسکان</div>
+                            </div>
+                        {% endif %}
+
+                        {% if products_count > 0 %}
+                            <div class="stat-item animate-count-up">
+                                <div class="stat-number">{{ products_count }}</div>
+                                <div class="stat-label">محصولات</div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </section>

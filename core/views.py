@@ -18,11 +18,19 @@ def home(request):
     estate = Estate.objects.all()[:3]
     products = Product.objects.all()[:3]
 
+    articles_count = Article.objects.count()
+    accommodations_count = Accommodation.objects.count()
+    estate_count = Estate.objects.count()
+    products_count = Product.objects.count()
+
     return render(request, 'core/home.html', {
         "articles": articles,
         "accommodations": accommodations,
         "estate": estate,
-        "products": products
+        "products": products,
+        "accommodations_count": accommodations_count,
+        "estate_count": estate_count,
+        "products_count": products_count,
     })
 
 
