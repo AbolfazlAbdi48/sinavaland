@@ -1,0 +1,66 @@
+{% extends 'errors/base.html' %}
+
+{% block title %}خطای سرور | سینوالند{% endblock %}
+
+{% block error_content %}
+
+    <section class="error-page error-page-500">
+        <div class="container">
+            <div class="error-layout">
+
+                <div class="error-visual">
+                    <div class="error-visual-circle"></div>
+
+                    <div class="error-number">
+                        5<span>0</span>0
+                    </div>
+
+                    <span class="error-decoration one"></span>
+                    <span class="error-decoration two"></span>
+                    <span class="error-decoration three"></span>
+
+                    <div class="error-visual-caption">
+                        مشکلی در سرور رخ داده است!
+                    </div>
+                </div>
+
+                <div class="error-content">
+                    <h1>
+                        متأسفانه مشکلی پیش آمده
+                        <span>در حال بررسی هستیم!</span>
+                    </h1>
+
+                    <p class="error-description">
+                        هنگام پردازش درخواست شما مشکلی در سرور رخ داده است.
+                        این مشکل را بررسی می‌کنیم.
+                        لطفاً کمی بعد دوباره تلاش کنید.
+                    </p>
+
+                    <div class="error-actions">
+
+                        <button type="button"
+                                class="error-btn error-btn-primary"
+                                onclick="window.location.reload()">
+                            تلاش مجدد
+                            <span aria-hidden="true">↻</span>
+                        </button>
+
+                        <a href="{% url 'core:home' %}"
+                           class="error-btn error-btn-secondary">
+                            بازگشت به صفحه اصلی
+                        </a>
+
+                    </div>
+
+                    <div class="error-hint">
+                        <span class="error-hint-icon">i</span>
+                        از صبوری و همراهی شما سپاسگزاریم.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

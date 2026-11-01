@@ -1,0 +1,66 @@
+{% extends 'errors/base.html' %}
+
+{% block title %}صفحه پیدا نشد | سینوالند{% endblock %}
+
+{% block error_content %}
+
+    <section class="error-page">
+        <div class="container">
+            <div class="error-layout">
+
+                <div class="error-visual">
+                    <div class="error-visual-circle"></div>
+
+                    <div class="error-number">
+                        4<span>0</span>4
+                    </div>
+
+                    <span class="error-decoration one"></span>
+                    <span class="error-decoration two"></span>
+                    <span class="error-decoration three"></span>
+
+                    <div class="error-visual-caption">
+                        مسیر مورد نظر پیدا نشد!
+                    </div>
+                </div>
+
+                <div class="error-content">
+                    <h1>
+                        صفحه‌ای که دنبالش هستید
+                        <span>اینجا نیست!</span>
+                    </h1>
+
+                    <p class="error-description">
+                        به نظر می‌رسد صفحه مورد نظر شما وجود ندارد،
+                        آدرس آن تغییر کرده یا دیگر در دسترس نیست.
+                        نگران نباشید؛ می‌توانید از صفحه اصلی مسیرتان را ادامه دهید.
+                    </p>
+
+                    <div class="error-actions">
+
+                        <a href="{% url 'core:home' %}"
+                           class="error-btn error-btn-primary">
+                            بازگشت به صفحه اصلی
+                            <span aria-hidden="true">←</span>
+                        </a>
+
+                        <button type="button"
+                                class="error-btn error-btn-secondary"
+                                onclick="history.back()">
+                            بازگشت به صفحه قبل
+                        </button>
+
+                    </div>
+
+                    <div class="error-hint">
+                        <span class="error-hint-icon">i</span>
+                        لطفاً آدرس واردشده را بررسی کنید.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

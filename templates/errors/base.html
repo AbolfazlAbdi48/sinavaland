@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+
+{% block title %}خطا | سینوالند{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+
+    <style>
+        /* ===== Error Pages ===== */
+
+        .error-page {
+            min-height: min(720px, calc(100vh - 64px));
+            display: flex;
+            align-items: center;
+            padding-block: clamp(3rem, 8vw, 6rem);
+            overflow: hidden;
+        }
+
+        .error-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: clamp(2rem, 6vw, 5rem);
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        /* Illustration */
+
+        .error-visual {
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-visual-circle {
+            position: absolute;
+            width: min(310px, 75vw);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: rgba(26, 39, 68, .07);
+        }
+
+        .error-visual-circle::before,
+        .error-visual-circle::after {
+            content: "";
+            position: absolute;
+            inset: -25px;
+            border: 1px dashed rgba(26, 39, 68, .2);
+            border-radius: 50%;
+        }
+
+        .error-visual-circle::after {
+            inset: 25px;
+            border-style: solid;
+            border-color: rgba(245, 158, 11, .25);
+        }
+
+        .error-number {
+            position: relative;
+            z-index: 1;
+            direction: ltr;
+            font-size: clamp(6rem, 13vw, 10rem);
+            line-height: 1;
+            font-weight: 900;
+            color: var(--navy);
+            letter-spacing: -8px;
+            animation: error-number-in .6s ease-out both;
+        }
+
+        .error-number span {
+            color: var(--amber);
+        }
+
+        .error-visual-caption {
+            position: absolute;
+            z-index: 2;
+            bottom: 5px;
+            padding: 9px 20px;
+            border-radius: 30px;
+            background: var(--card);
+            color: var(--navy);
+            font-size: .8rem;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(26, 39, 68, .08);
+        }
+
+        .error-decoration {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--amber);
+        }
+
+        .error-decoration.one {
+            top: 12%;
+            right: 15%;
+        }
+
+        .error-decoration.two {
+            bottom: 18%;
+            left: 12%;
+            width: 8px;
+            height: 8px;
+            background: var(--steel);
+        }
+
+        .error-decoration.three {
+            top: 25%;
+            left: 14%;
+            width: 7px;
+            height: 7px;
+        }
+
+        /* Error Content */
+
+        .error-content {
+            max-width: 520px;
+        }
+
+        .error-content h1 {
+            margin-bottom: 16px;
+            color: var(--navy);
+            font-size: clamp(1.7rem, 3vw, 2.35rem);
+            line-height: 1.8;
+            font-weight: 800;
+        }
+
+        .error-content h1 span {
+            display: block;
+            color: var(--amber);
+        }
+
+        .error-description {
+            color: var(--muted-fg);
+            font-size: .95rem;
+            line-height: 2.2;
+        }
+
+        /* Actions */
+
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .error-btn {
+            min-height: 48px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: .85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .error-btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .error-btn-primary:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+        }
+
+        .error-btn-secondary {
+            background: white;
+            color: var(--navy);
+            border-color: var(--border);
+        }
+
+        .error-btn-secondary:hover {
+            border-color: var(--navy);
+            transform: translateY(-2px);
+        }
+
+        .error-hint {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 28px;
+            color: var(--muted-fg);
+            font-size: .75rem;
+        }
+
+        .error-hint-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid var(--steel);
+            border-radius: 50%;
+            font-size: .7rem;
+        }
+
+        /* Server Error Variation */
+
+        .error-page-500 .error-visual-circle {
+            background: rgba(245, 158, 11, .09);
+        }
+
+        .error-page-500 .error-number {
+            color: #a85d08;
+        }
+
+        .error-page-500 .error-number span {
+            color: #e87936;
+        }
+
+        .error-page-500 .error-content h1 span {
+            color: #d87931;
+        }
+
+        /* Animation */
+
+        @keyframes error-number-in {
+            from {
+                opacity: 0;
+                transform: scale(.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+
+        @media (max-width: 800px) {
+            .error-page {
+                min-height: auto;
+                padding-block: 3rem 4rem;
+            }
+
+            .error-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 580px;
+                margin-inline: auto;
+            }
+
+            .error-visual {
+                min-height: 260px;
+                order: 1;
+            }
+
+            .error-visual-circle {
+                width: 220px;
+            }
+
+            .error-number {
+                font-size: 7rem;
+            }
+
+            .error-content {
+                order: 2;
+                max-width: none;
+                text-align: center;
+            }
+
+            .error-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .error-actions,
+            .error-hint {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-page {
+                padding-block: 2rem 3rem;
+            }
+
+            .error-visual {
+                min-height: 220px;
+            }
+
+            .error-visual-circle {
+                width: 185px;
+            }
+
+            .error-number {
+                font-size: 5.5rem;
+                letter-spacing: -5px;
+            }
+
+            .error-content h1 {
+                font-size: 1.45rem;
+            }
+
+            .error-description {
+                font-size: .85rem;
+            }
+
+            .error-actions {
+                flex-direction: column;
+            }
+
+            .error-btn {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .error-number {
+                animation: none;
+            }
+
+            .error-btn {
+                transition: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% block error_content %}{% endblock %}
+{% endblock %}
