@@ -61,7 +61,8 @@ def user_login(request):
         otp = OTP.objects.filter(
             user=user,
             code=code,
-            is_used=False
+            is_used=False,
+            expires_at__gt=timezone.now(),
         ).order_by('-created_at').first()
 
         if not otp:
@@ -78,10 +79,24 @@ def user_login(request):
             )
             return render(request, 'accounts/login.html')
 
-        otp.is_used = True
-        otp.save(update_fields=['is_used'])
+        updated = OTP.objects.filter(
+            pk=otp.pk,
+            is_used=False,
+            expires_at__gt=timezone.now(),
+        ).update(is_used=True)
 
-        login(request, user)
+        if updated == 0:
+            messages.error(
+                request,
+                'این کد قبلاً استفاده شده یا منقضی شده است.'
+            )
+            return render(request, 'accounts/login.html')
+
+        login(
+            request,
+            user,
+            backend='django.contrib.auth.backends.ModelBackend'
+        )
 
         if not user.first_name:
             if next_url:
@@ -160,7 +175,7 @@ def request_otp(request):
     if not success:
         return JsonResponse(
             {"error": "ارسال کد تایید با خطا مواجه شد."},
-            status=500,
+            status=502,
         )
 
     return JsonResponse(
