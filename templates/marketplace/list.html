@@ -432,16 +432,14 @@
                 <label for="category">دسته‌بندی</label>
                 <select name="category" id="category" onchange="this.form.submit()">
                     <option value="">همه</option>
-                    <option value="clothing" {% if request.GET.category == 'clothing' %}selected{% endif %}>پوشاک
+                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>خوراکی
                     </option>
-                    <option value="equipment" {% if request.GET.category == 'equipment' %}selected{% endif %}>تجهیزات
-                    </option>
-                    <option value="accessories" {% if request.GET.category == 'accessories' %}selected{% endif %}>لوازم
-                        جانبی
-                    </option>
-                    <option value="books" {% if request.GET.category == 'books' %}selected{% endif %}>کتاب و نقشه
+                    <option value="handicraft" {% if request.GET.category == 'handicraft' %}selected{% endif %}>صنایع
+                        دستی
                     </option>
                     <option value="souvenirs" {% if request.GET.category == 'souvenirs' %}selected{% endif %}>سوغات
+                    </option>
+                    <option value="other" {% if request.GET.category == 'other' %}selected{% endif %}>سایر
                     </option>
                 </select>
             </div>
@@ -523,13 +521,19 @@
     {% if products.has_other_pages %}
         <div class="pagination">
             {% if products.has_previous %}
-                <a href="?page={{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
+                <a href="?page=
+
+
+                        {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
             <span class="page-current">صفحه {{ products.number }} از {{ products.paginator.num_pages }}</span>
 
             {% if products.has_next %}
                 <a href="?page=
+
+
+
                         {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
             {% endif %}
         </div>

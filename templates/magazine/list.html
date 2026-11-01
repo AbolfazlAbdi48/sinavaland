@@ -282,21 +282,15 @@
 
                     <option value="">همه</option>
 
-                    <option value="travel_guide" {% if request.GET.category == 'travel_guide' %}selected{% endif %}>
-                        راهنمای سفر
+                    <option value="travel" {% if request.GET.category == 'travel' %}selected{% endif %}>
+                        سفر
                     </option>
-                    <option value="destination" {% if request.GET.category == 'destination' %}selected{% endif %}>معرفی
-                        مقصد
+                    <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>
+                        فرهنگ
                     </option>
-                    <option value="tips" {% if request.GET.category == 'tips' %}selected{% endif %}>نکات سفر</option>
-                    <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>فرهنگ و آداب
+                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی</option>
+                    <option value="nature" {% if request.GET.category == 'nature' %}selected{% endif %}>طبیعت
                     </option>
-                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی
-                    </option>
-                    <option value="adventure" {% if request.GET.category == 'adventure' %}selected{% endif %}>
-                        ماجراجویی
-                    </option>
-
                 </select>
             </div>
 

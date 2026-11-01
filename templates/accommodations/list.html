@@ -276,7 +276,7 @@
     }
 
     form {
-        margin: 0 24px;
+    margin: 0 24px;
     }
 {% endblock %}
 
@@ -299,12 +299,12 @@
                 <label for="category">دسته‌بندی</label>
                 <select name="category" id="category" onchange="this.form.submit()">
                     <option value="">همه</option>
-                    <option value="hotel" {% if request.GET.category == 'hotel' %}selected{% endif %}>Hotel</option>
-                    <option value="villa" {% if request.GET.category == 'villa' %}selected{% endif %}>Villa</option>
+                    <option value="hotel" {% if request.GET.category == 'hotel' %}selected{% endif %}>هتل</option>
+                    <option value="villa" {% if request.GET.category == 'villa' %}selected{% endif %}>ویلا</option>
                     <option value="apartment" {% if request.GET.category == 'apartment' %}selected{% endif %}>
-                        Apartment
+                        آپارتمان
                     </option>
-                    <option value="ecolodge" {% if request.GET.category == 'ecolodge' %}selected{% endif %}>Ecolodge
+                    <option value="ecolodge" {% if request.GET.category == 'ecolodge' %}selected{% endif %}>بوم‌گردی
                     </option>
                 </select>
             </div>
@@ -394,6 +394,7 @@
                 <a href="?page=
 
 
+
                         {{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -403,8 +404,10 @@
                 <a href="?page=
 
 
+
                         {{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
                 <a href="?page=
+
 
 
                         {{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">انتها</a>
