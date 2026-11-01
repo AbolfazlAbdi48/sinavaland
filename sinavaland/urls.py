@@ -16,7 +16,7 @@ class PersianSlugConverter(StringConverter):
 register_converter(PersianSlugConverter, 'persian_slug')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('management-panel/', admin.site.urls),
     path('', include('pwa.urls')),
     path('', include(('core.urls', 'core'), namespace='core')),
     path('accommodations/', include(('accommodations.urls', 'accommodations'), namespace='accommodations')),
@@ -31,3 +31,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'core.views.custom_404'
+handler500 = 'core.views.custom_500'

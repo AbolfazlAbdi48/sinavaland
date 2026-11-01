@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
+from django.utils.csp import CSP
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,14 +48,17 @@ INSTALLED_APPS = [
     'cart',
     'pwa',
     'django_ckeditor_5',
+    'axes',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.csp.ContentSecurityPolicyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'axes.middleware.AxesMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -205,3 +210,39 @@ CKEDITOR_5_CONFIGS = {
         ],
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AXES_ONLY_ADMIN_SITE = True
+
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+
+AXES_LOCKOUT_PARAMETERS = ['ip_address']
+
+AXES_RESET_ON_SUCCESS = True
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
+
+    SECURE_CSP_REPORT_ONLY = {
+        "default-src": [CSP.SELF],
+        "base-uri": [CSP.SELF],
+        "object-src": [CSP.NONE],
+        "frame-ancestors": [CSP.NONE],
+        "form-action": [CSP.SELF],
+        "img-src": [CSP.SELF, "data:"],
+        "font-src": [CSP.SELF, "data:"],
+        "style-src": [CSP.SELF, CSP.UNSAFE_INLINE],
+        "script-src": [CSP.SELF],
+    }
