@@ -1,4 +1,6 @@
 import json
+
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -43,18 +45,32 @@ def contact(request):
     """تماس با ما"""
     if request.method == 'POST':
         name = request.POST.get('name')
-        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        contact_number = request.POST.get('contact_number')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
+        address = request.POST.get('address')
+
+        phone_field = ContactMessage._meta.get_field('phone')
+        contact_number_field = ContactMessage._meta.get_field('contact_number')
+
+        try:
+            phone_field.clean(phone, None)
+            contact_number_field.clean(contact_number, None)
+        except ValidationError as e:
+            messages.error(request, e.messages[0])
+            return redirect('core:contact')
 
         ContactMessage.objects.create(
             name=name,
-            email=email,
+            subject=subject,
+            contact_number=contact_number,
             phone=phone,
-            message=message
+            message=message,
+            address=address,
         )
         messages.success(request, 'پیام شما با موفقیت ارسال شد.')
-        return redirect('contact')
+        return redirect('core:contact')
 
     return render(request, 'core/contact.html')
 
