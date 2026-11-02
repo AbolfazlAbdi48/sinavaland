@@ -3,46 +3,46 @@
 {% block title %}تماس با ما - سینوالند{% endblock %}
 
 {% block extra_css %}
-.contact-wrap {
+    .contact-wrap {
     max-width: 640px;
     margin: 48px auto 60px;
-}
+    }
 
-.contact-wrap h1 {
+    .contact-wrap h1 {
     font-size: 1.75rem;
     color: var(--fg);
     margin-bottom: 8px;
-}
+    }
 
-.contact-subtitle {
+    .contact-subtitle {
     color: var(--muted-fg);
     font-size: .9rem;
     margin-bottom: 28px;
-}
+    }
 
-.messages { margin-bottom: 20px; }
+    .messages { margin-bottom: 20px; }
 
-.alert {
+    .alert {
     padding: 10px 14px;
     border-radius: var(--radius);
     font-size: .875rem;
     margin-bottom: 8px;
-}
+    }
 
-.alert-success { background: #d1fae5; color: #065f46; }
-.alert-error   { background: #fee2e2; color: #991b1b; }
-.alert-warning { background: #fef3c7; color: #92400e; }
+    .alert-success { background: #d1fae5; color: #065f46; }
+    .alert-error   { background: #fee2e2; color: #991b1b; }
+    .alert-warning { background: #fef3c7; color: #92400e; }
 
-.contact-card {
+    .contact-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 36px 40px;
-}
+    }
 
-.form-group { margin-bottom: 18px; }
+    .form-group { margin-bottom: 18px; }
 
-.form-group label {
+    .form-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
@@ -50,10 +50,10 @@
     color: var(--muted-fg);
     text-transform: uppercase;
     letter-spacing: .03em;
-}
+    }
 
-.form-group input,
-.form-group textarea {
+    .form-group input,
+    .form-group textarea {
     width: 100%;
     padding: 11px 14px;
     border: 1px solid var(--input);
@@ -64,17 +64,17 @@
     transition: border-color .2s;
     box-sizing: border-box;
     font-family: inherit;
-}
+    }
 
-.form-group input:focus,
-.form-group textarea:focus {
+    .form-group input:focus,
+    .form-group textarea:focus {
     outline: none;
     border-color: var(--amber);
-}
+    }
 
-.form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group textarea { resize: vertical; min-height: 130px; }
 
-.btn-send {
+    .btn-send {
     width: 100%;
     padding: 13px;
     font-size: 1rem;
@@ -83,58 +83,81 @@
     cursor: pointer;
     justify-content: center;
     margin-top: 6px;
-}
+    }
 
-@media (max-width: 640px) {
+    @media (max-width: 640px) {
     .contact-card { padding: 24px 20px; }
-}
+    }
 {% endblock %}
 
 {% block content %}
-<div class="contact-wrap">
+    <div class="contact-wrap">
 
-    <h1>تماس با ما</h1>
-    <p class="contact-subtitle">سوال یا پیشنهادی دارید؟ پیام بگذارید، در اسرع وقت پاسخ می‌دهیم.</p>
+        <h1>تماس با ما</h1>
+        <p class="contact-subtitle">سوال یا پیشنهادی دارید؟ پیام بگذارید، در اسرع وقت پاسخ می‌دهیم.</p>
 
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="contact-card industrial-shadow">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="name">نام</label>
+                    <input type="text" id="name" name="name" required placeholder="نام شما">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">موبایل</label>
+                    <input type="text" id="phone" name="phone" required placeholder="09123456789">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact_number">شماره تماس</label>
+                    <input type="text" id="contact_number" name="contact_number" required placeholder="09123456789">
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">موضوع</label>
+                    <input type="text" id="subject" name="subject" required placeholder="موضوع پیام">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">آدرس</label>
+                    <textarea id="address" name="address" rows="1" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">پیام</label>
+                    <textarea id="message" name="message" rows="6" required
+                              placeholder="متن پیام خود را اینجا بنویسید..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <a
+                            href="https://www.google.com/maps/search/?api=1&query=36.62949378926204, 51.39467593854681"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                    >
+                        <i class="fas fa-map-marker-alt"></i>
+                        مشاهده موقعیت روی نقشه
+                    </a>
+                </div>
+
+                <button type="submit" class="btn-amber gradient-amber btn-send">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                    ارسال پیام
+                </button>
+            </form>
+        </div>
     </div>
-    {% endif %}
-
-    <div class="contact-card industrial-shadow">
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="name">نام</label>
-                <input type="text" id="name" name="name" required placeholder="نام شما">
-            </div>
-
-            <div class="form-group">
-                <label for="email">ایمیل</label>
-                <input type="email" id="email" name="email" required placeholder="example@email.com">
-            </div>
-
-            <div class="form-group">
-                <label for="subject">موضوع</label>
-                <input type="text" id="subject" name="subject" required placeholder="موضوع پیام">
-            </div>
-
-            <div class="form-group">
-                <label for="message">پیام</label>
-                <textarea id="message" name="message" rows="5" required placeholder="متن پیام خود را اینجا بنویسید..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-amber gradient-amber btn-send">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                </svg>
-                ارسال پیام
-            </button>
-        </form>
-    </div>
-</div>
 {% endblock %}
