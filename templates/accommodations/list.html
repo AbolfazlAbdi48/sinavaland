@@ -2,7 +2,7 @@
 
 {% block title %}رزرو اقامتگاه ها - سینوالند{% endblock %}
 
-{% load humanize %}
+{% load humanize %}{% load number_filters %}
 
 {% block extra_css %}
     /* ===== Page Header ===== */
@@ -358,7 +358,7 @@
                         {{ accommodation.location }}
                     </div>
                     <div class="acc-card-price">
-                        {{ accommodation.price_per_night | intcomma }} تومان
+                        {{ accommodation.price_per_night | intcomma | persian_numbers }} تومان
                         <span>/ شب</span>
                     </div>
                 </div>
@@ -395,18 +395,24 @@
 
 
 
-                        {{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
+
+
+                        {{ page_obj.previous_page_number | persian_numbers }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
             {% endif %}
 
-            <span class="current-page">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            <span class="current-page">{{ page_obj.number | persian_numbers }} / {{ page_obj.paginator.num_pages | persian_numbers }}</span>
 
             {% if page_obj.has_next %}
                 <a href="?page=
 
 
 
-                        {{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
+
+
+                        {{ page_obj.next_page_number | persian_numbers }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
                 <a href="?page=
+
+
 
 
 

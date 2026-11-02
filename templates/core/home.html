@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}{% load humanize %}{% load jalali %}
+{% load static %}{% load humanize %}{% load jalali %}{% load number_filters %}
 {% block title %}صفحه اصلی - سینوالند{% endblock %}
 
 {% block extra_css %}
@@ -417,6 +417,10 @@
     }
     }
 
+    #page-landing{
+    padding-top: 0;
+    }
+
 
 {% endblock %}
 
@@ -425,7 +429,7 @@
 
     <!-- PAGE: Landing -->
     <div id="page-landing" class="page-wrapper">
-        <main style="padding-top:64px">
+        <main>
 
             <!-- Hero -->
             <section class="hero">
@@ -480,21 +484,21 @@
                     <div class="stats-grid">
                         {% if accommodations_count > 0 %}
                             <div class="stat-item animate-count-up">
-                                <div class="stat-number">{{ accommodations_count }}</div>
+                                <div class="stat-number">{{ accommodations_count | persian_numbers }}</div>
                                 <div class="stat-label">اقامتگاه</div>
                             </div>
                         {% endif %}
 
                         {% if estate_count > 0 %}
                             <div class="stat-item animate-count-up">
-                                <div class="stat-number">{{ estate_count }}</div>
+                                <div class="stat-number">{{ estate_count | persian_numbers }}</div>
                                 <div class="stat-label">املاک و اسکان</div>
                             </div>
                         {% endif %}
 
                         {% if products_count > 0 %}
                             <div class="stat-item animate-count-up">
-                                <div class="stat-number">{{ products_count }}</div>
+                                <div class="stat-number">{{ products_count | persian_numbers }}</div>
                                 <div class="stat-label">محصولات</div>
                             </div>
                         {% endif %}
@@ -547,7 +551,8 @@
                                                     {{ accommodation.location }}
                                                 </div>
                                                 <div class="acc-card-price">
-                                                    {{ accommodation.price_per_night | intcomma }} تومان
+                                                    {{ accommodation.price_per_night | intcomma | persian_numbers }}
+                                                    تومان
                                                     <span>/ شب</span>
                                                 </div>
                                             </div>
@@ -620,10 +625,10 @@
                                             <div class="product-card-footer">
                                                 <div class="price-stack">
                                                     {% if product.discount_price %}
-                                                        <span class="price-old">{{ product.price|intcomma }} تومان</span>
-                                                        <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
+                                                        <span class="price-old">{{ product.price|intcomma | persian_numbers }} تومان</span>
+                                                        <span class="price-final">{{ product.discount_price|intcomma | persian_numbers }} تومان</span>
                                                     {% else %}
-                                                        <span class="price-final">{{ product.price|intcomma }} تومان</span>
+                                                        <span class="price-final">{{ product.price|intcomma | persian_numbers }} تومان</span>
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -717,7 +722,7 @@
                                                 </div>
 
                                                 <div class="estate-price">
-                                                    {{ est.total_price|intcomma }}
+                                                    {{ est.total_price|intcomma|persian_numbers }}
                                                     <span>تومان</span>
                                                 </div>
                                             </div>

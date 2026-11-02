@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load humanize %}
+{% load humanize %}{% load number_filters %}
 
 {% block title %}فروشگاه - سینوالند{% endblock %}
 
@@ -487,13 +487,13 @@
                 <div class="product-card-footer">
                     <div class="price-stack">
                         {% if product.discount_price %}
-                            <span class="price-old">{{ product.price|intcomma }} تومان</span>
-                            <span class="price-final">{{ product.discount_price|intcomma }} تومان</span>
+                            <span class="price-old">{{ product.price|intcomma | persian_numbers }} تومان</span>
+                            <span class="price-final">{{ product.discount_price|intcomma | persian_numbers }} تومان</span>
                         {% else %}
-                            <span class="price-final">{{ product.price|intcomma }} تومان</span>
+                            <span class="price-final">{{ product.price|intcomma | persian_numbers }} تومان</span>
                         {% endif %}
                     </div>
-                    <span class="product-stock-label">موجودی: {{ product.stock }}</span>
+                    <span class="product-stock-label">موجودی: {{ product.stock | persian_numbers }}</span>
                 </div>
 
                 <a href="{% url 'marketplace:detail' product.slug %}" class="btn-amber gradient-amber product-btn"
@@ -524,17 +524,21 @@
                 <a href="?page=
 
 
-                        {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
+
+
+                        {{ products.previous_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
-            <span class="page-current">صفحه {{ products.number }} از {{ products.paginator.num_pages }}</span>
+            <span class="page-current">صفحه {{ products.number | persian_numbers }} از {{ products.paginator.num_pages | persian_numbers }}</span>
 
             {% if products.has_next %}
                 <a href="?page=
 
 
 
-                        {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
+
+
+                        {{ products.next_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
             {% endif %}
         </div>
     {% endif %}

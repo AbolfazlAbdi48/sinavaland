@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load jalali %}
+{% load jalali %}{% load number_filters %}
 {% block title %}مجله گردشگری - سینوالند{% endblock %}
 
 {% block extra_css %}
@@ -288,7 +288,8 @@
                     <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>
                         فرهنگ
                     </option>
-                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی</option>
+                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی
+                    </option>
                     <option value="nature" {% if request.GET.category == 'nature' %}selected{% endif %}>طبیعت
                     </option>
                 </select>
@@ -357,7 +358,7 @@
             </span>
 
                         <span> تاریخ انتشار:
-                {{ article.created_at|to_jalali }}
+                {{ article.created_at|to_jalali|persian_numbers }}
             </span>
                     </div>
 
@@ -399,6 +400,7 @@
 
 
 
+
                         {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
@@ -410,6 +412,7 @@
 
             {% if articles.has_next %}
                 <a href="?page=
+
 
 
 

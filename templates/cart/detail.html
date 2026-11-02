@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static %}{% load number_filters %}
 
 {% block title %}سبد خرید من | سینوالند{% endblock %}
 
@@ -662,7 +662,8 @@
                                         </div>
 
                                         {% if item.product.stock < 5 %}
-                                            <small style="color: #e31010; font-size: .75rem; margin: 0 auto;">موجودی کمتر از 5 عدد</small>
+                                            <small style="color: #e31010; font-size: .75rem; margin: 0 auto;">موجودی
+                                                کمتر از 5 عدد</small>
                                         {% endif %}
 
                                         <form method="post" action="{% url 'cart:cart-delete' item_id=item.pk %}">
@@ -781,6 +782,7 @@
 
 {% block extra_js %}
     <script>
+
         document.addEventListener("DOMContentLoaded", () => {
             const cart = document.querySelector(".cart-page");
             if (!cart) return;
@@ -794,12 +796,14 @@
             const itemCountElement = cart.querySelector("#cart-item-count");
             const summaryCountElement = cart.querySelector("#cart-summary-count");
 
+            // فقط برای نمایش اعداد فارسی
             const formatNumber = (number) =>
-                new Intl.NumberFormat("en-US", {
+                new Intl.NumberFormat("fa-IR-u-nu-arabext", {
                     useGrouping: true,
                     maximumFractionDigits: 0
                 }).format(number);
 
+            // تبدیل اعداد فارسی و عربی به انگلیسی برای پردازش
             function parseLocalizedNumber(value) {
                 const normalized = String(value ?? "")
                     .trim()
@@ -831,8 +835,10 @@
                 );
             }
 
+            // محاسبه مجموع قیمت و تعداد محصولات
             function updateCartTotals() {
                 const products = getCartProducts();
+
                 let subtotal = 0;
                 let totalQuantity = 0;
 
@@ -874,14 +880,17 @@
                     subtotal += lineTotal;
                     totalQuantity += quantity;
 
+                    // نمایش قیمت محصول به فارسی
                     if (linePriceElement) {
                         linePriceElement.textContent =
                             formatNumber(lineTotal);
                     }
 
+                    // نمایش تعداد محصول به فارسی
                     quantityElement.textContent =
                         formatNumber(quantity);
 
+                    // کنترل محدودیت موجودی
                     if (increaseButton) {
                         increaseButton.disabled =
                             quantity >= stock;
@@ -893,31 +902,37 @@
                     }
                 });
 
+                // نمایش جمع محصولات
                 if (subtotalElement) {
                     subtotalElement.textContent =
                         `${formatNumber(subtotal)} تومان`;
                 }
 
+                // نمایش مبلغ قابل پرداخت
                 if (totalElement) {
                     totalElement.textContent =
                         formatNumber(subtotal);
                 }
 
+                // نمایش تعداد آیتم‌های سبد خرید
                 if (itemCountElement) {
                     itemCountElement.textContent =
                         `${formatNumber(products.length)} کالا`;
                 }
 
+                // نمایش مجموع تعداد محصولات
                 if (summaryCountElement) {
                     summaryCountElement.textContent =
                         `${formatNumber(totalQuantity)} عدد`;
                 }
 
+                // بررسی خالی شدن سبد خرید
                 if (products.length === 0) {
                     showEmptyCart();
                 }
             }
 
+            // نمایش وضعیت سبد خرید خالی
             function showEmptyCart() {
                 const layout = cart.querySelector(".cart-layout");
 
@@ -958,11 +973,13 @@
                 }
 
                 if (subtotalElement) {
-                    subtotalElement.textContent = "0 تومان";
+                    subtotalElement.textContent =
+                        `${formatNumber(0)} تومان`;
                 }
 
                 if (totalElement) {
-                    totalElement.textContent = "0";
+                    totalElement.textContent =
+                        formatNumber(0);
                 }
             }
 
@@ -998,6 +1015,7 @@
                         return;
                     }
 
+                    // افزایش تعداد
                     if (
                         button.classList.contains("quantity-increase")
                     ) {
@@ -1019,6 +1037,7 @@
                         return;
                     }
 
+                    // کاهش تعداد
                     if (
                         button.classList.contains("quantity-decrease")
                     ) {
@@ -1032,7 +1051,7 @@
                 });
             }
 
-            // آماده‌سازی تمام آیتم‌ها در یک input مخفی
+            // آماده‌سازی اطلاعات سبد خرید برای ارسال به Django
             if (checkoutForm && cartDataInput) {
                 checkoutForm.addEventListener("submit", event => {
                     const products = getCartProducts();
@@ -1065,6 +1084,7 @@
 
                         seenIds.add(itemId);
 
+                        // مقادیر JSON همچنان انگلیسی و عددی هستند.
                         cartItems.push({
                             item_id: itemId,
                             quantity: quantity
@@ -1075,6 +1095,7 @@
                 });
             }
 
+            // محاسبه اولیه هنگام بارگذاری صفحه
             updateCartTotals();
         });
     </script>

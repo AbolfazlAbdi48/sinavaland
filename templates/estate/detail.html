@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load humanize %}{% load static %}{% load jalali %}
+{% load humanize %}{% load static %}{% load jalali %}{% load number_filters %}
 
 
 {% block title %}{{ estate.title }} - سینوالند{% endblock %}
@@ -1025,7 +1025,7 @@
                                             href="tel:{{ estate.owner_phone_number }}"
                                             class="estate-owner-phone-number"
                                     >
-                                        {{ estate.owner_phone_number }}
+                                        {{ estate.owner_phone_number | persian_numbers }}
                                     </a>
 
                                 </div>
@@ -1048,7 +1048,7 @@
                                 متراژ
                             </span>
                             <span class="estate-detail-value">
-                                {{ estate.area }} متر
+                                {{ estate.area | persian_numbers }} متر
                             </span>
                         </div>
 
@@ -1057,7 +1057,7 @@
                                 سال ساخت
                             </span>
                             <span class="estate-detail-value">
-                                {{ estate.construction_year }}
+                                {{ estate.construction_year | persian_numbers }}
                             </span>
                         </div>
 
@@ -1066,7 +1066,7 @@
                                 تعداد اتاق
                             </span>
                             <span class="estate-detail-value">
-                                {{ estate.rooms }}
+                                {{ estate.rooms | persian_numbers }}
                             </span>
                         </div>
 
@@ -1075,7 +1075,7 @@
                                 طبقه
                             </span>
                             <span class="estate-detail-value">
-                                {{ estate.floor }}
+                                {{ estate.floor | persian_numbers }}
                             </span>
                         </div>
 
@@ -1131,7 +1131,7 @@
                             قیمت کل
                         </span>
                             <span class="estate-price-value">
-                            {{ estate.total_price|intcomma }} تومان
+                            {{ estate.total_price|intcomma|persian_numbers }} تومان
                         </span>
                         </div>
 
@@ -1140,7 +1140,7 @@
                             قیمت هر متر
                         </span>
                             <span class="estate-price-value">
-                            {{ estate.price_per_meter|intcomma }} تومان
+                            {{ estate.price_per_meter|intcomma|persian_numbers }} تومان
                         </span>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load humanize %}{% load static %}
+{% load humanize %}{% load static %}{% load number_filters %}
 
 {% block title %}املاک و اسکان - سینوالند{% endblock %}
 
@@ -372,7 +372,7 @@
                     </p>
 
                     <div class="estate-price">
-                        {{ est.total_price|intcomma }}
+                        {{ est.total_price|intcomma|persian_numbers }}
                         <span>تومان</span>
                     </div>
                 </div>
@@ -412,13 +412,16 @@
 
 
 
-                        {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+                        {{ estate.previous_page_number | persian_numbers }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
             {% endif %}
 
             <span class="page-current">
-    صفحه {{ estate.number }} از {{ estate.paginator.num_pages }}
+    صفحه {{ estate.number | persian_numbers }} از {{ estate.paginator.num_pages | persian_numbers }}
 </span>
 
             {% if estate.has_next %}
@@ -440,7 +443,10 @@
 
 
 
-                        {{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+                        {{ estate.next_page_number | persian_numbers }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی
                 </a>
             {% endif %}

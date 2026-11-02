@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load jalali %}
+{% load number_filters %}
 
 {% block title %}{{ accommodation.name }} - سینوالند{% endblock %}
 
@@ -752,7 +753,7 @@
             <div class="price-card industrial-shadow">
                 <div class="price-card-header">
                     <div class="price-amount">
-                        {{ accommodation.price_per_night | intcomma }} تومان
+                        {{ accommodation.price_per_night | intcomma | persian_numbers }} تومان
                         <span>/ شب</span>
                     </div>
                 </div>

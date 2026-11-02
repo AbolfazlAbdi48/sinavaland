@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load humanize %}
+{% load humanize %}{% load number_filters %}
 
 {% block title %}{{ product.title }} - سینوالند{% endblock %}
 
@@ -315,14 +315,14 @@
             <div class="price-box industrial-shadow">
                 {% if product.discount_price %}
                     <div class="price-original">
-                        <span class="price-old">{{ product.price|intcomma }} تومان</span>
+                        <span class="price-old">{{ product.price|intcomma | persian_numbers }} تومان</span>
                         <span class="discount-badge">
-                        {% widthratio product.price|add:"-"|add:product.discount_price product.price 100 %}% تخفیف
+                        {% widthratio product.price|persian_numbers|add:"-"|add:product.discount_price product.price 100 %}% تخفیف
                     </span>
                     </div>
-                    <div class="price-final">{{ product.discount_price|intcomma }} تومان</div>
+                    <div class="price-final">{{ product.discount_price|intcomma | persian_numbers }} تومان</div>
                 {% else %}
-                    <div class="price-final">{{ product.price|intcomma }} تومان</div>
+                    <div class="price-final">{{ product.price|intcomma | persian_numbers }} تومان</div>
                 {% endif %}
             </div>
 
@@ -352,7 +352,7 @@
                         <line x1="12" y1="9" x2="12" y2="13"/>
                         <line x1="12" y1="17" x2="12.01" y2="17"/>
                     </svg>
-                    تنها {{ product.stock }} عدد باقی مانده
+                    تنها {{ product.stock | persian_numbers }} عدد باقی مانده
                 </div>
             {% else %}
                 <div class="stock-badge unavailable">
@@ -444,7 +444,7 @@
 
             <!-- Meta -->
             <div class="product-meta">
-                <p><strong>شناسه محصول:</strong> {{ product.id }}</p>
+                <p><strong>شناسه محصول:</strong> {{ product.id | persian_numbers }}</p>
                 <p><strong>دسته‌بندی:</strong> {{ product.get_category_display }}</p>
             </div>
 
