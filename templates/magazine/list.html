@@ -401,13 +401,14 @@
 
 
 
-                        {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+                        {{ articles.previous_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
             {% endif %}
 
             <span class="page-current">
-    صفحه {{ articles.number }} از {{ articles.paginator.num_pages }}
+    صفحه {{ articles.number | persian_numbers }} از {{ articles.paginator.num_pages | persian_numbers }}
 </span>
 
             {% if articles.has_next %}
@@ -417,7 +418,8 @@
 
 
 
-                        {{ articles.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+                        {{ articles.next_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی
                 </a>
             {% endif %}
