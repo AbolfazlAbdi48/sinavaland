@@ -4,6 +4,12 @@ from django.urls.converters import StringConverter
 from django.conf import settings
 from django.conf.urls.static import static
 from urllib.parse import unquote
+from django.contrib.sitemaps.views import sitemap
+
+from magazine.sitemaps import ArticleSitemap
+from marketplace.sitemaps import ProductSitemap
+from accommodations.sitemaps import AccommodationSitemap
+from estate.sitemaps import EstateSitemap
 
 
 class PersianSlugConverter(StringConverter):
@@ -12,6 +18,13 @@ class PersianSlugConverter(StringConverter):
     def to_python(self, value):
         return unquote(value)
 
+
+sitemaps = {
+    'articles': ArticleSitemap,
+    'products': ProductSitemap,
+    'estate': EstateSitemap,
+    'accommodations': AccommodationSitemap
+}
 
 register_converter(PersianSlugConverter, 'persian_slug')
 
@@ -25,7 +38,8 @@ urlpatterns = [
     path('magazine/', include(('magazine.urls', 'magazine'), namespace='magazine')),
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
-    path('ckeditor5/', include('django_ckeditor_5.urls'))
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
 
 if settings.DEBUG:

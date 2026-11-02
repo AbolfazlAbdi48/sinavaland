@@ -703,7 +703,7 @@
             <div class="gallery-item">
                 <img
                         src="{{ image.image.url }}"
-                        alt="{{ accommodation.title }}"
+                        alt="{{ accommodation.name }}"
                         class="gallery-image"
                         onclick="openImage({{ forloop.counter0 }})"
                 >
@@ -738,7 +738,9 @@
                 </span>
                     توضیحات
                 </h3>
-                <p>{{ accommodation.description|safe }}</p>
+                <div class="description-content">
+                    {{ accommodation.description|safe }}
+                </div>
             </div>
         </div>
 

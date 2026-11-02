@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.conf import settings
 from .utils import generate_accommodation_code
 from django_ckeditor_5.fields import CKEditor5Field
+from django.urls import reverse
 
 
 class Accommodation(models.Model):
@@ -59,6 +60,12 @@ class Accommodation(models.Model):
 
     def __str__(self):
         return self.code
+
+    def get_absolute_url(self):
+        return reverse(
+            'accommodations:detail',
+            kwargs={'slug': self.slug}
+        )
 
     def save(self, *args, **kwargs):
         if not self.slug:

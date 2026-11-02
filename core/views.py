@@ -13,12 +13,17 @@ from marketplace.models import Product
 def home(request):
     """صفحه اصلی"""
 
-    articles = Article.objects.all()[:3]
-    accommodations = Accommodation.objects.all()[:3]
-    estate = Estate.objects.all()[:3]
-    products = Product.objects.all()[:3]
+    articles = Article.objects.filter(is_published=True)[:3]
 
-    articles_count = Article.objects.count()
+    accommodations = Accommodation.objects.all()[:3]
+
+    estate = Estate.objects.filter(is_available=True)[:3]
+
+    products = Product.objects.filter(
+        is_available=True,
+        stock__gt=0
+    )[:3]
+
     accommodations_count = Accommodation.objects.count()
     estate_count = Estate.objects.count()
     products_count = Product.objects.count()
@@ -108,7 +113,7 @@ def host_service_worker(request):
 
 
 def tourist(request):
-    return render(request, 'core/home.html')
+    return redirect('core:home', permanent=True)
 
 
 def custom_404(request, exception):
@@ -117,3 +122,17 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, '500.html', status=500)
+
+
+def robots_txt(request):
+    content = """
+User-agent: *
+
+Disallow: /management-panel/
+Disallow: /accounts/
+Disallow: /cart/
+Disallow: /ckeditor5/
+
+Sitemap: https://sinavaland.ir/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")

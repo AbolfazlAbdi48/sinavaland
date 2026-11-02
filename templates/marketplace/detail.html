@@ -377,7 +377,10 @@
                 </span>
                     توضیحات محصول
                 </h2>
-                <p>{{ product.description|safe }}</p>
+
+                <div class="product-description">
+                    {{ product.description|safe }}
+                </div>
             </div>
 
             <!-- Actions -->

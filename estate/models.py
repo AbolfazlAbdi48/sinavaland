@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+from django.urls import reverse
 from django.utils.text import slugify
 
 from accounts.models import phone_validator
@@ -39,6 +39,12 @@ class Estate(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            'estate:detail',
+            kwargs={'slug': self.slug}
+        )
 
     def save(self, *args, **kwargs):
         if not self.slug:

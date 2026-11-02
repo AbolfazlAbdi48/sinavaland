@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -34,6 +35,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            'marketplace:detail',
+            kwargs={'slug': self.slug}
+        )
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -8,4 +8,5 @@ urlpatterns = [
     path('host/manifest.json', views.host_manifest, name='host_manifest'),
     path('host/sw.js', views.host_service_worker, name='host_service_worker'),
     path('tourist/', views.tourist, name='tourist'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
 ]
