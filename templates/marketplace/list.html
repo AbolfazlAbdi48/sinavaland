@@ -446,17 +446,22 @@
         <div class="filters-wrap industrial-shadow">
             <div class="filter-group">
                 <label for="category">دسته‌بندی</label>
-                <select name="category" id="category" onchange="this.form.submit()">
+
+                <select
+                        name="category"
+                        id="category"
+                        onchange="this.form.submit()"
+                >
                     <option value="">همه</option>
-                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>خوراکی
-                    </option>
-                    <option value="handicraft" {% if request.GET.category == 'handicraft' %}selected{% endif %}>صنایع
-                        دستی
-                    </option>
-                    <option value="souvenirs" {% if request.GET.category == 'souvenirs' %}selected{% endif %}>سوغات
-                    </option>
-                    <option value="other" {% if request.GET.category == 'other' %}selected{% endif %}>سایر
-                    </option>
+
+                    {% for value, label in categories %}
+                        <option
+                                value="{{ value }}"
+                                {% if selected_category == value %}selected{% endif %}
+                        >
+                            {{ label }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -567,6 +572,8 @@
 
 
 
+
+
                         {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -574,6 +581,8 @@
 
             {% if products.has_next %}
                 <a href="?page=
+
+
 
 
 

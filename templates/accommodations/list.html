@@ -301,15 +301,22 @@
         <div class="filters-wrap industrial-shadow">
             <div class="filter-group">
                 <label for="category">دسته‌بندی</label>
-                <select name="category" id="category" onchange="this.form.submit()">
+
+                <select
+                        name="category"
+                        id="category"
+                        onchange="this.form.submit()"
+                >
                     <option value="">همه</option>
-                    <option value="hotel" {% if request.GET.category == 'hotel' %}selected{% endif %}>هتل</option>
-                    <option value="villa" {% if request.GET.category == 'villa' %}selected{% endif %}>ویلا</option>
-                    <option value="apartment" {% if request.GET.category == 'apartment' %}selected{% endif %}>
-                        آپارتمان
-                    </option>
-                    <option value="ecolodge" {% if request.GET.category == 'ecolodge' %}selected{% endif %}>بوم‌گردی
-                    </option>
+
+                    {% for value, label in categories %}
+                        <option
+                                value="{{ value }}"
+                                {% if selected_category == value %}selected{% endif %}
+                        >
+                            {{ label }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -425,6 +432,7 @@
 
 
 
+
                         {{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
             {% endif %}
 
@@ -444,8 +452,10 @@
 
 
 
+
                         {{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
                 <a href="?page=
+
 
 
 
