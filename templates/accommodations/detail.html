@@ -27,22 +27,6 @@
     transform: scale(1.03);
     }
 
-    .accommodation-gallery {
-    width: 100%;
-    display: flex;
-    margin: 2.5rem 0;
-    gap: 1.5dvw;
-    padding: 0 1rem;
-
-    overflow-x: auto;
-    }
-
-    .accommodation-gallery img {
-    width: 25dvw;
-    height: 30dvh;
-    object-fit: cover;
-    flex-shrink: 0;
-    }
 
     .detail-hero-overlay {
     position: absolute;
@@ -67,6 +51,69 @@
 
     @media (min-width: 768px) {
     .detail-hero-content h1 { font-size: 2.5rem; }
+
+    .image-modal {
+    padding: 50px 12px 60px;
+    }
+
+    .modal-image {
+    max-width: 100%;
+    max-height: calc(100dvh - 120px);
+    }
+
+    .close-modal {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 29px;
+    }
+
+
+    .prev-image,
+    .next-image {
+    width: 44px;
+    height: 44px;
+
+    background: #ffffff;
+    color: #1a2744;
+
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+
+    font-size: 20px;
+    font-weight: 700;
+
+    opacity: 1;
+    }
+
+    .prev-image:hover,
+    .next-image:hover {
+    background: #f59e0b;
+    color: #1a2744;
+    }
+
+    .prev-image:active,
+    .next-image:active {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: #1a2744;
+    }
+
+    .prev-image {
+    left: 10px;
+    }
+
+    .next-image {
+    right: 10px;
+    }
+
+    .image-counter {
+    bottom: 10px;
+    font-size: 12px;
+    }
     }
 
     .detail-meta-row {
@@ -323,58 +370,41 @@
     margin-bottom: 12px;
     }
 
+
     .accommodation-gallery {
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-
     gap: 12px;
-
     overflow-x: auto;
     overflow-y: hidden;
-
     padding: 10px 0;
-
+    margin: 2.5rem 0;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     }
 
     .gallery-item {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 250px;
-
+    flex: 0 0 250px;
     width: 250px;
     min-width: 250px;
     max-width: 250px;
-
     height: 180px;
-    min-height: 180px;
-    max-height: 180px;
-
-    cursor: pointer;
     overflow: hidden;
     border-radius: 10px;
+    cursor: pointer;
     scroll-snap-align: start;
-
     margin: 0;
     }
 
     .gallery-image {
     display: block;
-
     width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-
     height: 100%;
-    min-height: 100%;
-    max-height: 100%;
-
     object-fit: cover;
-
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
     }
 
     .gallery-image:hover {
@@ -382,57 +412,113 @@
     }
 
 
-    /* Modal */
 
+    /* ===== Image Modal ===== */
     .image-modal {
     display: none;
     position: fixed;
-    z-index: 9999;
     inset: 0;
+    z-index: 99999;
 
-    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    padding: 60px 12px;
+
+    background: rgba(0, 0, 0, 0.94);
 
     align-items: center;
     justify-content: center;
     }
 
+    .image-modal.active {
+    display: flex;
+    }
+
     .modal-image {
-    max-width: 90%;
-    max-height: 90vh;
+    display: block;
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 85vh;
+
     object-fit: contain;
+    border-radius: 8px;
     }
 
     .close-modal {
     position: absolute;
-    top: 20px;
-    right: 30px;
-
-    color: white;
-    font-size: 40px;
+    top: 18px;
+    right: 24px;
+    z-index: 2;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-family: inherit;
+    font-size: 34px;
+    line-height: 1;
     cursor: pointer;
+    transition: background 0.2s ease;
+    }
+
+    .close-modal:hover {
+    background: rgba(255, 255, 255, 0.25);
     }
 
     .prev-image,
     .next-image {
     position: absolute;
-
     top: 50%;
+    z-index: 2;
     transform: translateY(-50%);
-
-    background: none;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
-
-    color: white;
-    font-size: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 22px;
     cursor: pointer;
+    transition: background 0.2s ease;
     }
 
+    .prev-image:hover,
+    .next-image:hover {
+    background: rgba(255, 255, 255, 0.25);
+    }
+
+
     .prev-image {
-    left: 30px;
+    left: 24px;
     }
 
     .next-image {
-    right: 30px;
+    right: 24px;
+    }
+
+    .image-counter {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 14px;
+    direction: ltr;
+    user-select: none;
     }
 
     .reservation-dates {
@@ -615,6 +701,21 @@
     background: #f0fdf4;
     color: #15803d;
     }
+
+    @media (max-width: 600px) {
+    .gallery-item {
+    flex: 0 0 75vw;
+    width: 75vw;
+    min-width: 75vw;
+    max-width: 75vw;
+    height: 180px;
+    }
+
+    .accommodation-gallery {
+    gap: 12px;
+    padding: 10px 14px;
+    }
+    }
 {% endblock %}
 
 {% block content %}
@@ -628,100 +729,171 @@
     </a>
 
     <!-- Hero Image / Header -->
-    {% if accommodation.images %}
-        <div class="detail-hero">
-            <img src="{{ accommodation.images.first.image.url }}" alt="{{ accommodation.name }}">
-            <div class="detail-hero-overlay"></div>
-            <div class="detail-hero-content">
-                <h1>{{ accommodation.name }}</h1>
-                <div class="detail-meta-row">
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                        {{ accommodation.location }}
-                    </div>
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
-                            <line x1="7" y1="7" x2="7.01" y2="7"/>
-                        </svg>
-                        {{ accommodation.get_category_display }}
-                    </div>
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                        </svg>
-                        {{ accommodation.capacity }} نفر
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="detail-hero-placeholder gradient-industrial"
-             style="margin: 0 -1.5rem 40px; padding: 80px 0 60px; text-align: center;">
-            <div style="position:relative;z-index:10;">
-                <h1 style="font-size:2rem;color:var(--primary-fg);margin-bottom:10px;">{{ accommodation.name }}</h1>
-                <div class="detail-meta-row" style="justify-content:center;">
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                        {{ accommodation.location }}
-                    </div>
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
-                            <line x1="7" y1="7" x2="7.01" y2="7"/>
-                        </svg>
-                        {{ accommodation.get_category_display }}
-                    </div>
-                    <div class="detail-meta-item">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                        </svg>
-                        {{ accommodation.capacity }} نفر
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    <!-- Hero Image / Header -->
+    {% with image=accommodation.prefetched_images.0 %}
+        {% if image and image.image %}
+            <div class="detail-hero">
+                <img
+                        src="{{ image.large_image.url }}"
+                        alt="{{ accommodation.name }}"
+                        fetchpriority="high"
+                        loading="eager"
+                        decoding="async"
+                >
 
+                <div class="detail-hero-overlay"></div>
+
+                <div class="detail-hero-content">
+                    <h1>{{ accommodation.name }}</h1>
+
+                    <div class="detail-meta-row">
+
+                        <div class="detail-meta-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            {{ accommodation.location }}
+                        </div>
+
+                        <div class="detail-meta-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                            </svg>
+                            {{ accommodation.get_category_display }}
+                        </div>
+
+                        <div class="detail-meta-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                            {{ accommodation.capacity }} نفر
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="detail-hero-placeholder gradient-industrial"
+                 style="margin: 0 -1.5rem 40px; padding: 80px 0 60px; text-align: center;">
+
+                <div style="position:relative;z-index:10;">
+                    <h1 style="font-size:2rem;color:var(--primary-fg);margin-bottom:10px;">
+                        {{ accommodation.name }}
+                    </h1>
+
+                    <div class="detail-meta-row" style="justify-content:center;">
+
+                        <div class="detail-meta-item">
+                            {{ accommodation.location }}
+                        </div>
+
+                        <div class="detail-meta-item">
+                            {{ accommodation.get_category_display }}
+                        </div>
+
+                        <div class="detail-meta-item">
+                            {{ accommodation.capacity }} نفر
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- Accommodation Gallery -->
     <div class="accommodation-gallery">
-        {% for image in accommodation.images.all %}
+
+        {% for image in accommodation.prefetched_images %}
+
             <div class="gallery-item">
                 <img
-                        src="{{ image.image.url }}"
-                        alt="{{ accommodation.name }}"
+                        src="{{ image.card_image.url }}"
+                        srcset="
+                    {{ image.thumbnail.url }} 180w,
+                    {{ image.card_image.url }} 468w
+                "
+                        sizes="250px"
+                        width="468"
+                        height="468"
+                        data-full-image="{{ image.large_image.url }}"
+                        alt="{{ accommodation.name }} - تصویر {{ forloop.counter }}"
                         class="gallery-image"
+                        loading="lazy"
+                        decoding="async"
                         onclick="openImage({{ forloop.counter0 }})"
                 >
             </div>
+
         {% empty %}
+
             <p>تصویری برای این اقامتگاه ثبت نشده است.</p>
+
         {% endfor %}
+
     </div>
 
-    <!-- Modal -->
-    <div id="imageModal" class="image-modal">
-        <span class="close-modal" onclick="closeImage()">&times;</span>
 
-        <img id="modalImage" class="modal-image">
+    <!-- Image Modal -->
+    <div
+            id="imageModal"
+            class="image-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="نمایش تصاویر اقامتگاه"
+    >
 
-        <button class="prev-image" onclick="changeImage(-1)">&#10094;</button>
-        <button class="next-image" onclick="changeImage(1)">&#10095;</button>
+        <button
+                type="button"
+                class="close-modal"
+                onclick="closeImage()"
+                aria-label="بستن تصویر"
+        >
+            &times;
+        </button>
+
+        <button
+                type="button"
+                class="prev-image"
+                onclick="changeImage(-1)"
+                aria-label="تصویر قبلی"
+        >
+            &#10095;
+        </button>
+
+        <img
+                id="modalImage"
+                class="modal-image"
+                src=""
+                alt=""
+        >
+
+        <button
+                type="button"
+                class="next-image"
+                onclick="changeImage(1)"
+                aria-label="تصویر بعدی"
+        >
+            &#10094;
+        </button>
+
+        <div class="image-counter" aria-live="polite">
+            <span id="currentImageNumber">1</span>
+            /
+            <span id="totalImageNumber">1</span>
+        </div>
+
     </div>
     <!-- Two-column layout -->
     <div class="detail-layout">
@@ -942,52 +1114,147 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'datepicker/persian-datepicker.min.js' %}"></script>
     <script>
-        const images = [
-            {% for image in accommodation.images.all %}
-                "{{ image.image.url }}",
-            {% endfor %}
-        ];
+        /* ================================
+           Accommodation Image Modal
+        ================================ */
 
-        let currentIndex = 0;
+        const galleryImages = document.querySelectorAll(
+            ".gallery-image[data-full-image]"
+        );
 
+        const imageModal = document.getElementById("imageModal");
+        const modalImage = document.getElementById("modalImage");
+
+        const currentImageNumber = document.getElementById(
+            "currentImageNumber"
+        );
+
+        const totalImageNumber = document.getElementById(
+            "totalImageNumber"
+        );
+
+        let currentImageIndex = 0;
+        let lastFocusedElement = null;
+
+
+        // Initialize image counter
+        if (totalImageNumber) {
+            totalImageNumber.textContent = galleryImages.length;
+        }
+
+
+        // Open modal
         function openImage(index) {
-            currentIndex = index;
 
-            document.getElementById("modalImage").src = images[currentIndex];
-            document.getElementById("imageModal").style.display = "flex";
+            if (!galleryImages.length || !imageModal || !modalImage) {
+                return;
+            }
+
+            if (index < 0 || index >= galleryImages.length) {
+                return;
+            }
+
+            currentImageIndex = index;
+            lastFocusedElement = document.activeElement;
+
+            updateModalImage();
+
+            imageModal.classList.add("active");
+
+            document.body.style.overflow = "hidden";
+
+            const closeButton = imageModal.querySelector(".close-modal");
+
+            if (closeButton) {
+                closeButton.focus();
+            }
         }
 
-        function closeImage() {
-            document.getElementById("imageModal").style.display = "none";
+
+        // Update modal image
+        function updateModalImage() {
+
+            const selectedImage = galleryImages[currentImageIndex];
+
+            if (!selectedImage) {
+                return;
+            }
+
+            modalImage.src = selectedImage.dataset.fullImage;
+            modalImage.alt = selectedImage.alt;
+
+            if (currentImageNumber) {
+                currentImageNumber.textContent = currentImageIndex + 1;
+            }
         }
 
+
+        // Change image
         function changeImage(direction) {
-            currentIndex += direction;
 
-            if (currentIndex >= images.length) {
-                currentIndex = 0;
+            if (
+                !galleryImages.length ||
+                !imageModal.classList.contains("active")
+            ) {
+                return;
             }
 
-            if (currentIndex < 0) {
-                currentIndex = images.length - 1;
-            }
+            currentImageIndex =
+                (currentImageIndex + direction + galleryImages.length)
+                % galleryImages.length;
 
-            document.getElementById("modalImage").src = images[currentIndex];
+            updateModalImage();
         }
 
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
+
+        // Close modal
+        function closeImage() {
+
+            if (!imageModal || !modalImage) {
+                return;
+            }
+
+            imageModal.classList.remove("active");
+
+            document.body.style.overflow = "";
+
+            modalImage.removeAttribute("src");
+            modalImage.alt = "";
+
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+                lastFocusedElement = null;
+            }
+        }
+
+
+        // Close modal by clicking on backdrop
+        imageModal.addEventListener("click", function (event) {
+
+            if (event.target === imageModal) {
                 closeImage();
             }
 
-            if (event.key === "ArrowRight") {
-                changeImage(-1);
+        });
+
+
+        // Keyboard navigation
+        document.addEventListener("keydown", function (event) {
+
+            if (!imageModal.classList.contains("active")) {
+                return;
             }
 
-            if (event.key === "ArrowLeft") {
+            if (event.key === "Escape") {
+                closeImage();
+            } else if (event.key === "ArrowRight") {
+                changeImage(-1);
+            } else if (event.key === "ArrowLeft") {
                 changeImage(1);
             }
+
         });
+
     </script>
     <script>
         $(document).ready(function () {

@@ -288,15 +288,27 @@
         <!-- Gallery -->
         <div class="product-gallery industrial-shadow">
             {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                <img
+                        src="{{ product.large_image.url }}"
+                        srcset="
+            {{ product.thumbnail.url }} 180w,
+            {{ product.card_image.url }} 468w,
+            {{ product.large_image.url }} 1024w
+        "
+                        sizes="
+            (max-width: 767px) calc(100vw - 48px),
+            (max-width: 1023px) calc((100vw - 80px) / 2),
+            calc(100vw - 560px)
+        "
+                        width="1024"
+                        height="1024"
+                        alt="{{ product.title }}"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                >
             {% else %}
                 <div class="product-gallery-placeholder">
-                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
                     بدون تصویر
                 </div>
             {% endif %}

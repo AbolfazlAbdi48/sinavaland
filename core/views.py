@@ -4,8 +4,9 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import ContactMessage
+from django.db.models import Prefetch
 
+from .models import ContactMessage
 from magazine.models import Article
 from accommodations.models import Accommodation
 from estate.models import Estate
@@ -15,22 +16,50 @@ from marketplace.models import Product
 def home(request):
     """صفحه اصلی"""
 
-    articles = Article.objects.filter(is_published=True)[:3]
+    articles = (
+        Article.objects
+        .filter(is_published=True)
+        .select_related("author")
+        [:3]
+    )
 
-    accommodations = Accommodation.objects.all()[:3]
+    accommodations = (
+        Accommodation.objects
+        .prefetch_related(
+            Prefetch(
+                "images",
+                to_attr="prefetched_images",
+            )
+        )
+        [:3]
+    )
 
-    estate = Estate.objects.filter(is_available=True)[:3]
+    estate = (
+        Estate.objects
+        .filter(is_available=True)
+        .prefetch_related(
+            Prefetch(
+                "images",
+                to_attr="prefetched_images",
+            )
+        )
+        [:3]
+    )
 
-    products = Product.objects.filter(
-        is_available=True,
-        stock__gt=0
-    )[:3]
+    products = (
+        Product.objects
+        .filter(
+            is_available=True,
+            stock__gt=0,
+        )
+        [:3]
+    )
 
     accommodations_count = Accommodation.objects.count()
     estate_count = Estate.objects.count()
     products_count = Product.objects.count()
 
-    return render(request, 'core/home.html', {
+    context = {
         "articles": articles,
         "accommodations": accommodations,
         "estate": estate,
@@ -38,7 +67,9 @@ def home(request):
         "accommodations_count": accommodations_count,
         "estate_count": estate_count,
         "products_count": products_count,
-    })
+    }
+
+    return render(request, "core/home.html", context)
 
 
 def contact(request):

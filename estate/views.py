@@ -3,6 +3,7 @@ from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.db.models import Q, Prefetch
 
 from .models import Estate
 
@@ -16,16 +17,39 @@ from core.seo import (
 def estate_list(request):
     """لیست املاک"""
 
-    estate = Estate.objects.filter(
-        is_available=True
-    ).order_by("-created_at")
+    estate = (
+        Estate.objects
+        .filter(is_available=True)
+        .prefetch_related(
+            Prefetch(
+                "images",
+                to_attr="prefetched_images",
+            )
+        )
+        .order_by("-created_at")
+    )
 
-    lowest_price = request.GET.get("lowest_price", "").strip()
-    highest_price = request.GET.get("highest_price", "").strip()
+    # ===== Price Filters =====
+    lowest_price = request.GET.get(
+        "lowest_price", ""
+    ).strip()
+
+    highest_price = request.GET.get(
+        "highest_price", ""
+    ).strip()
 
     try:
-        lowest_price = Decimal(lowest_price) if lowest_price else None
-        highest_price = Decimal(highest_price) if highest_price else None
+        lowest_price = (
+            Decimal(lowest_price)
+            if lowest_price
+            else None
+        )
+
+        highest_price = (
+            Decimal(highest_price)
+            if highest_price
+            else None
+        )
 
         for price in (lowest_price, highest_price):
             if price is not None and (
@@ -45,31 +69,42 @@ def estate_list(request):
             request,
             "لطفاً بازه قیمت را با مقادیر عددی معتبر وارد کنید."
         )
+
         lowest_price = None
         highest_price = None
 
     if lowest_price is not None:
-        estate = estate.filter(total_price__gte=lowest_price)
-
-    if highest_price is not None:
-        estate = estate.filter(total_price__lte=highest_price)
-
-    search = request.GET.get("search")
-
-    if search:
-        estate = (
-                estate.filter(title__icontains=search)
-                | estate.filter(destination__icontains=search)
+        estate = estate.filter(
+            total_price__gte=lowest_price
         )
 
+    if highest_price is not None:
+        estate = estate.filter(
+            total_price__lte=highest_price
+        )
+
+    # ===== Search =====
+    search = request.GET.get("search", "").strip()
+
+    if search:
+        estate = estate.filter(
+            Q(title__icontains=search)
+            | Q(destination__icontains=search)
+        )
+
+    # ===== Pagination =====
     paginator = Paginator(estate, 12)
+
     page = request.GET.get("page")
+
     estate = paginator.get_page(page)
 
+    # ===== Context =====
     context = {
         "estate": estate,
     }
 
+    # ===== SEO =====
     context.update(
         seo_context(
             request,
@@ -85,7 +120,9 @@ def estate_list(request):
                 "description": (
                     "فهرست آگهی‌های املاک ثبت‌شده در سینوالند."
                 ),
-                "url": request.build_absolute_uri(request.path),
+                "url": request.build_absolute_uri(
+                    request.path
+                ),
             },
         )
     )
@@ -101,7 +138,12 @@ def estate_detail(request, slug):
     """جزئیات ملک"""
 
     estate = get_object_or_404(
-        Estate,
+        Estate.objects.prefetch_related(
+            Prefetch(
+                "images",
+                to_attr="prefetched_images",
+            )
+        ),
         slug=slug,
         is_available=True,
     )
@@ -114,10 +156,10 @@ def estate_detail(request, slug):
         estate.description
     )
 
-    # تصاویر ملک
+    # ===== Estate Images =====
     estate_images = [
         item
-        for item in estate.images.all()
+        for item in estate.prefetched_images
         if item.image
     ]
 
@@ -126,7 +168,7 @@ def estate_detail(request, slug):
         for item in estate_images
     ]
 
-    # موجودیت اصلی: ملک
+    # ===== Main Property Entity =====
     property_schema = {
         "@type": "Place",
         "@id": f"{estate_url}#property",
@@ -142,7 +184,7 @@ def estate_detail(request, slug):
     if image_urls:
         property_schema["image"] = image_urls
 
-    # ویژگی‌های ملک
+    # ===== Property Attributes =====
     additional_properties = []
 
     property_attributes = [
@@ -163,9 +205,11 @@ def estate_detail(request, slug):
             if unit:
                 property_value["unitText"] = unit
 
-            additional_properties.append(property_value)
+            additional_properties.append(
+                property_value
+            )
 
-    # امکانات؛ وضعیت مثبت و منفی هر دو ثبت می‌شوند
+    # ===== Property Features =====
     features = {
         "استخر": estate.has_pool,
         "پارکینگ": estate.has_parking,
@@ -180,9 +224,11 @@ def estate_detail(request, slug):
         })
 
     if additional_properties:
-        property_schema["additionalProperty"] = additional_properties
+        property_schema["additionalProperty"] = (
+            additional_properties
+        )
 
-    # پیشنهاد فروش ملک
+    # ===== Offer Schema =====
     offer_schema = {
         "@type": "Offer",
         "url": estate_url,
@@ -190,16 +236,20 @@ def estate_detail(request, slug):
             "@id": f"{estate_url}#property",
         },
         "availability": "https://schema.org/InStock",
-        "businessFunction": "https://purl.org/goodrelations/v1#Sell",
+        "businessFunction": (
+            "https://purl.org/goodrelations/v1#Sell"
+        ),
     }
 
     if estate.total_price is not None:
         offer_schema.update({
-            "price": price_to_schema(estate.total_price),
+            "price": price_to_schema(
+                estate.total_price
+            ),
             "priceCurrency": "IRR",
         })
 
-    # داده ساختاریافته آگهی ملک
+    # ===== Real Estate Listing Schema =====
     schema = {
         "@context": "https://schema.org",
         "@type": "RealEstateListing",
@@ -213,16 +263,20 @@ def estate_detail(request, slug):
         "inLanguage": "fa-IR",
     }
 
+    # ===== SEO Image =====
     first_image = (
         estate_images[0].image
         if estate_images
         else None
     )
 
+    # ===== Context =====
     context = {
         "estate": estate,
+        "estate_images": estate_images,
     }
 
+    # ===== SEO =====
     context.update(
         seo_context(
             request,

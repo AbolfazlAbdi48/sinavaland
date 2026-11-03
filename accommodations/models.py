@@ -7,6 +7,15 @@ from .utils import generate_accommodation_code
 from django_ckeditor_5.fields import CKEditor5Field
 from django.urls import reverse
 
+from imagekit.models import ImageSpecField
+
+from core.image_specs import (
+    ThumbnailSpec,
+    CardImageSpec,
+    LargeImageSpec,
+    HomeCardLargeSpec
+)
+
 
 class Accommodation(models.Model):
     CATEGORY_CHOICES = [
@@ -109,8 +118,23 @@ class AccommodationImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images'
     )
-
     image = models.ImageField(upload_to='accommodations/', blank=True, null=True)
+    thumbnail = ImageSpecField(
+        source="image",
+        spec=ThumbnailSpec,
+    )
+    card_image = ImageSpecField(
+        source="image",
+        spec=CardImageSpec,
+    )
+    large_image = ImageSpecField(
+        source="image",
+        spec=LargeImageSpec,
+    )
+    home_large_image = ImageSpecField(
+        source="image",
+        spec=HomeCardLargeSpec,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -17,6 +17,12 @@ from core.seo import (
     price_to_schema,
 )
 
+from django.core.paginator import Paginator
+from django.db.models import Prefetch
+from django.shortcuts import render
+
+from .models import Accommodation, AccommodationImage
+
 
 def accommodation_list(request):
     """لیست اقامتگاه‌ها"""
@@ -33,10 +39,19 @@ def accommodation_list(request):
     search = request.GET.get("search")
 
     if search:
-        accommodations = (
-                accommodations.filter(title__icontains=search)
-                | accommodations.filter(location__icontains=search)
+        accommodations = accommodations.filter(
+            title__icontains=search
+        ) | accommodations.filter(
+            location__icontains=search
         )
+
+    accommodations = accommodations.prefetch_related(
+        Prefetch(
+            "images",
+            queryset=AccommodationImage.objects.order_by("id"),
+            to_attr="prefetched_images",
+        )
+    )
 
     # صفحه‌بندی
     paginator = Paginator(accommodations, 12)
@@ -60,9 +75,7 @@ def accommodation_list(request):
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
                 "name": "اقامتگاه‌های سینوالند",
-                "description": (
-                    "فهرست اقامتگاه‌های ثبت‌شده در سینوالند."
-                ),
+                "description": "فهرست اقامتگاه‌های ثبت‌شده در سینوالند.",
                 "url": request.build_absolute_uri(request.path),
             },
         )
@@ -79,7 +92,13 @@ def accommodation_detail(request, slug):
     """جزئیات اقامتگاه"""
 
     accommodation = get_object_or_404(
-        Accommodation,
+        Accommodation.objects.prefetch_related(
+            Prefetch(
+                "images",
+                queryset=AccommodationImage.objects.order_by("id"),
+                to_attr="prefetched_images",
+            )
+        ),
         slug=slug,
     )
 

@@ -115,31 +115,37 @@
     }
 
     .article-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: transform .25s, box-shadow .25s;
+    min-width: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    background: var(--card);
+    border-radius: var(--radius);
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
     }
 
     .article-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px -4px rgba(26, 39, 68, .15);
+    border-color: var(--amber);
+    box-shadow: 0 10px 28px rgba(26, 39, 68, .12);
     }
 
     .article-image-wrap {
-    position: relative;
+    width: 100%;
     height: 220px;
     overflow: hidden;
     }
 
     .article-image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .4s;
+    object-position: center;
     }
 
     .article-card:hover .article-image {
@@ -276,22 +282,21 @@
             <div class="filter-group">
                 <label for="category">دسته‌بندی</label>
 
-                <select name="category"
+                <select
+                        name="category"
                         id="category"
-                        onchange="this.form.submit()">
-
+                        onchange="this.form.submit()"
+                >
                     <option value="">همه</option>
 
-                    <option value="travel" {% if request.GET.category == 'travel' %}selected{% endif %}>
-                        سفر
-                    </option>
-                    <option value="culture" {% if request.GET.category == 'culture' %}selected{% endif %}>
-                        فرهنگ
-                    </option>
-                    <option value="food" {% if request.GET.category == 'food' %}selected{% endif %}>غذا و نوشیدنی
-                    </option>
-                    <option value="nature" {% if request.GET.category == 'nature' %}selected{% endif %}>طبیعت
-                    </option>
+                    {% for value, label in categories %}
+                        <option
+                                value="{{ value }}"
+                                {% if selected_category == value %}selected{% endif %}
+                        >
+                            {{ label }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -328,9 +333,24 @@
                 <div class="article-image-wrap">
 
                     {% if article.image %}
-                        <img src="{{ article.image.url }}"
-                             alt="{{ article.title }}"
-                             class="article-image">
+                        <img
+                                src="{{ article.card_image.url }}"
+                                srcset="
+        {{ article.thumbnail.url }} 180w,
+        {{ article.card_image.url }} 468w
+    "
+                                sizes="
+        (max-width: 600px) 100vw,
+        (max-width: 1023px) 50vw,
+        (max-width: 1400px) 33vw,
+        25vw
+    "
+                                alt="{{ article.title }}"
+                                width="468"
+                                height="468"
+                                loading="lazy"
+                                decoding="async"
+                        >
                     {% else %}
                         <div class="article-image-placeholder">
                             بدون تصویر
@@ -402,7 +422,19 @@
 
 
 
-                        {{ articles.previous_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+
+
+
+
+
+
+
+
+
+                        {{ articles.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
             {% endif %}
@@ -419,7 +451,19 @@
 
 
 
-                        {{ articles.next_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+
+
+
+
+
+
+
+
+
+                        {{ articles.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی
                 </a>
             {% endif %}

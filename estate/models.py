@@ -3,6 +3,14 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 from accounts.models import phone_validator
+from imagekit.models import ImageSpecField
+
+from core.image_specs import (
+    ThumbnailSpec,
+    CardImageSpec,
+    LargeImageSpec,
+    HomeCardLargeSpec
+)
 
 
 class Estate(models.Model):
@@ -66,6 +74,22 @@ class EstateImage(models.Model):
     )
 
     image = models.ImageField(upload_to='estate/', blank=True, null=True)
+    thumbnail = ImageSpecField(
+        source="image",
+        spec=ThumbnailSpec,
+    )
+    card_image = ImageSpecField(
+        source="image",
+        spec=CardImageSpec,
+    )
+    large_image = ImageSpecField(
+        source="image",
+        spec=LargeImageSpec,
+    )
+    home_large_image = ImageSpecField(
+        source="image",
+        spec=HomeCardLargeSpec,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

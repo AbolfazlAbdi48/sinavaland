@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Article
 
@@ -10,42 +11,51 @@ from core.seo import (
 
 
 def article_list(request):
-    """لیست مقالات"""
+    """لیست مقالات منتشرشده"""
 
-    articles = Article.objects.filter(
-        is_published=True
-    ).order_by("-created_at")
+    articles = (
+        Article.objects
+        .filter(is_published=True)
+        .select_related("author")
+    )
 
-    # فیلتر بر اساس دسته‌بندی
-    category = request.GET.get("category")
+    # فیلتر دسته‌بندی
+    category = request.GET.get("category", "").strip()
 
-    if category:
+    valid_categories = dict(Article.CATEGORY_CHOICES)
+
+    if category in valid_categories:
         articles = articles.filter(category=category)
+    else:
+        category = ""
 
     # جستجو
-    search = request.GET.get("search")
+    search = request.GET.get("search", "").strip()
 
     if search:
-        articles = (
-                articles.filter(title__icontains=search)
-                | articles.filter(content__icontains=search)
+        articles = articles.filter(
+            Q(title__icontains=search) |
+            Q(content__icontains=search)
         )
 
-    # صفحه‌بندی
-    paginator = Paginator(articles, 12)
-    page_number = request.GET.get("page")
-    articles = paginator.get_page(page_number)
+    # مرتب‌سازی و صفحه‌بندی
+    articles = articles.order_by("-created_at")
 
-    context = {
-        "articles": articles,
-        "categories": Article.CATEGORY_CHOICES,
-    }
+    paginator = Paginator(articles, 12)
+    articles = paginator.get_page(request.GET.get("page"))
 
     # Canonical
     canonical_url = request.build_absolute_uri(request.path)
 
     if articles.number > 1:
         canonical_url = f"{canonical_url}?page={articles.number}"
+
+    context = {
+        "articles": articles,
+        "categories": Article.CATEGORY_CHOICES,
+        "selected_category": category,
+        "search_query": search,
+    }
 
     context.update(
         seo_context(
@@ -68,11 +78,7 @@ def article_list(request):
         )
     )
 
-    return render(
-        request,
-        "magazine/list.html",
-        context,
-    )
+    return render(request, "magazine/list.html", context)
 
 
 def article_detail(request, slug):

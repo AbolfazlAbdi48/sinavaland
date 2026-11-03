@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'pwa',
     'django_ckeditor_5',
     'axes',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

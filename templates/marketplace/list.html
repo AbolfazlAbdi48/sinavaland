@@ -113,7 +113,7 @@
     /* ===== Products Grid ===== */
     .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 24px;
     margin: 0 24px 40px;
     }
@@ -360,7 +360,23 @@
 
     /* ===== Responsive ===== */
 
+    @media (max-width: 1200px) {
+    .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    }
+
+    @media (max-width: 992px) {
+    .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    }
+
     @media (max-width: 640px) {
+    .products-grid {
+    grid-template-columns: 1fr;
+    }
+
     .product-card-body {
     padding: 13px 12px 10px;
     }
@@ -464,7 +480,23 @@
             <div class="product-card animate-fade-in-up industrial-shadow">
                 <div class="product-card-img">
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                        <img
+                                src="{{ product.card_image.url }}"
+                                srcset="
+        {{ product.thumbnail.url }} 180w,
+        {{ product.card_image.url }} 468w
+    "
+                                sizes="
+        (max-width: 640px) calc(100vw - 48px),
+        (max-width: 992px) calc((100vw - 72px) / 2),
+        300px
+    "
+                                width="468"
+                                height="468"
+                                alt="{{ product.title }}"
+                                loading="lazy"
+                                decoding="async"
+                        >
                     {% else %}
                         <div class="product-card-img-placeholder">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -526,7 +558,16 @@
 
 
 
-                        {{ products.previous_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
+
+
+
+
+
+
+
+
+
+                        {{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">قبلی</a>
             {% endif %}
 
             <span class="page-current">صفحه {{ products.number | persian_numbers }} از {{ products.paginator.num_pages | persian_numbers }}</span>
@@ -538,7 +579,16 @@
 
 
 
-                        {{ products.next_page_number | persian_numbers }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
+
+
+
+
+
+
+
+
+
+                        {{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">بعدی</a>
             {% endif %}
         </div>
     {% endif %}

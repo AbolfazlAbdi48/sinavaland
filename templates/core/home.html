@@ -308,6 +308,18 @@
 
     /* ===== Responsive ===== */
 
+    @media (max-width: 1200px) {
+    .articles-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    }
+
+    @media (max-width: 900px) {
+    .articles-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    }
+
     @media (max-width: 640px) {
     .product-card-body {
     padding: 13px 12px 10px;
@@ -342,6 +354,13 @@
 
     .product-stock-label {
     font-size: .72rem;
+    }
+    }
+
+    @media (max-width: 600px) {
+    .articles-grid {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
     }
     }
 
@@ -445,7 +464,7 @@
                         که مثل دست مادربزرگ‌هامون
                         طعم خاطره دارن.</p>
                     <div class="hero-btns">
-                        <a href="#about" class="btn-amber gradient-amber">درباره سینوالند
+                        <a href="#accommodations" class="btn-amber gradient-amber">رزرو اقامتگاه
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
                                 <path d="M15 18l-6-6 6-6"/>
@@ -463,7 +482,7 @@
                         <p>با سینوالند دیگه نیازی نیست برای تجربه اصالت شمال، ساعت‌ها راه برید.</p>
                     </div>
                     <div class="video-container industrial-shadow">
-                        <img src="{% static 'sinavaland.jpg' %}" alt="روستای سینوا"/>
+                        <img src="{% static 'sinavaland.jpg' %}" alt="روستای سینوا" loading="lazy"/>
                         <div class="video-overlay"></div>
                         <div class="play-btn gradient-amber">
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="#2d3548" stroke="none">
@@ -479,7 +498,7 @@
             </section>
 
             <!-- Stats -->
-            <section class="stats">
+            <section class="stats" id="accommodations">
                 <div class="container">
                     <div class="stats-grid">
                         {% if accommodations_count > 0 %}
@@ -520,19 +539,34 @@
                                     <a href="{% url 'accommodations:detail' slug=accommodation.slug %}">
                                         <article class="article-card animate-fade-in-up industrial-shadow">
                                             <div class="article-image-wrap">
-                                                {% if accommodation.images %}
-                                                    {% with image=accommodation.images.first %}
-                                                        {% if image %}
-                                                            <img src="{{ image.image.url }}"
-                                                                 alt="{{ accommodation.name }}"
-                                                                 class="article-image">
-                                                        {% endif %}
-                                                    {% endwith %}
-                                                {% else %}
-                                                    <div class="article-image-placeholder">
-                                                        بدون تصویر
-                                                    </div>
-                                                {% endif %}
+                                                {% with image=accommodation.prefetched_images.0 %}
+                                                    {% if image %}
+                                                        <img
+                                                                src="{{ image.card_image.url }}"
+                                                                srcset="
+                {{ image.thumbnail.url }} 180w,
+                {{ image.card_image.url }} 468w,
+                {{ image.home_large_image.url }} 960w
+            "
+                                                                sizes="
+                (max-width: 600px) calc(100vw - 48px),
+                (max-width: 900px) calc((100vw - 72px) / 2),
+                (max-width: 1200px) calc((100vw - 96px) / 3),
+                calc((100vw - 120px) / 4)
+            "
+                                                                width="468"
+                                                                height="468"
+                                                                alt="{{ accommodation.name }}"
+                                                                class="article-image"
+                                                                loading="lazy"
+                                                                decoding="async"
+                                                        >
+                                                    {% else %}
+                                                        <div class="article-image-placeholder">
+                                                            بدون تصویر
+                                                        </div>
+                                                    {% endif %}
+                                                {% endwith %}
                                                 <div class="article-category">
                                                     {{ accommodation.get_category_display }}
                                                 </div>
@@ -602,8 +636,26 @@
                                         <article class="article-card animate-fade-in-up industrial-shadow">
                                             <div class="article-image-wrap">
                                                 {% if product.image %}
-                                                    <img src="{{ product.image.url }}" alt="{{ product.title }}"
-                                                         class="article-image">
+                                                    <img
+                                                            src="{{ product.card_image.url }}"
+                                                            srcset="
+        {{ product.thumbnail.url }} 180w,
+        {{ product.card_image.url }} 468w,
+        {{ product.home_large_image.url }} 960w
+    "
+                                                            sizes="
+        (max-width: 600px) calc(100vw - 48px),
+        (max-width: 900px) calc((100vw - 72px) / 2),
+        (max-width: 1200px) calc((100vw - 96px) / 3),
+        calc((100vw - 120px) / 4)
+    "
+                                                            width="468"
+                                                            height="468"
+                                                            alt="{{ product.title }}"
+                                                            class="article-image"
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                    >
                                                 {% else %}
                                                     <div class="article-image-placeholder">
                                                         بدون تصویر
@@ -618,7 +670,7 @@
                                                     {{ product.title }}
                                                 </h3>
                                                 <div class="article-excerpt">
-                                                    {{ product.description | truncatewords:10 | safe }}
+                                                    {{ product.description | safe | linebreaks }}
                                                 </div>
                                             </div>
 
@@ -665,7 +717,7 @@
 
             <!-- Full-width Banner -->
             <section class="full-banner">
-                <img src="{% static 'umag-savadkuh-attractions.webp' %}" alt="انبار ماشین‌آلات"/>
+                <img src="{% static 'umag-savadkuh-attractions.webp' %}" alt="روستای سینوا" loading="lazy"/>
                 <div class="overlay gradient-industrial"></div>
                 <div class="banner-content">
                     <div class="inner">
@@ -696,18 +748,34 @@
                                     <a href="{% url 'estate:detail' slug=est.slug %}">
                                         <article class="article-card animate-fade-in-up industrial-shadow">
                                             <div class="article-image-wrap">
-                                                {% if est.images %}
-                                                    {% with image=est.images.first %}
-                                                        {% if image %}
-                                                            <img src="{{ image.image.url }}" alt="{{ est.name }}"
-                                                                 class="article-image">
-                                                        {% endif %}
-                                                    {% endwith %}
-                                                {% else %}
-                                                    <div class="article-image-placeholder">
-                                                        بدون تصویر
-                                                    </div>
-                                                {% endif %}
+                                                {% with image=est.prefetched_images.0 %}
+                                                    {% if image %}
+                                                        <img
+                                                                src="{{ image.card_image.url }}"
+                                                                srcset="
+                {{ image.thumbnail.url }} 180w,
+                {{ image.card_image.url }} 468w,
+                {{ image.home_large_image.url }} 960w
+            "
+                                                                sizes="
+                (max-width: 600px) calc(100vw - 48px),
+                (max-width: 900px) calc((100vw - 72px) / 2),
+                (max-width: 1200px) calc((100vw - 96px) / 3),
+                calc((100vw - 120px) / 4)
+            "
+                                                                width="468"
+                                                                height="468"
+                                                                alt="{{ est.title }}"
+                                                                class="article-image"
+                                                                loading="lazy"
+                                                                decoding="async"
+                                                        >
+                                                    {% else %}
+                                                        <div class="article-image-placeholder">
+                                                            بدون تصویر
+                                                        </div>
+                                                    {% endif %}
+                                                {% endwith %}
                                             </div>
                                             <div class="article-content">
                                                 <h3>{{ est.title }}</h3>
@@ -775,9 +843,26 @@
                                         <article class="article-card animate-fade-in-up industrial-shadow">
                                             <div class="article-image-wrap">
                                                 {% if article.image %}
-                                                    <img src="{{ article.image.url }}"
-                                                         alt="{{ article.title }}"
-                                                         class="article-image">
+                                                    <img
+                                                            src="{{ article.card_image.url }}"
+                                                            srcset="
+        {{ article.thumbnail.url }} 180w,
+        {{ article.card_image.url }} 468w,
+        {{ article.home_large_image.url }} 960w
+    "
+                                                            sizes="
+        (max-width: 600px) calc(100vw - 48px),
+        (max-width: 900px) calc((100vw - 72px) / 2),
+        (max-width: 1200px) calc((100vw - 96px) / 3),
+        calc((100vw - 120px) / 4)
+    "
+                                                            width="468"
+                                                            height="468"
+                                                            alt="{{ article.title }}"
+                                                            class="article-image"
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                    >
                                                 {% else %}
                                                     <div class="article-image-placeholder">
                                                         بدون تصویر
@@ -833,7 +918,7 @@
             <!-- CTA -->
             <section class="cta-section" id="call">
                 <div class="cta-bg">
-                    <img src="{% static 'sinavaland.jpg' %}" alt="روستای سینوا"/>
+                    <img src="{% static 'sinavaland.jpg' %}" alt="روستای سینوا" loading="lazy"/>
                     <div class="overlay gradient-industrial"></div>
                 </div>
                 <div class="container cta-content">

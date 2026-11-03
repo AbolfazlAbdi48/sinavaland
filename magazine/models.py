@@ -4,6 +4,15 @@ from accounts.models import User
 from django.urls import reverse
 
 from django_ckeditor_5.fields import CKEditor5Field
+from imagekit.models import ImageSpecField
+
+from core.image_specs import (
+    ThumbnailSpec,
+    CardImageSpec,
+    LargeImageSpec,
+    HeroImageSpec,
+    HomeCardLargeSpec,
+)
 
 
 class Article(models.Model):
@@ -25,6 +34,26 @@ class Article(models.Model):
     )
     excerpt = models.TextField(max_length=300, verbose_name='خلاصه')
     image = models.ImageField(upload_to='article/', blank=True, null=True)
+    thumbnail = ImageSpecField(
+        source="image",
+        spec=ThumbnailSpec,
+    )
+    card_image = ImageSpecField(
+        source="image",
+        spec=CardImageSpec,
+    )
+    large_image = ImageSpecField(
+        source="image",
+        spec=LargeImageSpec,
+    )
+    hero_image = ImageSpecField(
+        source="image",
+        spec=HeroImageSpec,
+    )
+    home_large_image = ImageSpecField(
+        source="image",
+        spec=HomeCardLargeSpec,
+    )
     is_published = models.BooleanField(default=False, verbose_name='منتشر شده')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

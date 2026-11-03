@@ -120,7 +120,7 @@
     /* ===== Accommodation Cards Grid ===== */
     .acc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 24px;
     margin: 0 24px 40px;
     }
@@ -142,15 +142,19 @@
 
     .acc-card-img {
     position: relative;
+    width: 100%;
     height: 200px;
     overflow: hidden;
+    background: var(--muted);
     }
 
     .acc-card-img img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .4s;
+    object-position: center;
+    transition: transform .4s ease;
     }
 
     .acc-card:hover .acc-card-img img {
@@ -328,23 +332,40 @@
         {% for accommodation in accommodations %}
             <div class="acc-card animate-fade-in-up industrial-shadow">
                 <div class="acc-card-img">
-                    {% if accommodation.images %}
-                        {% with image=accommodation.images.first %}
-                            {% if image %}
-                                <img src="{{ image.image.url }}" alt="{{ accommodation.name }}">
-                            {% endif %}
-                        {% endwith %}
-                    {% else %}
-                        <div class="acc-card-img-placeholder">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                        </div>
-                    {% endif %}
-                    <div class="acc-card-badge">{{ accommodation.get_category_display }}</div>
+                    {% with image=accommodation.prefetched_images.0 %}
+                        {% if image and image.image %}
+                            <img
+                                    src="{{ image.card_image.url }}"
+                                    srcset="
+        {{ image.thumbnail.url }} 180w,
+        {{ image.card_image.url }} 468w
+    "
+                                    sizes="
+        (max-width: 640px) calc(100vw - 48px),
+        (max-width: 992px) calc(50vw - 36px),
+        300px
+    "
+                                    width="468"
+                                    height="200"
+                                    alt="{{ accommodation.name }}"
+                                    loading="lazy"
+                                    decoding="async"
+                            >
+                        {% else %}
+                            <div class="acc-card-img-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="acc-card-badge">
+                        {{ accommodation.get_category_display }}
+                    </div>
                 </div>
 
                 <div class="acc-card-body">
@@ -397,7 +418,14 @@
 
 
 
-                        {{ page_obj.previous_page_number | persian_numbers }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
+
+
+
+
+
+
+
+                        {{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">قبلی</a>
             {% endif %}
 
             <span class="current-page">{{ page_obj.number | persian_numbers }} / {{ page_obj.paginator.num_pages | persian_numbers }}</span>
@@ -409,8 +437,22 @@
 
 
 
-                        {{ page_obj.next_page_number | persian_numbers }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
+
+
+
+
+
+
+
+                        {{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">بعدی</a>
                 <a href="?page=
+
+
+
+
+
+
+
 
 
 

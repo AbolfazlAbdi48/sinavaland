@@ -8,16 +8,19 @@
     /* ===== Hero ===== */
     .article-hero {
     position: relative;
-    height: 500px;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    min-height: 280px;
+    max-height: 500px;
     overflow: hidden;
-    margin: 0 -1.5rem 40px;
+    margin-bottom: 40px;
     }
 
     .article-hero img {
     width: 100%;
     height: 100%;
+    display: block;
     object-fit: cover;
-    transition: transform .6s;
     }
 
     .article-hero:hover img { transform: scale(1.03); }
@@ -292,71 +295,30 @@
     <!-- Hero -->
     {% if article.image %}
         <div class="article-hero">
-            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+
+            <img
+                    src="{{ article.hero_image.url }}"
+                    srcset="
+        {{ article.large_image.url }} 1200w,
+        {{ article.hero_image.url }} 1600w
+    "
+                    sizes="100vw"
+                    alt="{{ article.title }}"
+                    width="1600"
+                    height="700"
+                    fetchpriority="high"
+                    decoding="async"
+            >
+
+
             <div class="article-hero-overlay"></div>
+
             <div class="article-hero-content container">
-                <span class="category-badge"
-                      style="margin-bottom:12px;display:inline-flex;">{{ article.get_category_display }}</span>
+            <span class="category-badge">
+                {{ article.get_category_display }}
+            </span>
+
                 <h1>{{ article.title }}</h1>
-                <div class="article-hero-meta">
-                    <div class="article-hero-meta-item">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                        {{ article.author.get_full_name|default:article.author.username }}
-                    </div>
-                    <div class="article-hero-meta-item">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                        {{ article.published_at|date:"Y/m/d" }}
-                    </div>
-                    <div class="article-hero-meta-item">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                        {{ article.views|default:0|persian_numbers }} بازدید
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="article-hero-placeholder gradient-industrial">
-            <span class="category-badge"
-                  style="display:inline-flex;margin-bottom:12px;">{{ article.get_category_display }}</span>
-            <h1>{{ article.title }}</h1>
-            <div class="article-hero-meta" style="justify-content:center;">
-                <div class="article-hero-meta-item">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                    {{ article.author.get_full_name|default:article.author.username }}
-                </div>
-                <div class="article-hero-meta-item">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                    {{ article.published_at|date:"Y/m/d"|persian_numbers }}
-                </div>
-                <div class="article-hero-meta-item">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    {{ article.views|default:0|persian_numbers }} بازدید
-                </div>
             </div>
         </div>
     {% endif %}

@@ -111,7 +111,7 @@
     /* ===== Tours Grid ===== */
     .estate-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 24px;
     margin: 0 24px 40px;
     }
@@ -133,11 +133,14 @@
 
     .estate-card-img {
     position: relative;
-    height: 200px;
+    width: 100%;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
+    background: var(--muted);
     }
 
     .estate-card-img img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -273,6 +276,23 @@
     border-radius: 8px;
     }
 
+    @media (max-width: 1100px) {
+    .estate-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    }
+    @media (max-width: 768px) {
+    .estate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    }
+
+    @media (max-width: 520px) {
+    .estate-grid {
+    grid-template-columns: 1fr;
+    }
+    }
+
 {% endblock %}
 
 {% block content %}
@@ -342,17 +362,33 @@
         {% for est in estate %}
             <div class="estate-card animate-fade-in-up industrial-shadow">
                 <div class="estate-card-img">
-                    {% if est.images %}
-                        {% with image=est.images.first %}
-                            {% if image %}
-                                <img src="{{ image.image.url }}" alt="{{ est.name }}">
-                            {% endif %}
-                        {% endwith %}
-                    {% else %}
-                        <div class="estate-image-placeholder">
-                            بدون تصویر
-                        </div>
-                    {% endif %}
+                    {% with image=est.prefetched_images.0 %}
+                        {% if image and image.image %}
+                            <img
+                                    src="{{ image.card_image.url }}"
+                                    srcset="
+        {{ image.thumbnail.url }} 180w,
+        {{ image.card_image.url }} 468w,
+        {{ image.large_image.url }} 1024w
+    "
+                                    sizes="
+        (max-width: 520px) calc(100vw - 48px),
+        (max-width: 768px) calc(50vw - 36px),
+        (max-width: 1100px) calc(33.33vw - 32px),
+        calc(25vw - 30px)
+    "
+                                    alt="{{ est.title }}"
+                                    width="468"
+                                    height="312"
+                                    loading="lazy"
+                                    decoding="async"
+                            >
+                        {% else %}
+                            <div class="estate-image-placeholder">
+                                بدون تصویر
+                            </div>
+                        {% endif %}
+                    {% endwith %}
                 </div>
 
                 <div class="estate-card-body">
@@ -415,7 +451,13 @@
 
 
 
-                        {{ estate.previous_page_number | persian_numbers }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+
+
+
+                        {{ estate.previous_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     قبلی
                 </a>
             {% endif %}
@@ -446,7 +488,13 @@
 
 
 
-                        {{ estate.next_page_number | persian_numbers }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+
+
+
+
+
+
+                        {{ estate.next_page_number }}{% if request.GET.duration %}&duration={{ request.GET.duration }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
                     بعدی
                 </a>
             {% endif %}
